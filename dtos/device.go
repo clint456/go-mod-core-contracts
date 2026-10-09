@@ -9,7 +9,7 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v4/models"
 )
 
-type Device struct {
+type Node struct {
 	DBTimestamp    `json:",inline"`
 	Id             string                        `json:"id,omitempty" yaml:"id,omitempty" validate:"omitempty,uuid"`
 	Name           string                        `json:"name" yaml:"name" validate:"required,edgex-dto-none-empty-string"`

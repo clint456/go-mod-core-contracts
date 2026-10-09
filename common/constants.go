@@ -70,6 +70,17 @@ const (
 	ApiProvisionWatcherByProfileNameRoute = ApiProvisionWatcherRoute + "/" + Profile + "/" + Name + "/:" + Name
 	ApiProvisionWatcherByServiceNameRoute = ApiProvisionWatcherRoute + "/" + Service + "/" + Name + "/:" + Name
 
+	ApiNorthRoute                = ApiBase + "/north"
+	ApiAllNorthRoute             = ApiNorthRoute + "/" + All
+	ApiNorthByNameRoute          = ApiNorthRoute + "/" + Name + "/:" + Name
+	ApiNorthByServiceNameRoute   = ApiNorthRoute + "/" + Service + "/" + Name + "/:" + Name
+	ApiNorthProfileRoute         = ApiBase + "/northprofile"
+	ApiAllNorthProfileRoute      = ApiNorthProfileRoute + "/" + All
+	ApiNorthProfileByNameRoute   = ApiNorthProfileRoute + "/" + Name + "/:" + Name
+	ApiNorthProfileByModelRoute  = ApiNorthProfileRoute + "/" + Model + "/:" + Model
+	ApiNorthResourceRoute        = ApiBase + "/northresource"
+	ApiNorthProfileResourceRoute = ApiNorthResourceRoute + "/" + Profile + "/:" + ProfileName + "/" + Resource + "/:" + ResourceName
+
 	ApiDiscoveryRoute     = ApiBase + "/discovery"
 	ApiDiscoveryByIdRoute = ApiDiscoveryRoute + "/" + RequestId + "/:" + RequestId
 
