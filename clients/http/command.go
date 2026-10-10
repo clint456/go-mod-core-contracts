@@ -44,9 +44,9 @@ func NewCommandClientWithUrlCallback(baseUrlFunc clients.ClientBaseUrlFunc, auth
 	}
 }
 
-// AllDeviceCoreCommands returns a paginated list of MultiDeviceCoreCommandsResponse. The list contains all of the commands in the system associated with their respective device.
-func (client *CommandClient) AllDeviceCoreCommands(ctx context.Context, offset int, limit int) (
-	res responses.MultiDeviceCoreCommandsResponse, err errors.EdgeX) {
+// AllNodeCoreCommands returns a paginated list of MultiNodeCoreCommandsResponse. The list contains all of the commands in the system associated with their respective node.
+func (client *CommandClient) AllNodeCoreCommands(ctx context.Context, offset int, limit int) (
+	res responses.MultiNodeCoreCommandsResponse, err errors.EdgeX) {
 	requestParams := url.Values{}
 	requestParams.Set(common.Offset, strconv.Itoa(offset))
 	requestParams.Set(common.Limit, strconv.Itoa(limit))
@@ -54,18 +54,18 @@ func (client *CommandClient) AllDeviceCoreCommands(ctx context.Context, offset i
 	if goErr != nil {
 		return res, errors.NewCommonEdgeXWrapper(goErr)
 	}
-	err = utils.GetRequest(ctx, &res, baseUrl, common.ApiAllDeviceRoute, requestParams, client.authInjector)
+	err = utils.GetRequest(ctx, &res, baseUrl, common.ApiAllNodeRoute, requestParams, client.authInjector)
 	if err != nil {
 		return res, errors.NewCommonEdgeXWrapper(err)
 	}
 	return res, nil
 }
 
-// DeviceCoreCommandsByDeviceName returns all commands associated with the specified device name.
-func (client *CommandClient) DeviceCoreCommandsByDeviceName(ctx context.Context, name string) (
-	res responses.DeviceCoreCommandResponse, err errors.EdgeX) {
+// NodeCoreCommandsByNodeName returns all commands associated with the specified node name.
+func (client *CommandClient) NodeCoreCommandsByNodeName(ctx context.Context, name string) (
+	res responses.NodeCoreCommandResponse, err errors.EdgeX) {
 	path := common.NewPathBuilder().EnableNameFieldEscape(client.enableNameFieldEscape).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(name).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(name).BuildPath()
 	baseUrl, goErr := clients.GetBaseUrl(client.baseUrlFunc)
 	if goErr != nil {
 		return res, errors.NewCommonEdgeXWrapper(goErr)
@@ -77,13 +77,13 @@ func (client *CommandClient) DeviceCoreCommandsByDeviceName(ctx context.Context,
 	return res, nil
 }
 
-// IssueGetCommandByName issues the specified read command referenced by the command name to the device/sensor that is also referenced by name.
-func (client *CommandClient) IssueGetCommandByName(ctx context.Context, deviceName string, commandName string, dsPushEvent bool, dsReturnEvent bool) (res *responses.EventResponse, err errors.EdgeX) {
+// IssueGetCommandByName issues the specified read command referenced by the command name to the node/sensor that is also referenced by name.
+func (client *CommandClient) IssueGetCommandByName(ctx context.Context, nodeName string, commandName string, dsPushEvent bool, dsReturnEvent bool) (res *responses.EventResponse, err errors.EdgeX) {
 	requestParams := url.Values{}
 	requestParams.Set(common.PushEvent, strconv.FormatBool(dsPushEvent))
 	requestParams.Set(common.ReturnEvent, strconv.FormatBool(dsReturnEvent))
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(client.enableNameFieldEscape).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(commandName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(commandName).BuildPath()
 	baseUrl, goErr := clients.GetBaseUrl(client.baseUrlFunc)
 	if goErr != nil {
 		return res, errors.NewCommonEdgeXWrapper(goErr)
@@ -95,13 +95,13 @@ func (client *CommandClient) IssueGetCommandByName(ctx context.Context, deviceNa
 	return res, nil
 }
 
-func (client *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Context, deviceName string, commandName string, queryParams map[string]string) (res *responses.EventResponse, err errors.EdgeX) {
+func (client *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Context, nodeName string, commandName string, queryParams map[string]string) (res *responses.EventResponse, err errors.EdgeX) {
 	requestParams := url.Values{}
 	for k, v := range queryParams {
 		requestParams.Set(k, v)
 	}
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(client.enableNameFieldEscape).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(commandName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(commandName).BuildPath()
 	baseUrl, goErr := clients.GetBaseUrl(client.baseUrlFunc)
 	if goErr != nil {
 		return res, errors.NewCommonEdgeXWrapper(goErr)
@@ -113,10 +113,10 @@ func (client *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Co
 	return res, nil
 }
 
-// IssueSetCommandByName issues the specified write command referenced by the command name to the device/sensor that is also referenced by name.
-func (client *CommandClient) IssueSetCommandByName(ctx context.Context, deviceName string, commandName string, settings map[string]any) (res dtoCommon.BaseResponse, err errors.EdgeX) {
+// IssueSetCommandByName issues the specified write command referenced by the command name to the node/sensor that is also referenced by name.
+func (client *CommandClient) IssueSetCommandByName(ctx context.Context, nodeName string, commandName string, settings map[string]any) (res dtoCommon.BaseResponse, err errors.EdgeX) {
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(client.enableNameFieldEscape).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(commandName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(commandName).BuildPath()
 	baseUrl, goErr := clients.GetBaseUrl(client.baseUrlFunc)
 	if goErr != nil {
 		return res, errors.NewCommonEdgeXWrapper(goErr)

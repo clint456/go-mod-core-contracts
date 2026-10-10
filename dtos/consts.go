@@ -10,7 +10,7 @@ const (
 	// shared keys
 	keyApiVersion  = "apiVersion"
 	keyId          = "id"
-	keyDeviceName  = "deviceName"
+	keyNodeName    = "nodeName"
 	keyProfileName = "profileName"
 	keyOrigin      = "origin"
 	keyTags        = "tags"

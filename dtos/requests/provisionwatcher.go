@@ -37,13 +37,13 @@ func (pw *AddProvisionWatcherRequest) UnmarshalJSON(b []byte) error {
 		return errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal request body as JSON.", err)
 	}
 
-	if alias.ProvisionWatcher.DiscoveredDevice.Properties == nil {
-		alias.ProvisionWatcher.DiscoveredDevice.Properties = make(map[string]any)
+	if alias.ProvisionWatcher.DiscoveredNode.Properties == nil {
+		alias.ProvisionWatcher.DiscoveredNode.Properties = make(map[string]any)
 	}
 
 	*pw = AddProvisionWatcherRequest(alias)
 
-	// validate AddDeviceRequest DTO
+	// validate AddNodeRequest DTO
 	if err := pw.Validate(); err != nil {
 		return err
 	}
@@ -83,7 +83,7 @@ func (pw *UpdateProvisionWatcherRequest) UnmarshalJSON(b []byte) error {
 
 	*pw = UpdateProvisionWatcherRequest(alias)
 
-	// validate UpdateDeviceRequest DTO
+	// validate UpdateNodeRequest DTO
 	if err := pw.Validate(); err != nil {
 		return err
 	}
@@ -104,20 +104,20 @@ func ReplaceProvisionWatcherModelFieldsWithDTO(pw *models.ProvisionWatcher, patc
 	if patch.AdminState != nil {
 		pw.AdminState = models.AdminState(*patch.AdminState)
 	}
-	if patch.DiscoveredDevice.ProfileName != nil {
-		pw.DiscoveredDevice.ProfileName = *patch.DiscoveredDevice.ProfileName
+	if patch.DiscoveredNode.ProfileName != nil {
+		pw.DiscoveredNode.ProfileName = *patch.DiscoveredNode.ProfileName
 	}
 	if patch.ServiceName != nil {
 		pw.ServiceName = *patch.ServiceName
 	}
-	if patch.DiscoveredDevice.AdminState != nil {
-		pw.DiscoveredDevice.AdminState = models.AdminState(*patch.DiscoveredDevice.AdminState)
+	if patch.DiscoveredNode.AdminState != nil {
+		pw.DiscoveredNode.AdminState = models.AdminState(*patch.DiscoveredNode.AdminState)
 	}
-	if patch.DiscoveredDevice.AutoEvents != nil {
-		pw.DiscoveredDevice.AutoEvents = dtos.ToAutoEventModels(patch.DiscoveredDevice.AutoEvents)
+	if patch.DiscoveredNode.AutoEvents != nil {
+		pw.DiscoveredNode.AutoEvents = dtos.ToAutoEventModels(patch.DiscoveredNode.AutoEvents)
 	}
-	if patch.DiscoveredDevice.Properties != nil {
-		pw.DiscoveredDevice.Properties = patch.DiscoveredDevice.Properties
+	if patch.DiscoveredNode.Properties != nil {
+		pw.DiscoveredNode.Properties = patch.DiscoveredNode.Properties
 	}
 }
 

@@ -114,7 +114,7 @@ var scheduleJobWithInvalidRestAction = `{
 	]
 }`
 
-var scheduleJobWithInvalidDeviceControlAction = `{
+var scheduleJobWithInvalidNodeControlAction = `{
 	"id": "82eb2e26-0f24-48aa-ae4c-de9dac3fb9bc",
 	"name": "TestScheduleJob",
 	"definition": {
@@ -125,10 +125,10 @@ var scheduleJobWithInvalidDeviceControlAction = `{
 	},
 	"actions": [
 		{
-			"type": "DEVICECONTROL",
+			"type": "NODECONTROL",
 			"contentType": "application/json",
 			"payload": "eyJ0ZXN0I",
-			"deviceName": ["123"],
+			"nodeName": ["123"],
 			"typoName": "testSourceName"
 		}
 	]
@@ -182,14 +182,14 @@ var restAction = RESTAction{
 	Address: TestAddress,
 }
 
-var deviceControlAction = DeviceControlAction{
+var nodeControlAction = NodeControlAction{
 	BaseScheduleAction: BaseScheduleAction{
 		Id:          ExampleUUID,
-		Type:        common.ActionDeviceControl,
+		Type:        common.ActionNodeControl,
 		ContentType: TestContentType,
 		Payload:     []byte(TestPayload),
 	},
-	DeviceName: TestDeviceName,
+	NodeName:   TestNodeName,
 	SourceName: TestSourceName,
 }
 
@@ -236,14 +236,14 @@ func scheduleJobWithRESTScheduleAction() ScheduleJob {
 	}
 }
 
-func scheduleJobWithDEVICECONTROLScheduleAction() ScheduleJob {
+func scheduleJobWithNODECONTROLScheduleAction() ScheduleJob {
 	return ScheduleJob{
 		DBTimestamp:              DBTimestamp{},
 		Id:                       ExampleUUID,
 		Name:                     TestScheduleJobName,
 		Definition:               intervalScheduleDef,
 		AutoTriggerMissedRecords: false,
-		Actions:                  []ScheduleAction{deviceControlAction},
+		Actions:                  []ScheduleAction{nodeControlAction},
 	}
 }
 
@@ -264,8 +264,8 @@ func TestScheduleJob_UnmarshalJSON(t *testing.T) {
 	scheduleJobWithRestScheduleActionJsonData, err := json.Marshal(scheduleJobWithRestScheduleAction)
 	require.NoError(t, err)
 
-	scheduleJobWithDeviceControlScheduleAction := scheduleJobWithDEVICECONTROLScheduleAction()
-	scheduleJobWithDeviceControlScheduleActionJsonData, err := json.Marshal(scheduleJobWithDeviceControlScheduleAction)
+	scheduleJobWithNodeControlScheduleAction := scheduleJobWithNODECONTROLScheduleAction()
+	scheduleJobWithNodeControlScheduleActionJsonData, err := json.Marshal(scheduleJobWithNodeControlScheduleAction)
 	require.NoError(t, err)
 
 	tests := []struct {
@@ -284,8 +284,8 @@ func TestScheduleJob_UnmarshalJSON(t *testing.T) {
 		{"unmarshal ScheduleJob with invalid EDGEXMESSAGEBUS ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithInvalidEdgeXMessageBusAction), true},
 		{"valid, unmarshal ScheduleJob with REST ScheduleAction", scheduleJobWithRestScheduleAction, scheduleJobWithRestScheduleActionJsonData, false},
 		{"unmarshal ScheduleJob with invalid REST ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithInvalidRestAction), true},
-		{"valid, unmarshal ScheduleJob with DEVICECONTROL ScheduleAction", scheduleJobWithDeviceControlScheduleAction, scheduleJobWithDeviceControlScheduleActionJsonData, false},
-		{"unmarshal ScheduleJob with invalid DEVICECONTROL ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithInvalidDeviceControlAction), true},
+		{"valid, unmarshal ScheduleJob with NODECONTROL ScheduleAction", scheduleJobWithNodeControlScheduleAction, scheduleJobWithNodeControlScheduleActionJsonData, false},
+		{"unmarshal ScheduleJob with invalid NODECONTROL ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithInvalidNodeControlAction), true},
 		{"unmarshal ScheduleJob with unsupported ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithUnsupportedAction), true},
 		{"unmarshal ScheduleJob with invalid ScheduleAction", ScheduleJob{}, []byte(scheduleJobWithInvalidScheduleAction), true},
 		{"unmarshal invalid ScheduleJob, invalid data", ScheduleJob{}, []byte(`{"Created": [1]}`), true},
@@ -314,7 +314,7 @@ func TestScheduleAction_GetBaseScheduleAction(t *testing.T) {
 	}{
 		{"EdgeXMessageBusAction", edgeXMessageBusAction, edgeXMessageBusAction.BaseScheduleAction},
 		{"RESTAction", restAction, restAction.BaseScheduleAction},
-		{"DeviceControlAction", deviceControlAction, deviceControlAction.BaseScheduleAction},
+		{"NodeControlAction", nodeControlAction, nodeControlAction.BaseScheduleAction},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -332,7 +332,7 @@ func TestScheduleAction_WithEmptyPayloadAndId(t *testing.T) {
 	}{
 		{"EdgeXMessageBusAction", edgeXMessageBusAction, edgeXMessageBusAction.WithEmptyPayloadAndId()},
 		{"RESTAction", restAction, restAction.WithEmptyPayloadAndId()},
-		{"DeviceControlAction", deviceControlAction, deviceControlAction.WithEmptyPayloadAndId()},
+		{"NodeControlAction", nodeControlAction, nodeControlAction.WithEmptyPayloadAndId()},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
@@ -350,7 +350,7 @@ func TestScheduleAction_SetIdIfNotExists(t *testing.T) {
 	}{
 		{"EdgeXMessageBusAction", edgeXMessageBusAction},
 		{"RESTAction", restAction},
-		{"DeviceControlAction", deviceControlAction},
+		{"NodeControlAction", nodeControlAction},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

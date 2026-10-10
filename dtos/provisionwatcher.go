@@ -18,18 +18,18 @@ type ProvisionWatcher struct {
 	Identifiers         map[string]string   `json:"identifiers" yaml:"identifiers" validate:"gt=0,dive,keys,required,endkeys,required"`
 	BlockingIdentifiers map[string][]string `json:"blockingIdentifiers,omitempty" yaml:"blockingIdentifiers,omitempty"`
 	AdminState          string              `json:"adminState" yaml:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'"`
-	DiscoveredDevice    DiscoveredDevice    `json:"discoveredDevice" yaml:"discoveredDevice"`
+	DiscoveredNode      DiscoveredNode      `json:"discoveredNode" yaml:"discoveredNode"`
 }
 
 type UpdateProvisionWatcher struct {
-	Id                  *string                `json:"id" validate:"required_without=Name,edgex-dto-uuid"`
-	Name                *string                `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string"`
-	ServiceName         *string                `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string"`
-	Labels              []string               `json:"labels"`
-	Identifiers         map[string]string      `json:"identifiers" validate:"omitempty,gt=0,dive,keys,required,endkeys,required"`
-	BlockingIdentifiers map[string][]string    `json:"blockingIdentifiers"`
-	AdminState          *string                `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'"`
-	DiscoveredDevice    UpdateDiscoveredDevice `json:"discoveredDevice"`
+	Id                  *string              `json:"id" validate:"required_without=Name,edgex-dto-uuid"`
+	Name                *string              `json:"name" validate:"required_without=Id,edgex-dto-none-empty-string"`
+	ServiceName         *string              `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string"`
+	Labels              []string             `json:"labels"`
+	Identifiers         map[string]string    `json:"identifiers" validate:"omitempty,gt=0,dive,keys,required,endkeys,required"`
+	BlockingIdentifiers map[string][]string  `json:"blockingIdentifiers"`
+	AdminState          *string              `json:"adminState" validate:"omitempty,oneof='LOCKED' 'UNLOCKED'"`
+	DiscoveredNode      UpdateDiscoveredNode `json:"discoveredNode"`
 }
 
 // ToProvisionWatcherModel transforms the ProvisionWatcher DTO to the ProvisionWatcher model
@@ -43,7 +43,7 @@ func ToProvisionWatcherModel(dto ProvisionWatcher) models.ProvisionWatcher {
 		Identifiers:         dto.Identifiers,
 		BlockingIdentifiers: dto.BlockingIdentifiers,
 		AdminState:          models.AdminState(dto.AdminState),
-		DiscoveredDevice:    ToDiscoveredDeviceModel(dto.DiscoveredDevice),
+		DiscoveredNode:      ToDiscoveredNodeModel(dto.DiscoveredNode),
 	}
 }
 
@@ -58,7 +58,7 @@ func FromProvisionWatcherModelToDTO(pw models.ProvisionWatcher) ProvisionWatcher
 		Identifiers:         pw.Identifiers,
 		BlockingIdentifiers: pw.BlockingIdentifiers,
 		AdminState:          string(pw.AdminState),
-		DiscoveredDevice:    FromDiscoveredDeviceModelToDTO(pw.DiscoveredDevice),
+		DiscoveredNode:      FromDiscoveredNodeModelToDTO(pw.DiscoveredNode),
 	}
 }
 
@@ -73,7 +73,7 @@ func FromProvisionWatcherModelToUpdateDTO(pw models.ProvisionWatcher) UpdateProv
 		Identifiers:         pw.Identifiers,
 		BlockingIdentifiers: pw.BlockingIdentifiers,
 		AdminState:          &adminState,
-		DiscoveredDevice:    FromDiscoveredDeviceModelToUpdateDTO(pw.DiscoveredDevice),
+		DiscoveredNode:      FromDiscoveredNodeModelToUpdateDTO(pw.DiscoveredNode),
 	}
 	return dto
 }

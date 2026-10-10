@@ -24,7 +24,7 @@ import (
 type Event struct {
 	dtoCommon.Versionable `json:",inline"`
 	Id                    string         `json:"id" validate:"required,uuid"`
-	DeviceName            string         `json:"deviceName" validate:"required,edgex-dto-none-empty-string"`
+	NodeName              string         `json:"nodeName" validate:"required,edgex-dto-none-empty-string"`
 	ProfileName           string         `json:"profileName,omitempty" validate:"omitempty,edgex-dto-none-empty-string"`
 	SourceName            string         `json:"sourceName,omitempty" validate:"omitempty,edgex-dto-none-empty-string"`
 	Origin                int64          `json:"origin" validate:"required"`
@@ -34,11 +34,11 @@ type Event struct {
 }
 
 // NewEvent creates and returns an initialized Event with no Readings
-func NewEvent(profileName, deviceName, sourceName string) Event {
+func NewEvent(profileName, nodeName, sourceName string) Event {
 	return Event{
 		Versionable: dtoCommon.NewVersionable(),
 		Id:          uuid.NewString(),
-		DeviceName:  deviceName,
+		NodeName:    nodeName,
 		ProfileName: profileName,
 		SourceName:  sourceName,
 		Origin:      time.Now().UnixNano(),
@@ -63,7 +63,7 @@ func FromEventModelToDTO(event models.Event) Event {
 	return Event{
 		Versionable: dtoCommon.NewVersionable(),
 		Id:          event.Id,
-		DeviceName:  event.DeviceName,
+		NodeName:    event.NodeName,
 		ProfileName: event.ProfileName,
 		SourceName:  event.SourceName,
 		Origin:      event.Origin,
@@ -74,7 +74,7 @@ func FromEventModelToDTO(event models.Event) Event {
 
 // AddSimpleReading adds a simple reading to the Event
 func (e *Event) AddSimpleReading(resourceName string, valueType string, value interface{}) error {
-	reading, err := NewSimpleReading(e.ProfileName, e.DeviceName, resourceName, valueType, value)
+	reading, err := NewSimpleReading(e.ProfileName, e.NodeName, resourceName, valueType, value)
 	if err != nil {
 		return err
 	}
@@ -84,17 +84,17 @@ func (e *Event) AddSimpleReading(resourceName string, valueType string, value in
 
 // AddBinaryReading adds a binary reading to the Event
 func (e *Event) AddBinaryReading(resourceName string, binaryValue []byte, mediaType string) {
-	e.Readings = append(e.Readings, NewBinaryReading(e.ProfileName, e.DeviceName, resourceName, binaryValue, mediaType))
+	e.Readings = append(e.Readings, NewBinaryReading(e.ProfileName, e.NodeName, resourceName, binaryValue, mediaType))
 }
 
 // AddObjectReading adds a object reading to the Event
 func (e *Event) AddObjectReading(resourceName string, objectValue interface{}) {
-	e.Readings = append(e.Readings, NewObjectReading(e.ProfileName, e.DeviceName, resourceName, objectValue))
+	e.Readings = append(e.Readings, NewObjectReading(e.ProfileName, e.NodeName, resourceName, objectValue))
 }
 
 // AddNullReading adds a simple reading with null value to the Event
 func (e *Event) AddNullReading(resourceName string, valueType string) {
-	e.Readings = append(e.Readings, NewNullReading(e.ProfileName, e.DeviceName, resourceName, valueType))
+	e.Readings = append(e.Readings, NewNullReading(e.ProfileName, e.NodeName, resourceName, valueType))
 }
 
 // ToXML provides a XML representation of the Event as a string
@@ -127,7 +127,7 @@ func (e Event) marshal(marshal func(any) ([]byte, error)) ([]byte, error) {
 	var aux struct {
 		dtoCommon.Versionable `json:",inline"`
 		Id                    string        `json:"id" validate:"required,uuid"`
-		DeviceName            string        `json:"deviceName"`
+		NodeName              string        `json:"nodeName"`
 		ProfileName           string        `json:"profileName"`
 		SourceName            string        `json:"sourceName"`
 		Origin                int64         `json:"origin"`
@@ -136,7 +136,7 @@ func (e Event) marshal(marshal func(any) ([]byte, error)) ([]byte, error) {
 	}
 	aux.Versionable = e.Versionable
 	aux.Id = e.Id
-	aux.DeviceName = e.DeviceName
+	aux.NodeName = e.NodeName
 	aux.ProfileName = e.ProfileName
 	aux.SourceName = e.SourceName
 	aux.Origin = e.Origin
@@ -148,7 +148,7 @@ func (e Event) marshal(marshal func(any) ([]byte, error)) ([]byte, error) {
 	if os.Getenv(common.EnvOptimizeEventPayload) == common.ValueTrue {
 		for i, reading := range e.Readings {
 			reading.Id = ""
-			reading.DeviceName = ""
+			reading.NodeName = ""
 			reading.ProfileName = ""
 			if e.Origin == reading.Origin {
 				reading.Origin = 0
@@ -195,7 +195,7 @@ func (e *Event) unmarshal(data []byte, unmarshal func([]byte, any) error) error 
 	if e.Id, err = popStringValueFromKey(rawMap, keyId); err != nil {
 		return err
 	}
-	if e.DeviceName, err = popStringValueFromKey(rawMap, keyDeviceName); err != nil {
+	if e.NodeName, err = popStringValueFromKey(rawMap, keyNodeName); err != nil {
 		return err
 	}
 	if e.ProfileName, err = popStringValueFromKey(rawMap, keyProfileName); err != nil {
@@ -264,7 +264,7 @@ func (e *Event) unmarshal(data []byte, unmarshal func([]byte, any) error) error 
 	if os.Getenv(common.EnvOptimizeEventPayload) == common.ValueTrue {
 		// recover the reduced fields
 		for i, reading := range e.Readings {
-			e.Readings[i].DeviceName = e.DeviceName
+			e.Readings[i].NodeName = e.NodeName
 			e.Readings[i].ProfileName = e.ProfileName
 			if reading.Origin == 0 {
 				e.Readings[i].Origin = e.Origin

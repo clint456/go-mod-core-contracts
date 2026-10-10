@@ -8,7 +8,7 @@ package models
 type BaseReading struct {
 	Id           string
 	Origin       int64
-	DeviceName   string
+	NodeName     string
 	ResourceName string
 	ProfileName  string
 	ValueType    string

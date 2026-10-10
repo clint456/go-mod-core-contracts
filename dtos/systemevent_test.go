@@ -28,16 +28,16 @@ import (
 )
 
 var expectedApiVersion = common.ApiVersion
-var expectedType = common.DeviceSystemEventType
+var expectedType = common.NodeSystemEventType
 var expectedAction = common.SystemEventActionAdd
 var expectedSoonerTimestamp = time.Now().UnixNano()
 var expectedSource = "core-metadata"
-var expectedOwner = "device-onvif-camera"
-var expectedTags = map[string]string{"device-profile": "onvif-camera"}
-var expectedDetails = Device{
+var expectedOwner = "node-onvif-camera"
+var expectedTags = map[string]string{"node-profile": "onvif-camera"}
+var expectedDetails = Node{
 	Id:          TestUUID,
-	Name:        "My-Camera-Device",
-	ServiceName: "device-onvif-camera",
+	Name:        "My-Camera-Node",
+	ServiceName: "node-onvif-camera",
 	ProfileName: "onvif-camera",
 	Protocols: map[string]ProtocolProperties{
 		"Onvif": {
@@ -74,7 +74,7 @@ func TestDecodeDetailsFromJSONDecodedData(t *testing.T) {
 	err = json.Unmarshal(data, target) // simulate the client receive the systemEvent from broker and decode the systemEvent
 	require.NoError(t, err)
 
-	actual := &Device{}
+	actual := &Node{}
 	err = target.DecodeDetails(actual) // decode the map[string]interface{} to actual data type
 	require.NoError(t, err)
 	assert.Equal(t, expectedDetails, *actual)
@@ -91,7 +91,7 @@ func TestDecodeDetailsFromCBORDecodedData(t *testing.T) {
 	err = cbor.Unmarshal(data, target) // simulate the client receive the systemEvent from broker and decode the systemEvent
 	require.NoError(t, err)
 
-	actual := &Device{}
+	actual := &Node{}
 	err = target.DecodeDetails(actual) // decode the map[interface{}]interface{} to actual data type
 	require.NoError(t, err)
 	assert.Equal(t, expectedDetails, *actual)
@@ -110,7 +110,7 @@ func TestDecodeDetailsError(t *testing.T) {
 	for _, test := range tests {
 		t.Run(test.Name, func(t *testing.T) {
 			target := NewSystemEvent(expectedType, expectedAction, expectedSource, expectedOwner, expectedTags, test.Details)
-			actual := &Device{}
+			actual := &Node{}
 			err := target.DecodeDetails(actual)
 			require.Error(t, err)
 			require.Contains(t, err.Error(), test.expectedError)

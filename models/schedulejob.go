@@ -189,12 +189,12 @@ func UnmarshalScheduleAction(b []byte) (action ScheduleAction, err error) {
 			return action, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal REST ScheduleAction.", err)
 		}
 		action = restAction
-	case common.ActionDeviceControl:
-		var deviceControlAction DeviceControlAction
-		if err = json.Unmarshal(b, &deviceControlAction); err != nil {
-			return action, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal DEVICECONTROL ScheduleAction.", err)
+	case common.ActionNodeControl:
+		var nodeControlAction NodeControlAction
+		if err = json.Unmarshal(b, &nodeControlAction); err != nil {
+			return action, errors.NewCommonEdgeX(errors.KindContractInvalid, "Failed to unmarshal NODECONTROL ScheduleAction.", err)
 		}
-		action = deviceControlAction
+		action = nodeControlAction
 	default:
 		return action, errors.NewCommonEdgeX(errors.KindContractInvalid, "Unsupported schedule action type", err)
 	}
@@ -260,21 +260,21 @@ func (r RESTAction) WithId(id string) ScheduleAction {
 	return r
 }
 
-type DeviceControlAction struct {
+type NodeControlAction struct {
 	BaseScheduleAction
-	DeviceName string
+	NodeName   string
 	SourceName string
 }
 
-func (d DeviceControlAction) GetBaseScheduleAction() BaseScheduleAction {
+func (d NodeControlAction) GetBaseScheduleAction() BaseScheduleAction {
 	return d.BaseScheduleAction
 }
-func (d DeviceControlAction) WithEmptyPayloadAndId() ScheduleAction {
+func (d NodeControlAction) WithEmptyPayloadAndId() ScheduleAction {
 	d.Id = ""
 	d.Payload = nil
 	return d
 }
-func (d DeviceControlAction) WithId(id string) ScheduleAction {
+func (d NodeControlAction) WithId(id string) ScheduleAction {
 	if len(d.Id) == 0 {
 		if id != "" {
 			d.Id = id
@@ -288,5 +288,5 @@ func (d DeviceControlAction) WithId(id string) ScheduleAction {
 // ScheduleDefType is used to identify the schedule definition type, i.e., INTERVAL or CRON
 type ScheduleDefType string
 
-// ScheduleActionType is used to identify the schedule action type, i.e., EDGEXMESSAGEBUS, REST, or DEVICECONTROL
+// ScheduleActionType is used to identify the schedule action type, i.e., EDGEXMESSAGEBUS, REST, or NODECONTROL
 type ScheduleActionType string

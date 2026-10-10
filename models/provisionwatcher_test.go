@@ -18,18 +18,18 @@ func TestProvisionWatcher_Clone(t *testing.T) {
 		Identifiers:         map[string]string{"Address": "172.0.0.1", "Port": "8080"},
 		BlockingIdentifiers: map[string][]string{"Address": {"127.0.0.1", "127.0.0.2"}, "Port": {"123", "456"}},
 		AdminState:          Unlocked,
-		DiscoveredDevice: DiscoveredDevice{
+		DiscoveredNode: DiscoveredNode{
 			ProfileName: "TestProfile",
 			AdminState:  Locked,
 			AutoEvents: []AutoEvent{
 				{
 					Interval: "10s", OnChange: false, OnChangeThreshold: 0.5,
-					SourceName: "TestDeviceResource",
+					SourceName: "TestResource",
 					Retention:  Retention{MaxCap: 500, MinCap: 100, Duration: "1m"},
 				},
 				{
 					Interval: "15s", OnChange: true, OnChangeThreshold: 1.23,
-					SourceName: "TestDeviceResource2",
+					SourceName: "TestResource2",
 					Retention:  Retention{MaxCap: 1000, MinCap: 1, Duration: "1m"},
 				},
 			},

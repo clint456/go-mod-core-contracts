@@ -7,7 +7,7 @@ package models
 
 type Event struct {
 	Id          string
-	DeviceName  string
+	NodeName    string
 	ProfileName string
 	SourceName  string
 	Origin      int64

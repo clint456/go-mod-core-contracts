@@ -8,15 +8,15 @@ package models
 import "maps"
 
 type ResourceOperation struct {
-	DeviceResource string
-	DefaultValue   string
-	Mappings       map[string]string
+	Resource     string
+	DefaultValue string
+	Mappings     map[string]string
 }
 
 func (r ResourceOperation) Clone() ResourceOperation {
 	cloned := ResourceOperation{
-		DeviceResource: r.DeviceResource,
-		DefaultValue:   r.DefaultValue,
+		Resource:     r.Resource,
+		DefaultValue: r.DefaultValue,
 	}
 	if len(r.Mappings) > 0 {
 		cloned.Mappings = make(map[string]string)

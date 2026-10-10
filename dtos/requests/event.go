@@ -137,7 +137,7 @@ func AddEventReqToEventModel(addEventReq AddEventRequest) (event models.Event) {
 
 	return models.Event{
 		Id:          addEventReq.Event.Id,
-		DeviceName:  addEventReq.Event.DeviceName,
+		NodeName:    addEventReq.Event.NodeName,
 		ProfileName: addEventReq.Event.ProfileName,
 		SourceName:  addEventReq.Event.SourceName,
 		Origin:      addEventReq.Event.Origin,

@@ -24,7 +24,7 @@ const (
 	TestContentType     = "application/json"
 	TestPayload         = "eyJ0ZXN0I"
 	TestAddress         = "http://localhost:12345/test/address"
-	TestDeviceName      = "TestDeviceName"
+	TestNodeName        = "TestNodeName"
 	TestSourceName      = "TestSourceName"
 	TestStartTimestamp  = 1724052774
 	TestEndTimestamp    = 1824052774

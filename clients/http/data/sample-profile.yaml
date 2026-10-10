@@ -1,11 +1,11 @@
 name: "Sample-Profile"
 manufacturer: "Sample-Company"
-model: "Sample-Device"
+model: "Sample-Node"
 labels:
-  - "device-example"
-description: "Example of Device"
+  - "node-example"
+description: "Example of Node"
 
-deviceResources:
+resources:
   -
     name: "temperature"
     description: "query temperature"
@@ -17,11 +17,11 @@ deviceResources:
     properties:
       { type: "INT16", readWrite: "R"}
 
-deviceCommands:
+commands:
   -
     name: "temperature"
     get:
-      - { deviceResource: "temperature" }
+      - { resource: "temperature" }
 
 coreCommands:
   -

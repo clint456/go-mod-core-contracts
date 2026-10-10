@@ -26,7 +26,7 @@ func TestPopKey(t *testing.T) {
 }
 
 func TestMergeExtensions(t *testing.T) {
-	base := map[string]any{"deviceName": "sensor-1", "value": "42"}
+	base := map[string]any{"nodeName": "sensor-1", "value": "42"}
 
 	tests := []struct {
 		name       string
@@ -37,23 +37,23 @@ func TestMergeExtensions(t *testing.T) {
 			name:       "merges new keys into existing payload",
 			extensions: map[string]any{"BACnetProperty": "present_value", "BACnetObjectType": "analog_input"},
 			verify: func(t *testing.T, result map[string]any) {
-				assert.Equal(t, "sensor-1", result["deviceName"])
+				assert.Equal(t, "sensor-1", result["nodeName"])
 				assert.Equal(t, "present_value", result["BACnetProperty"])
 				assert.Equal(t, "analog_input", result["BACnetObjectType"])
 			},
 		},
 		{
 			name:       "extension key overwrites conflicting existing key",
-			extensions: map[string]any{"deviceName": "overridden"},
+			extensions: map[string]any{"nodeName": "overridden"},
 			verify: func(t *testing.T, result map[string]any) {
-				assert.Equal(t, "overridden", result["deviceName"])
+				assert.Equal(t, "overridden", result["nodeName"])
 			},
 		},
 		{
 			name:       "empty extensions leaves payload unchanged",
 			extensions: map[string]any{},
 			verify: func(t *testing.T, result map[string]any) {
-				assert.Equal(t, base["deviceName"], result["deviceName"])
+				assert.Equal(t, base["nodeName"], result["nodeName"])
 				assert.Equal(t, base["value"], result["value"])
 				assert.Len(t, result, len(base))
 			},

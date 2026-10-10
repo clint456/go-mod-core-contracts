@@ -26,7 +26,7 @@ import (
 type BaseReading struct {
 	Id             string         `json:"id,omitempty"`
 	Origin         int64          `json:"origin" validate:"required"`
-	DeviceName     string         `json:"deviceName" validate:"required,edgex-dto-none-empty-string"`
+	NodeName       string         `json:"nodeName" validate:"required,edgex-dto-none-empty-string"`
 	ResourceName   string         `json:"resourceName" validate:"required,edgex-dto-none-empty-string"`
 	ProfileName    string         `json:"profileName,omitempty" validate:"omitempty,edgex-dto-none-empty-string"`
 	ValueType      string         `json:"valueType" validate:"required,edgex-dto-value-type"`
@@ -66,11 +66,11 @@ type NumericReading struct {
 	NumericValue any
 }
 
-func newBaseReading(profileName string, deviceName string, resourceName string, valueType string) BaseReading {
+func newBaseReading(profileName string, nodeName string, resourceName string, valueType string) BaseReading {
 	return BaseReading{
 		Id:           uuid.NewString(),
 		Origin:       time.Now().UnixNano(),
-		DeviceName:   deviceName,
+		NodeName:     nodeName,
 		ResourceName: resourceName,
 		ProfileName:  profileName,
 		ValueType:    valueType,
@@ -80,13 +80,13 @@ func newBaseReading(profileName string, deviceName string, resourceName string, 
 }
 
 // NewSimpleReading creates and returns a new initialized BaseReading with its SimpleReading initialized
-func NewSimpleReading(profileName string, deviceName string, resourceName string, valueType string, value any) (BaseReading, error) {
+func NewSimpleReading(profileName string, nodeName string, resourceName string, valueType string, value any) (BaseReading, error) {
 	stringValue, err := convertInterfaceValue(valueType, value)
 	if err != nil {
 		return BaseReading{}, err
 	}
 
-	reading := newBaseReading(profileName, deviceName, resourceName, valueType)
+	reading := newBaseReading(profileName, nodeName, resourceName, valueType)
 	reading.SimpleReading = SimpleReading{
 		Value: stringValue,
 	}
@@ -94,8 +94,8 @@ func NewSimpleReading(profileName string, deviceName string, resourceName string
 }
 
 // NewBinaryReading creates and returns a new initialized BaseReading with its BinaryReading initialized
-func NewBinaryReading(profileName string, deviceName string, resourceName string, binaryValue []byte, mediaType string) BaseReading {
-	reading := newBaseReading(profileName, deviceName, resourceName, common.ValueTypeBinary)
+func NewBinaryReading(profileName string, nodeName string, resourceName string, binaryValue []byte, mediaType string) BaseReading {
+	reading := newBaseReading(profileName, nodeName, resourceName, common.ValueTypeBinary)
 	reading.BinaryReading = BinaryReading{
 		BinaryValue: binaryValue,
 		MediaType:   mediaType,
@@ -104,8 +104,8 @@ func NewBinaryReading(profileName string, deviceName string, resourceName string
 }
 
 // NewObjectReading creates and returns a new initialized BaseReading with its ObjectReading initialized
-func NewObjectReading(profileName string, deviceName string, resourceName string, objectValue any) BaseReading {
-	reading := newBaseReading(profileName, deviceName, resourceName, common.ValueTypeObject)
+func NewObjectReading(profileName string, nodeName string, resourceName string, objectValue any) BaseReading {
+	reading := newBaseReading(profileName, nodeName, resourceName, common.ValueTypeObject)
 	reading.ObjectReading = ObjectReading{
 		ObjectValue: objectValue,
 	}
@@ -113,8 +113,8 @@ func NewObjectReading(profileName string, deviceName string, resourceName string
 }
 
 // NewObjectReadingWithArray creates and returns a new initialized BaseReading with its ObjectReading initialized with ObjectArray valueType
-func NewObjectReadingWithArray(profileName string, deviceName string, resourceName string, objectValue any) BaseReading {
-	reading := newBaseReading(profileName, deviceName, resourceName, common.ValueTypeObjectArray)
+func NewObjectReadingWithArray(profileName string, nodeName string, resourceName string, objectValue any) BaseReading {
+	reading := newBaseReading(profileName, nodeName, resourceName, common.ValueTypeObjectArray)
 	reading.ObjectReading = ObjectReading{
 		ObjectValue: objectValue,
 	}
@@ -122,15 +122,15 @@ func NewObjectReadingWithArray(profileName string, deviceName string, resourceNa
 }
 
 // NewNullReading creates and returns a new initialized BaseReading with null
-func NewNullReading(profileName string, deviceName string, resourceName string, valueType string) BaseReading {
-	reading := newBaseReading(profileName, deviceName, resourceName, valueType)
+func NewNullReading(profileName string, nodeName string, resourceName string, valueType string) BaseReading {
+	reading := newBaseReading(profileName, nodeName, resourceName, valueType)
 	reading.isNull = true
 	return reading
 }
 
 // NewNumericReading creates and returns a new initialized BaseReading with its NumericReading initialized
-func NewNumericReading(profileName string, deviceName string, resourceName string, valueType string, value any) BaseReading {
-	reading := newBaseReading(profileName, deviceName, resourceName, valueType)
+func NewNumericReading(profileName string, nodeName string, resourceName string, valueType string, value any) BaseReading {
+	reading := newBaseReading(profileName, nodeName, resourceName, valueType)
 	reading.NumericReading = NumericReading{
 		NumericValue: value,
 	}
@@ -370,7 +370,7 @@ func ToReadingModel(r BaseReading) models.Reading {
 	br := models.BaseReading{
 		Id:           r.Id,
 		Origin:       r.Origin,
-		DeviceName:   r.DeviceName,
+		NodeName:     r.NodeName,
 		ResourceName: r.ResourceName,
 		ProfileName:  r.ProfileName,
 		ValueType:    r.ValueType,
@@ -408,7 +408,7 @@ func FromReadingModelToDTO(reading models.Reading) BaseReading {
 		baseReading = BaseReading{
 			Id:            r.Id,
 			Origin:        r.Origin,
-			DeviceName:    r.DeviceName,
+			NodeName:      r.NodeName,
 			ResourceName:  r.ResourceName,
 			ProfileName:   r.ProfileName,
 			ValueType:     r.ValueType,
@@ -420,7 +420,7 @@ func FromReadingModelToDTO(reading models.Reading) BaseReading {
 		baseReading = BaseReading{
 			Id:            r.Id,
 			Origin:        r.Origin,
-			DeviceName:    r.DeviceName,
+			NodeName:      r.NodeName,
 			ResourceName:  r.ResourceName,
 			ProfileName:   r.ProfileName,
 			ValueType:     r.ValueType,
@@ -432,7 +432,7 @@ func FromReadingModelToDTO(reading models.Reading) BaseReading {
 		baseReading = BaseReading{
 			Id:            r.Id,
 			Origin:        r.Origin,
-			DeviceName:    r.DeviceName,
+			NodeName:      r.NodeName,
 			ResourceName:  r.ResourceName,
 			ProfileName:   r.ProfileName,
 			ValueType:     r.ValueType,
@@ -444,7 +444,7 @@ func FromReadingModelToDTO(reading models.Reading) BaseReading {
 		baseReading = BaseReading{
 			Id:           r.Id,
 			Origin:       r.Origin,
-			DeviceName:   r.DeviceName,
+			NodeName:     r.NodeName,
 			ResourceName: r.ResourceName,
 			ProfileName:  r.ProfileName,
 			ValueType:    r.ValueType,
@@ -456,7 +456,7 @@ func FromReadingModelToDTO(reading models.Reading) BaseReading {
 		baseReading = BaseReading{
 			Id:             r.Id,
 			Origin:         r.Origin,
-			DeviceName:     r.DeviceName,
+			NodeName:       r.NodeName,
 			ResourceName:   r.ResourceName,
 			ProfileName:    r.ProfileName,
 			ValueType:      r.ValueType,
@@ -594,7 +594,7 @@ func (b BaseReading) marshal(marshal func(any) ([]byte, error)) ([]byte, error) 
 	type reading struct {
 		Id           string `json:"id,omitempty" cbor:"id,omitempty"`
 		Origin       int64  `json:"origin,omitempty" cbor:"origin,omitempty"`
-		DeviceName   string `json:"deviceName,omitempty" cbor:"deviceName,omitempty"`
+		NodeName     string `json:"nodeName,omitempty" cbor:"nodeName,omitempty"`
 		ResourceName string `json:"resourceName,omitempty" cbor:"resourceName,omitempty"`
 		ProfileName  string `json:"profileName,omitempty" cbor:"profileName,omitempty"`
 		ValueType    string `json:"valueType" cbor:"valueType"`
@@ -611,7 +611,7 @@ func (b BaseReading) marshal(marshal func(any) ([]byte, error)) ([]byte, error) 
 			reading: reading{
 				Id:           b.Id,
 				Origin:       b.Origin,
-				DeviceName:   b.DeviceName,
+				NodeName:     b.NodeName,
 				ResourceName: b.ResourceName,
 				ProfileName:  b.ProfileName,
 				ValueType:    b.ValueType,
@@ -626,7 +626,7 @@ func (b BaseReading) marshal(marshal func(any) ([]byte, error)) ([]byte, error) 
 	r := reading{
 		Id:           b.Id,
 		Origin:       b.Origin,
-		DeviceName:   b.DeviceName,
+		NodeName:     b.NodeName,
 		ResourceName: b.ResourceName,
 		ProfileName:  b.ProfileName,
 		ValueType:    b.ValueType,
@@ -716,7 +716,7 @@ func (b *BaseReading) populateFromMap(rawMap map[string]any) error {
 	if b.Id, err = popStringValueFromKey(rawMap, keyId); err != nil {
 		return err
 	}
-	if b.DeviceName, err = popStringValueFromKey(rawMap, keyDeviceName); err != nil {
+	if b.NodeName, err = popStringValueFromKey(rawMap, keyNodeName); err != nil {
 		return err
 	}
 	if b.ResourceName, err = popStringValueFromKey(rawMap, keyResourceName); err != nil {

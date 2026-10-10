@@ -16,17 +16,17 @@ type ProvisionWatcher struct {
 	Identifiers         map[string]string
 	BlockingIdentifiers map[string][]string
 	AdminState          AdminState
-	DiscoveredDevice    DiscoveredDevice
+	DiscoveredNode      DiscoveredNode
 }
 
 func (pw ProvisionWatcher) Clone() ProvisionWatcher {
 	cloned := ProvisionWatcher{
-		DBTimestamp:      pw.DBTimestamp,
-		Id:               pw.Id,
-		Name:             pw.Name,
-		ServiceName:      pw.ServiceName,
-		AdminState:       pw.AdminState,
-		DiscoveredDevice: pw.DiscoveredDevice.Clone(),
+		DBTimestamp:    pw.DBTimestamp,
+		Id:             pw.Id,
+		Name:           pw.Name,
+		ServiceName:    pw.ServiceName,
+		AdminState:     pw.AdminState,
+		DiscoveredNode: pw.DiscoveredNode.Clone(),
 	}
 	if len(pw.Labels) > 0 {
 		cloned.Labels = make([]string, len(pw.Labels))

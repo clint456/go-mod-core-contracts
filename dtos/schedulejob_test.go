@@ -64,23 +64,23 @@ var scheduleActionRestModel = models.RESTAction{
 	Method:  http.MethodGet,
 }
 
-var scheduleActionDeviceControl = ScheduleAction{
-	Type:        common.ActionDeviceControl,
+var scheduleActionNodeControl = ScheduleAction{
+	Type:        common.ActionNodeControl,
 	ContentType: common.ContentTypeJSON,
 	Payload:     []byte(payload),
-	DeviceControlAction: DeviceControlAction{
-		DeviceName: TestDeviceName,
+	NodeControlAction: NodeControlAction{
+		NodeName:   TestNodeName,
 		SourceName: TestSourceName,
 	},
 }
 
-var scheduleActionDeviceControlModel = models.DeviceControlAction{
+var scheduleActionNodeControlModel = models.NodeControlAction{
 	BaseScheduleAction: models.BaseScheduleAction{
-		Type:        common.ActionDeviceControl,
+		Type:        common.ActionNodeControl,
 		ContentType: common.ContentTypeJSON,
 		Payload:     []byte(payload),
 	},
-	DeviceName: TestDeviceName,
+	NodeName:   TestNodeName,
 	SourceName: TestSourceName,
 }
 
@@ -192,10 +192,10 @@ func TestScheduleJob_Validate(t *testing.T) {
 			Payload:     []byte(payload),
 		},
 	}
-	invalidDeviceControlAction := scheduleJob
-	invalidDeviceControlAction.Actions = []ScheduleAction{
+	invalidNodeControlAction := scheduleJob
+	invalidNodeControlAction.Actions = []ScheduleAction{
 		{
-			Type:        common.ActionDeviceControl,
+			Type:        common.ActionNodeControl,
 			ContentType: common.ContentTypeJSON,
 			Payload:     []byte(payload),
 		},
@@ -218,7 +218,7 @@ func TestScheduleJob_Validate(t *testing.T) {
 		{"invalid ScheduleJob, empty Actions", emptyActions, true},
 		{"invalid ScheduleJob, invalid EdgeXMessageBus Actions", invalidEdgeXMessageBusAction, true},
 		{"invalid ScheduleJob, invalid REST Actions", invalidRestAction, true},
-		{"invalid ScheduleJob, invalid DeviceControl Actions", invalidDeviceControlAction, true},
+		{"invalid ScheduleJob, invalid NodeControl Actions", invalidNodeControlAction, true},
 		{"invalid ScheduleJob, invalid AdminState", invalidAdminState, true},
 	}
 	for _, tt := range tests {
@@ -291,8 +291,8 @@ func TestToScheduleActionModel(t *testing.T) {
 	result2 := ToScheduleActionModel(scheduleActionRest)
 	assert.Equal(t, scheduleActionRestModel, result2, "ToScheduleActionModel did not result in REST ScheduleAction model")
 
-	result3 := ToScheduleActionModel(scheduleActionDeviceControl)
-	assert.Equal(t, scheduleActionDeviceControlModel, result3, "ToScheduleActionModel did not result in DeviceControl ScheduleAction model")
+	result3 := ToScheduleActionModel(scheduleActionNodeControl)
+	assert.Equal(t, scheduleActionNodeControlModel, result3, "ToScheduleActionModel did not result in NodeControl ScheduleAction model")
 }
 
 func TestFromScheduleActionModelToDTO(t *testing.T) {
@@ -302,8 +302,8 @@ func TestFromScheduleActionModelToDTO(t *testing.T) {
 	result2 := FromScheduleActionModelToDTO(scheduleActionRestModel)
 	assert.Equal(t, scheduleActionRest, result2, "FromScheduleActionModelToDTO did not result in REST ScheduleAction dto")
 
-	result3 := FromScheduleActionModelToDTO(scheduleActionDeviceControlModel)
-	assert.Equal(t, scheduleActionDeviceControl, result3, "FromScheduleActionModelToDTO did not result in DeviceControl ScheduleAction dto")
+	result3 := FromScheduleActionModelToDTO(scheduleActionNodeControlModel)
+	assert.Equal(t, scheduleActionNodeControl, result3, "FromScheduleActionModelToDTO did not result in NodeControl ScheduleAction dto")
 }
 
 func TestActiveYearlyTimeWindow_Validate(t *testing.T) {

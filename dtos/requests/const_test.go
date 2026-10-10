@@ -7,22 +7,22 @@ package requests
 
 const (
 	ExampleUUID    = "82eb2e26-0f24-48aa-ae4c-de9dac3fb9bc"
-	TestDeviceName = "TestDevice"
+	TestNodeName   = "TestNode"
 	TestOriginTime = 1587540776
 
-	TestDeviceServiceName = "TestDeviceServiceName"
-	TestBaseAddress       = "http://0.0.0.0:49991/api/v1/callback"
+	TestNodeServiceName = "TestNodeServiceName"
+	TestBaseAddress     = "http://0.0.0.0:49991/api/v1/callback"
 
-	TestDeviceProfileName = "TestDeviceProfileName"
-	TestManufacturer      = "TestManufacturer"
-	TestDescription       = "TestDescription"
-	TestModel             = "TestModel"
+	TestProfileName  = "TestProfileName"
+	TestManufacturer = "TestManufacturer"
+	TestDescription  = "TestDescription"
+	TestModel        = "TestModel"
 
 	TestSourceName = "TestSourceName"
 
-	TestDeviceResourceName = "TestDeviceResourceName"
+	TestResourceName = "TestResourceName"
 
-	TestDeviceCommandName = "TestDeviceCommand"
+	TestCommandName = "TestCommand"
 
 	TestReadingValue           = "45"
 	TestReadingFloatValue      = "3.14"

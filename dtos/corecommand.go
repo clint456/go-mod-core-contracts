@@ -13,8 +13,8 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v4/errors"
 )
 
-type DeviceCoreCommand struct {
-	DeviceName   string        `json:"deviceName" validate:"required,edgex-dto-none-empty-string"`
+type NodeCoreCommand struct {
+	NodeName     string        `json:"nodeName" validate:"required,edgex-dto-none-empty-string"`
 	ProfileName  string        `json:"profileName" validate:"required,edgex-dto-none-empty-string"`
 	CoreCommands []CoreCommand `json:"coreCommands,omitempty" validate:"dive"`
 }
@@ -33,28 +33,28 @@ type CoreCommandParameter struct {
 	ValueType    string `json:"valueType"`
 }
 
-func BuildCoreCommands(deviceName string, serviceUrl string, profile DeviceProfile) ([]CoreCommand, errors.EdgeX) {
+func BuildCoreCommands(nodeName string, serviceUrl string, profile Profile) ([]CoreCommand, errors.EdgeX) {
 	commandMap := make(map[string]CoreCommand)
-	// Build commands from device commands
-	for _, c := range profile.DeviceCommands {
+	// Build commands from node commands
+	for _, c := range profile.Commands {
 		if c.IsHidden {
 			continue
 		}
-		parameters, err := coreCommandParameters(c.ResourceOperations, profile.DeviceResources)
+		parameters, err := coreCommandParameters(c.ResourceOperations, profile.Resources)
 		if err != nil {
 			return nil, errors.NewCommonEdgeXWrapper(err)
 		}
-		commandMap[c.Name] = buildCoreCommand(deviceName, serviceUrl, c.Name, c.ReadWrite, parameters)
+		commandMap[c.Name] = buildCoreCommand(nodeName, serviceUrl, c.Name, c.ReadWrite, parameters)
 	}
-	// Build commands from device resource
-	for _, r := range profile.DeviceResources {
+	// Build commands from node resource
+	for _, r := range profile.Resources {
 		if _, ok := commandMap[r.Name]; ok || r.IsHidden {
 			continue
 		}
 		parameters := []CoreCommandParameter{
 			{ResourceName: r.Name, ValueType: r.Properties.ValueType},
 		}
-		commandMap[r.Name] = buildCoreCommand(deviceName, serviceUrl, r.Name, r.Properties.ReadWrite, parameters)
+		commandMap[r.Name] = buildCoreCommand(nodeName, serviceUrl, r.Name, r.Properties.ReadWrite, parameters)
 	}
 	// Convert command map to slice
 	var commands []CoreCommand
@@ -65,12 +65,12 @@ func BuildCoreCommands(deviceName string, serviceUrl string, profile DeviceProfi
 }
 
 // coreCommandParameters creates command parameters by mapping the resourceOperation to corresponding resourceName and valueType
-func coreCommandParameters(resourceOperations []ResourceOperation, resources []DeviceResource) ([]CoreCommandParameter, errors.EdgeX) {
+func coreCommandParameters(resourceOperations []ResourceOperation, resources []Resource) ([]CoreCommandParameter, errors.EdgeX) {
 	parameters := make([]CoreCommandParameter, len(resourceOperations))
 	for i, ro := range resourceOperations {
-		r, exists := deviceResourcesByName(resources, ro.DeviceResource)
+		r, exists := resourcesByName(resources, ro.Resource)
 		if !exists {
-			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("device command's resource %s doesn't match any deivce resource", ro.DeviceResource), nil)
+			return nil, errors.NewCommonEdgeX(errors.KindContractInvalid, fmt.Sprintf("node command's resource %s doesn't match any deivce resource", ro.Resource), nil)
 		}
 		parameters[i] = CoreCommandParameter{
 			ResourceName: r.Name,
@@ -80,15 +80,15 @@ func coreCommandParameters(resourceOperations []ResourceOperation, resources []D
 	return parameters, nil
 }
 
-func commandPath(deviceName, cmdName string) string {
-	return fmt.Sprintf("%s/%s/%s/%s", common.ApiDeviceRoute, common.Name, deviceName, cmdName)
+func commandPath(nodeName, cmdName string) string {
+	return fmt.Sprintf("%s/%s/%s/%s", common.ApiNodeRoute, common.Name, nodeName, cmdName)
 }
 
-func buildCoreCommand(deviceName, serviceUrl, cmdName, readWrite string, parameters []CoreCommandParameter) CoreCommand {
+func buildCoreCommand(nodeName, serviceUrl, cmdName, readWrite string, parameters []CoreCommandParameter) CoreCommand {
 	cmd := CoreCommand{
 		Name:       cmdName,
 		Url:        serviceUrl,
-		Path:       commandPath(deviceName, cmdName),
+		Path:       commandPath(nodeName, cmdName),
 		Parameters: parameters,
 	}
 	if strings.Contains(readWrite, common.ReadWrite_R) {
@@ -100,7 +100,7 @@ func buildCoreCommand(deviceName, serviceUrl, cmdName, readWrite string, paramet
 	return cmd
 }
 
-func deviceResourcesByName(resources []DeviceResource, name string) (res DeviceResource, exists bool) {
+func resourcesByName(resources []Resource, name string) (res Resource, exists bool) {
 	for _, resource := range resources {
 		if resource.Name == name {
 			exists = true

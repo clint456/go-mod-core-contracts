@@ -72,7 +72,7 @@ func (b *pathBuilder) SetPath(path string) *pathBuilder {
 	return b
 }
 
-// SetNameFieldPath set name path, such as device name, profile name, interval name
+// SetNameFieldPath set name path, such as node name, profile name, interval name
 func (b *pathBuilder) SetNameFieldPath(namePath string) *pathBuilder {
 	if b.enableNameFieldEscape {
 		namePath = URLEncode(namePath)

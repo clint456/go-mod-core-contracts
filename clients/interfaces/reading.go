@@ -24,19 +24,19 @@ type ReadingClient interface {
 	AllReadingsWithQueryParams(ctx context.Context, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
 	// ReadingCount returns a count of all readings currently stored in the database.
 	ReadingCount(ctx context.Context) (common.CountResponse, errors.EdgeX)
-	// ReadingCountByDeviceName returns a count of all readings currently stored in the database, sourced from the specified device.
-	ReadingCountByDeviceName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX)
-	// ReadingsByDeviceName returns a portion of the entire readings according to the device name, offset and limit parameters. Readings are sorted in descending order of created time.
+	// ReadingCountByNodeName returns a count of all readings currently stored in the database, sourced from the specified node.
+	ReadingCountByNodeName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX)
+	// ReadingsByNodeName returns a portion of the entire readings according to the node name, offset and limit parameters. Readings are sorted in descending order of created time.
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
-	ReadingsByDeviceName(ctx context.Context, name string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameWithQueryParams returns a portion of the entire readings according to the device name, specified query parameters. Readings are sorted in descending order of created time.
-	ReadingsByDeviceNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByResourceName returns a portion of the entire readings according to the device resource name, offset and limit parameters. Readings are sorted in descending order of created time.
+	ReadingsByNodeName(ctx context.Context, name string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameWithQueryParams returns a portion of the entire readings according to the node name, specified query parameters. Readings are sorted in descending order of created time.
+	ReadingsByNodeNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByResourceName returns a portion of the entire readings according to the node resource name, offset and limit parameters. Readings are sorted in descending order of created time.
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
 	ReadingsByResourceName(ctx context.Context, name string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByResourceNameWithQueryParams returns a portion of the entire readings according to the device resource name, specified query parameters. Readings are sorted in descending order of created time.
+	// ReadingsByResourceNameWithQueryParams returns a portion of the entire readings according to the node resource name, specified query parameters. Readings are sorted in descending order of created time.
 	ReadingsByResourceNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
 	// ReadingsByTimeRange returns readings between a given start and end date/time. Readings are sorted in descending order of created time.
 	// start, end: Unix timestamp, indicating the date/time range.
@@ -52,25 +52,25 @@ type ReadingClient interface {
 	ReadingsByResourceNameAndTimeRange(ctx context.Context, name string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
 	// ReadingsByResourceNameAndTimeRangeWithQueryParams returns readings by resource name and specified time range, query parameters. Readings are sorted in descending order of origin time.
 	ReadingsByResourceNameAndTimeRangeWithQueryParams(ctx context.Context, name string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceName returns readings by device name and resource name. Readings are sorted in descending order of origin time.
+	// ReadingsByNodeNameAndResourceName returns readings by node name and resource name. Readings are sorted in descending order of origin time.
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
-	ReadingsByDeviceNameAndResourceName(ctx context.Context, deviceName, resourceName string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceNameWithQueryParams returns readings by device name, resource name, and specified query parameters. Readings are sorted in descending order of origin time.
-	ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx context.Context, deviceName, resourceName string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceNameAndTimeRange returns readings by device name, resource name and specified time range. Readings are sorted in descending order of origin time.
+	ReadingsByNodeNameAndResourceName(ctx context.Context, nodeName, resourceName string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameAndResourceNameWithQueryParams returns readings by node name, resource name, and specified query parameters. Readings are sorted in descending order of origin time.
+	ReadingsByNodeNameAndResourceNameWithQueryParams(ctx context.Context, nodeName, resourceName string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameAndResourceNameAndTimeRange returns readings by node name, resource name and specified time range. Readings are sorted in descending order of origin time.
 	// start, end: Unix timestamp, indicating the date/time range
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
-	ReadingsByDeviceNameAndResourceNameAndTimeRange(ctx context.Context, deviceName, resourceName string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams returns readings by device name, resource name and specified time range, query parameters. Readings are sorted in descending order of origin time.
-	ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, deviceName, resourceName string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceNamesAndTimeRange returns readings by device name, multiple resource names and specified time range. Readings are sorted in descending order of origin time.
-	// If none of resourceNames is specified, return all Readings under specified deviceName and within specified time range
+	ReadingsByNodeNameAndResourceNameAndTimeRange(ctx context.Context, nodeName, resourceName string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams returns readings by node name, resource name and specified time range, query parameters. Readings are sorted in descending order of origin time.
+	ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, nodeName, resourceName string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameAndResourceNamesAndTimeRange returns readings by node name, multiple resource names and specified time range. Readings are sorted in descending order of origin time.
+	// If none of resourceNames is specified, return all Readings under specified nodeName and within specified time range
 	// start, end: Unix timestamp, indicating the date/time range
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
-	ReadingsByDeviceNameAndResourceNamesAndTimeRange(ctx context.Context, deviceName string, resourceNames []string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
-	// ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams returns readings by device name, multiple resource names and specified time range, query parameters. Readings are sorted in descending order of origin time.
-	ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, deviceName string, resourceNames []string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
+	ReadingsByNodeNameAndResourceNamesAndTimeRange(ctx context.Context, nodeName string, resourceNames []string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX)
+	// ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams returns readings by node name, multiple resource names and specified time range, query parameters. Readings are sorted in descending order of origin time.
+	ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, nodeName string, resourceNames []string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)
 }

@@ -13,10 +13,10 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v4/errors"
 )
 
-// ProfileScanRequest is the struct for requesting a profile for a specified device.
+// ProfileScanRequest is the struct for requesting a profile for a specified node.
 type ProfileScanRequest struct {
 	dtoCommon.BaseRequest `json:",inline"`
-	DeviceName            string `json:"deviceName" validate:"required"`
+	NodeName              string `json:"nodeName" validate:"required"`
 	ProfileName           string `json:"profileName,omitempty"`
 	Options               any    `json:"options,omitempty"`
 }
@@ -27,11 +27,11 @@ func (request ProfileScanRequest) Validate() error {
 	return err
 }
 
-// UnmarshalJSON implements the Unmarshaler interface for the AddDeviceCommandRequest type
+// UnmarshalJSON implements the Unmarshaler interface for the AddCommandRequest type
 func (psr *ProfileScanRequest) UnmarshalJSON(b []byte) error {
 	alias := struct {
 		dtoCommon.BaseRequest
-		DeviceName  string
+		NodeName    string
 		ProfileName string
 		Options     any
 	}{}

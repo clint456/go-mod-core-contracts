@@ -48,7 +48,7 @@ func NewEventClientWithUrlCallback(baseUrlFunc clients.ClientBaseUrlFunc, authIn
 func (ec *eventClient) Add(ctx context.Context, serviceName string, req requests.AddEventRequest) (
 	dtoCommon.BaseWithIdResponse, errors.EdgeX) {
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(ec.enableNameFieldEscape).
-		SetPath(common.ApiEventRoute).SetNameFieldPath(serviceName).SetNameFieldPath(req.Event.ProfileName).SetNameFieldPath(req.Event.DeviceName).SetNameFieldPath(req.Event.SourceName).BuildPath()
+		SetPath(common.ApiEventRoute).SetNameFieldPath(serviceName).SetNameFieldPath(req.Event.ProfileName).SetNameFieldPath(req.Event.NodeName).SetNameFieldPath(req.Event.SourceName).BuildPath()
 	var br dtoCommon.BaseWithIdResponse
 
 	bytes, encoding, err := req.Encode()
@@ -96,8 +96,8 @@ func (ec *eventClient) EventCount(ctx context.Context) (dtoCommon.CountResponse,
 	return res, nil
 }
 
-func (ec *eventClient) EventCountByDeviceName(ctx context.Context, name string) (dtoCommon.CountResponse, errors.EdgeX) {
-	requestPath := path.Join(common.ApiEventCountRoute, common.Device, common.Name, name)
+func (ec *eventClient) EventCountByNodeName(ctx context.Context, name string) (dtoCommon.CountResponse, errors.EdgeX) {
+	requestPath := path.Join(common.ApiEventCountRoute, common.Node, common.Name, name)
 	res := dtoCommon.CountResponse{}
 	baseUrl, err := clients.GetBaseUrl(ec.baseUrlFunc)
 	if err != nil {
@@ -110,13 +110,13 @@ func (ec *eventClient) EventCountByDeviceName(ctx context.Context, name string) 
 	return res, nil
 }
 
-func (ec *eventClient) EventsByDeviceName(ctx context.Context, name string, offset, limit int) (
+func (ec *eventClient) EventsByNodeName(ctx context.Context, name string, offset, limit int) (
 	responses.MultiEventsResponse, errors.EdgeX) {
-	return ec.EventsByDeviceNameWithQueryParams(ctx, name, offset, limit, nil)
+	return ec.EventsByNodeNameWithQueryParams(ctx, name, offset, limit, nil)
 }
 
-func (ec *eventClient) EventsByDeviceNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiEventsResponse, errors.EdgeX) {
-	requestPath := path.Join(common.ApiEventRoute, common.Device, common.Name, name)
+func (ec *eventClient) EventsByNodeNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiEventsResponse, errors.EdgeX) {
+	requestPath := path.Join(common.ApiEventRoute, common.Node, common.Name, name)
 	res := responses.MultiEventsResponse{}
 	baseUrl, err := clients.GetBaseUrl(ec.baseUrlFunc)
 	if err != nil {
@@ -129,8 +129,8 @@ func (ec *eventClient) EventsByDeviceNameWithQueryParams(ctx context.Context, na
 	return res, nil
 }
 
-func (ec *eventClient) DeleteByDeviceName(ctx context.Context, name string) (dtoCommon.BaseResponse, errors.EdgeX) {
-	requestPath := path.Join(common.ApiEventRoute, common.Device, common.Name, name)
+func (ec *eventClient) DeleteByNodeName(ctx context.Context, name string) (dtoCommon.BaseResponse, errors.EdgeX) {
+	requestPath := path.Join(common.ApiEventRoute, common.Node, common.Name, name)
 	res := dtoCommon.BaseResponse{}
 	baseUrl, err := clients.GetBaseUrl(ec.baseUrlFunc)
 	if err != nil {

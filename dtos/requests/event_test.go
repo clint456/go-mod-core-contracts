@@ -21,14 +21,14 @@ import (
 )
 
 func eventData() dtos.Event {
-	event := dtos.NewEvent(TestDeviceProfileName, TestDeviceName, TestSourceName)
+	event := dtos.NewEvent(TestProfileName, TestNodeName, TestSourceName)
 	event.Id = ExampleUUID
 	event.Origin = TestOriginTime
 	event.Tags = map[string]interface{}{
 		"GatewayId": "Houston-0001",
 	}
 	value, _ := strconv.ParseUint(TestReadingValue, 10, 8)
-	_ = event.AddSimpleReading(TestDeviceResourceName, common.ValueTypeUint8, uint8(value))
+	_ = event.AddSimpleReading(TestResourceName, common.ValueTypeUint8, uint8(value))
 	event.Readings[0].Id = ExampleUUID
 	event.Readings[0].Origin = TestOriginTime
 
@@ -50,8 +50,8 @@ func TestAddEventRequest_Validate(t *testing.T) {
 	noEventId.Event.Id = ""
 	invalidEventId := eventRequestData()
 	invalidEventId.Event.Id = "gj93j2-v92hvi3h"
-	noDeviceName := eventRequestData()
-	noDeviceName.Event.DeviceName = ""
+	noNodeName := eventRequestData()
+	noNodeName.Event.NodeName = ""
 	noProfileName := eventRequestData()
 	noProfileName.Event.ProfileName = ""
 	noSourceName := eventRequestData()
@@ -62,8 +62,8 @@ func TestAddEventRequest_Validate(t *testing.T) {
 	noReading := eventRequestData()
 	noReading.Event.Readings = nil
 
-	invalidReadingNoDevice := eventRequestData()
-	invalidReadingNoDevice.Event.Readings[0].DeviceName = ""
+	invalidReadingNoNode := eventRequestData()
+	invalidReadingNoNode.Event.Readings[0].NodeName = ""
 	invalidReadingNoResourceName := eventRequestData()
 	invalidReadingNoResourceName.Event.Readings[0].ResourceName = ""
 	invalidReadingNoProfileName := eventRequestData()
@@ -90,13 +90,13 @@ func TestAddEventRequest_Validate(t *testing.T) {
 	invalidBinaryReadingNoMedia.Event.Readings[0].BinaryValue = []byte(TestReadingBinaryValue)
 
 	nilBinaryReadingNoMedia := eventRequestData()
-	nilBinaryReadingNoMedia.Event.Readings[0] = dtos.NewNullReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, common.ValueTypeBinary)
+	nilBinaryReadingNoMedia.Event.Readings[0] = dtos.NewNullReading(TestProfileName, TestNodeName, TestResourceName, common.ValueTypeBinary)
 
 	nilSimpleReading := eventRequestData()
-	nilSimpleReading.Event.Readings[0] = dtos.NewNullReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, common.ValueTypeUint8)
+	nilSimpleReading.Event.Readings[0] = dtos.NewNullReading(TestProfileName, TestNodeName, TestResourceName, common.ValueTypeUint8)
 
 	nilObjectReading := eventRequestData()
-	nilObjectReading.Event.Readings[0] = dtos.NewNullReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, common.ValueTypeObject)
+	nilObjectReading.Event.Readings[0] = dtos.NewNullReading(TestProfileName, TestNodeName, TestResourceName, common.ValueTypeObject)
 
 	tests := []struct {
 		name        string
@@ -108,12 +108,12 @@ func TestAddEventRequest_Validate(t *testing.T) {
 		{"invalid AddEventRequest, Request Id is not an uuid", invalidReqId, true},
 		{"invalid AddEventRequest, no Event Id", noEventId, true},
 		{"invalid AddEventRequest, Event Id is not an uuid", invalidEventId, true},
-		{"invalid AddEventRequest, no DeviceName", noDeviceName, true},
+		{"invalid AddEventRequest, no NodeName", noNodeName, true},
 		{"valid AddEventRequest, no ProfileName", noProfileName, false},
 		{"valid AddEventRequest, no SourceName", noSourceName, false},
 		{"invalid AddEventRequest, no Origin", noOrigin, true},
 		{"invalid AddEventRequest, no Reading", noReading, true},
-		{"invalid AddEventRequest, no Reading DeviceName", invalidReadingNoDevice, true},
+		{"invalid AddEventRequest, no Reading NodeName", invalidReadingNoNode, true},
 		{"invalid AddEventRequest, no Resource Name", invalidReadingNoResourceName, true},
 		{"valid AddEventRequest, no Profile Name", invalidReadingNoProfileName, false},
 		{"invalid AddEventRequest, no Reading Origin", invalidReadingNoOrigin, true},
@@ -143,14 +143,14 @@ func TestAddEventRequest_Validate(t *testing.T) {
 		expectError bool
 	}
 
-	deviceNameWithUnreservedChar := eventRequestData()
-	deviceNameWithUnreservedChar.Event.DeviceName = nameWithUnreservedChars
+	nodeNameWithUnreservedChar := eventRequestData()
+	nodeNameWithUnreservedChar.Event.NodeName = nameWithUnreservedChars
 	profileNameWithUnreservedChar := eventRequestData()
 	profileNameWithUnreservedChar.Event.ProfileName = nameWithUnreservedChars
 	sourceNameWithUnreservedChar := eventRequestData()
 	sourceNameWithUnreservedChar.Event.SourceName = nameWithUnreservedChars
-	readingDeviceNameWithUnreservedChar := eventRequestData()
-	readingDeviceNameWithUnreservedChar.Event.Readings[0].DeviceName = nameWithUnreservedChars
+	readingNodeNameWithUnreservedChar := eventRequestData()
+	readingNodeNameWithUnreservedChar.Event.Readings[0].NodeName = nameWithUnreservedChars
 	readingResourceNameWithUnreservedChar := eventRequestData()
 	readingResourceNameWithUnreservedChar.Event.Readings[0].ResourceName = nameWithUnreservedChars
 	readingProfileNameWithUnreservedChar := eventRequestData()
@@ -158,34 +158,34 @@ func TestAddEventRequest_Validate(t *testing.T) {
 
 	// Following tests verify if name fields containing unreserved characters should pass edgex-dto-rfc3986-unreserved-chars check
 	testsForNameFields := []testForNameField{
-		{"Valid AddEventRequest with device name containing unreserved chars", deviceNameWithUnreservedChar, false},
+		{"Valid AddEventRequest with node name containing unreserved chars", nodeNameWithUnreservedChar, false},
 		{"Valid AddEventRequest with profile name containing unreserved chars", profileNameWithUnreservedChar, false},
 		{"Valid AddEventRequest with source name containing unreserved chars", sourceNameWithUnreservedChar, false},
-		{"Valid AddEventRequest with reading device name containing unreserved chars", readingDeviceNameWithUnreservedChar, false},
+		{"Valid AddEventRequest with reading node name containing unreserved chars", readingNodeNameWithUnreservedChar, false},
 		{"Valid AddEventRequest with reading resource name containing unreserved chars", readingResourceNameWithUnreservedChar, false},
 		{"Valid AddEventRequest with reading profile name containing unreserved chars", readingProfileNameWithUnreservedChar, false},
 	}
 
 	// Following tests verify if name fields containing reserved characters should be detected with an error
 	for _, n := range namesWithReservedChar {
-		deviceNameWithReservedChar := eventRequestData()
-		deviceNameWithReservedChar.Event.DeviceName = n
+		nodeNameWithReservedChar := eventRequestData()
+		nodeNameWithReservedChar.Event.NodeName = n
 		profileNameWithReservedChar := eventRequestData()
 		profileNameWithReservedChar.Event.ProfileName = n
 		sourceNameWithReservedChar := eventRequestData()
 		sourceNameWithReservedChar.Event.SourceName = n
-		readingDeviceNameWithReservedChar := eventRequestData()
-		readingDeviceNameWithReservedChar.Event.Readings[0].DeviceName = n
+		readingNodeNameWithReservedChar := eventRequestData()
+		readingNodeNameWithReservedChar.Event.Readings[0].NodeName = n
 		readingResourceNameWithReservedChar := eventRequestData()
 		readingResourceNameWithReservedChar.Event.Readings[0].ResourceName = n
 		readingProfileNameWithReservedChar := eventRequestData()
 		readingProfileNameWithReservedChar.Event.Readings[0].ProfileName = n
 
 		testsForNameFields = append(testsForNameFields,
-			testForNameField{"Valid AddEventRequest with device name containing reserved char", deviceNameWithReservedChar, false},
+			testForNameField{"Valid AddEventRequest with node name containing reserved char", nodeNameWithReservedChar, false},
 			testForNameField{"Valid AddEventRequest with profile name containing reserved char", profileNameWithReservedChar, false},
 			testForNameField{"Valid AddEventRequest with source name containing reserved char", sourceNameWithReservedChar, false},
-			testForNameField{"Valid AddEventRequest with reading device name containing reserved char", readingDeviceNameWithReservedChar, false},
+			testForNameField{"Valid AddEventRequest with reading node name containing reserved char", readingNodeNameWithReservedChar, false},
 			testForNameField{"Valid AddEventRequest with reading resource name containing reserved char", readingResourceNameWithReservedChar, false},
 			testForNameField{"Valid AddEventRequest with reading profile name containing reserved char", readingProfileNameWithReservedChar, false},
 		)
@@ -296,9 +296,9 @@ func Test_AddEventReqToEventModels(t *testing.T) {
 	s := models.SimpleReading{
 		BaseReading: models.BaseReading{
 			Id:           ExampleUUID,
-			DeviceName:   TestDeviceName,
-			ResourceName: TestDeviceResourceName,
-			ProfileName:  TestDeviceProfileName,
+			NodeName:     TestNodeName,
+			ResourceName: TestResourceName,
+			ProfileName:  TestProfileName,
 			Origin:       TestOriginTime,
 			ValueType:    common.ValueTypeUint8,
 			Tags:         make(map[string]any),
@@ -307,8 +307,8 @@ func Test_AddEventReqToEventModels(t *testing.T) {
 	}
 	expectedEventModel := models.Event{
 		Id:          ExampleUUID,
-		DeviceName:  TestDeviceName,
-		ProfileName: TestDeviceProfileName,
+		NodeName:    TestNodeName,
+		ProfileName: TestProfileName,
 		SourceName:  TestSourceName,
 		Origin:      TestOriginTime,
 		Readings:    []models.Reading{s},
@@ -332,8 +332,8 @@ func Test_AddEventReqToEventModels(t *testing.T) {
 }
 
 func TestNewAddEventRequest(t *testing.T) {
-	expectedProfileName := TestDeviceProfileName
-	expectedDeviceName := TestDeviceName
+	expectedProfileName := TestProfileName
+	expectedNodeName := TestNodeName
 	expectedSourceName := TestSourceName
 	expectedApiVersion := common.ApiVersion
 
@@ -344,7 +344,7 @@ func TestNewAddEventRequest(t *testing.T) {
 	assert.Equal(t, expectedApiVersion, actual.Event.ApiVersion)
 	assert.NotEmpty(t, actual.Event.Id)
 	assert.Equal(t, expectedProfileName, actual.Event.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.Event.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.Event.NodeName)
 	assert.Equal(t, expectedSourceName, actual.Event.SourceName)
 	assert.NotZero(t, len(actual.Event.Readings))
 	assert.NotZero(t, actual.Event.Origin)

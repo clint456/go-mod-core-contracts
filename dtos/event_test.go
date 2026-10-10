@@ -24,8 +24,8 @@ import (
 
 var valid = models.Event{
 	Id:          TestUUID,
-	DeviceName:  TestDeviceName,
-	ProfileName: TestDeviceProfileName,
+	NodeName:    TestNodeName,
+	ProfileName: TestProfileName,
 	SourceName:  TestSourceName,
 	Origin:      TestTimestamp,
 	Tags: map[string]interface{}{
@@ -46,8 +46,8 @@ var valid = models.Event{
 var expectedDTO = Event{
 	Versionable: dtoCommon.Versionable{ApiVersion: common.ApiVersion},
 	Id:          TestUUID,
-	DeviceName:  TestDeviceName,
-	ProfileName: TestDeviceProfileName,
+	NodeName:    TestNodeName,
+	ProfileName: TestProfileName,
 	SourceName:  TestSourceName,
 	Origin:      TestTimestamp,
 	Tags: map[string]interface{}{
@@ -81,15 +81,15 @@ func TestFromEventModelToDTO(t *testing.T) {
 }
 
 func TestEvent_ToXML(t *testing.T) {
-	reading := newBaseReading(TestDeviceProfileName, TestDeviceName, TestSourceName, TestValueType)
+	reading := newBaseReading(TestProfileName, TestNodeName, TestSourceName, TestValueType)
 	reading.Tags = map[string]any{"1": TestTag1, "2": TestTag2}
 	reading.Origin = TestTimestamp
 	reading.Id = TestUUID
 	var expectedDTO = Event{
 		Versionable: dtoCommon.Versionable{ApiVersion: common.ApiVersion},
 		Id:          TestUUID,
-		DeviceName:  TestDeviceName,
-		ProfileName: TestDeviceProfileName,
+		NodeName:    TestNodeName,
+		ProfileName: TestProfileName,
 		SourceName:  TestSourceName,
 		Origin:      TestTimestamp,
 		Tags: map[string]interface{}{
@@ -103,8 +103,8 @@ func TestEvent_ToXML(t *testing.T) {
 	}
 	// Since the order in map is random we have to verify the individual items exists without depending on order
 	contains := []string{
-		"<Event><ApiVersion>v3</ApiVersion><Id>7a1707f0-166f-4c4b-bc9d-1d54c74e0137</Id><DeviceName>TestDevice</DeviceName><ProfileName>TestDeviceProfileName</ProfileName><SourceName>TestSourceName</SourceName><Origin>1594963842</Origin>",
-		"<Readings><Id>7a1707f0-166f-4c4b-bc9d-1d54c74e0137</Id><Origin>1594963842</Origin><DeviceName>TestDevice</DeviceName><ResourceName>TestSourceName</ResourceName><ProfileName>TestDeviceProfileName</ProfileName>",
+		"<Event><ApiVersion>v3</ApiVersion><Id>7a1707f0-166f-4c4b-bc9d-1d54c74e0137</Id><NodeName>TestNode</NodeName><ProfileName>TestProfileName</ProfileName><SourceName>TestSourceName</SourceName><Origin>1594963842</Origin>",
+		"<Readings><Id>7a1707f0-166f-4c4b-bc9d-1d54c74e0137</Id><Origin>1594963842</Origin><NodeName>TestNode</NodeName><ResourceName>TestSourceName</ResourceName><ProfileName>TestProfileName</ProfileName>",
 		"<ValueType>Int8</ValueType><Units></Units><Tags>",
 		"<1>TestTag1</1>",
 		"<2>TestTag2</2>",
@@ -124,24 +124,24 @@ func TestEvent_ToXML(t *testing.T) {
 
 func TestNewEvent(t *testing.T) {
 	expectedApiVersion := common.ApiVersion
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
 	expectedSourceName := TestSourceName
 
-	actual := NewEvent(expectedProfileName, expectedDeviceName, expectedSourceName)
+	actual := NewEvent(expectedProfileName, expectedNodeName, expectedSourceName)
 
 	assert.Equal(t, expectedApiVersion, actual.ApiVersion)
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedSourceName, actual.SourceName)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Zero(t, len(actual.Readings))
 	assert.NotZero(t, actual.Origin)
 }
 
 func TestEvent_AddSimpleReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
 	expectedSourceName := TestSourceName
 	expectedReadingDetails := []struct {
 		inputValue   interface{}
@@ -155,7 +155,7 @@ func TestEvent_AddSimpleReading(t *testing.T) {
 	}
 	expectedReadingsCount := len(expectedReadingDetails)
 
-	target := NewEvent(expectedProfileName, expectedDeviceName, expectedSourceName)
+	target := NewEvent(expectedProfileName, expectedNodeName, expectedSourceName)
 	for _, expected := range expectedReadingDetails {
 		err := target.AddSimpleReading(expected.resourceName, expected.valueType, expected.inputValue)
 		require.NoError(t, err)
@@ -166,7 +166,7 @@ func TestEvent_AddSimpleReading(t *testing.T) {
 	for index, actual := range target.Readings {
 		assert.NotEmpty(t, actual.Id)
 		assert.Equal(t, expectedProfileName, actual.ProfileName)
-		assert.Equal(t, expectedDeviceName, actual.DeviceName)
+		assert.Equal(t, expectedNodeName, actual.NodeName)
 		assert.Equal(t, expectedReadingDetails[index].resourceName, actual.ResourceName)
 		assert.Equal(t, expectedReadingDetails[index].valueType, actual.ValueType)
 		assert.Equal(t, expectedReadingDetails[index].value, actual.Value)
@@ -175,23 +175,23 @@ func TestEvent_AddSimpleReading(t *testing.T) {
 }
 
 func TestEvent_AddBinaryReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
 	expectedSourceName := TestSourceName
-	expectedResourceName := TestDeviceResourceName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeBinary
 	expectedValue := []byte("Hello World")
 	expectedMediaType := "application/text"
 	expectedReadingsCount := 1
 
-	target := NewEvent(expectedProfileName, expectedDeviceName, expectedSourceName)
+	target := NewEvent(expectedProfileName, expectedNodeName, expectedSourceName)
 	target.AddBinaryReading(expectedResourceName, expectedValue, expectedMediaType)
 
 	require.Equal(t, expectedReadingsCount, len(target.Readings))
 	actual := target.Readings[0]
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.BinaryValue)
@@ -199,10 +199,10 @@ func TestEvent_AddBinaryReading(t *testing.T) {
 }
 
 func TestEvent_AddObjectReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
 	expectedSourceName := TestSourceName
-	expectedResourceName := TestDeviceResourceName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObject
 	expectedValue := map[string]interface{}{
 		"Attr1": "yyz",
@@ -211,14 +211,14 @@ func TestEvent_AddObjectReading(t *testing.T) {
 	}
 	expectedReadingsCount := 1
 
-	target := NewEvent(expectedProfileName, expectedDeviceName, expectedSourceName)
+	target := NewEvent(expectedProfileName, expectedNodeName, expectedSourceName)
 	target.AddObjectReading(expectedResourceName, expectedValue)
 
 	require.Equal(t, expectedReadingsCount, len(target.Readings))
 	actual := target.Readings[0]
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.ObjectValue)
@@ -226,7 +226,7 @@ func TestEvent_AddObjectReading(t *testing.T) {
 }
 
 func TestEvent_MarshalNullReading(t *testing.T) {
-	testEvent := NewEvent(TestDeviceProfileName, TestDeviceName, TestSourceName)
+	testEvent := NewEvent(TestProfileName, TestNodeName, TestSourceName)
 	testEvent.AddNullReading(common.ValueTypeInt8, common.ValueTypeInt8)
 	testEvent.AddNullReading(common.ValueTypeInt16, common.ValueTypeInt16)
 	testEvent.AddNullReading(common.ValueTypeInt32, common.ValueTypeInt32)
@@ -272,13 +272,13 @@ func TestEvent_MarshalNullReading(t *testing.T) {
 			err = tt.unmarshal(encoded, &result)
 			assert.NoError(t, err)
 
-			assert.Equal(t, testEvent.DeviceName, result.DeviceName)
+			assert.Equal(t, testEvent.NodeName, result.NodeName)
 			assert.Equal(t, testEvent.ProfileName, result.ProfileName)
 			assert.Equal(t, testEvent.SourceName, result.SourceName)
 			assert.Equal(t, len(testEvent.Readings), len(result.Readings))
 
 			for i, r := range result.Readings {
-				assert.Equal(t, testEvent.Readings[i].DeviceName, r.DeviceName)
+				assert.Equal(t, testEvent.Readings[i].NodeName, r.NodeName)
 				assert.Equal(t, testEvent.Readings[i].ProfileName, r.ProfileName)
 				assert.Equal(t, testEvent.Readings[i].ResourceName, r.ResourceName)
 				assert.Equal(t, testEvent.Readings[i].ValueType, r.ValueType)
@@ -292,7 +292,7 @@ func TestEvent_MarshalNullReading(t *testing.T) {
 }
 
 func TestEvent_MarshalOptimizedEventPayload(t *testing.T) {
-	testEvent := NewEvent(TestDeviceProfileName, TestDeviceName, TestSourceName)
+	testEvent := NewEvent(TestProfileName, TestNodeName, TestSourceName)
 	testEvent.Id = TestUUID
 	testEvent.Origin = TestTimestamp
 	err := testEvent.AddSimpleReading(TestReadingName, common.ValueTypeUint8, uint8(math.MaxUint8))
@@ -309,8 +309,8 @@ func TestEvent_MarshalOptimizedEventPayload(t *testing.T) {
 	assert.JSONEq(t,
 		fmt.Sprintf(
 			`{"apiVersion":"v3", "id":"%s",
-					"deviceName":"TestDevice","profileName":"TestDeviceProfileName","sourceName":"TestSourceName","origin":%d,
-					"readings":[{"resourceName":"TestDeviceResource","valueType":"Uint8","value":"255"}]}`, TestUUID, TestTimestamp),
+					"nodeName":"TestNode","profileName":"TestProfileName","sourceName":"TestSourceName","origin":%d,
+					"readings":[{"resourceName":"TestResource","valueType":"Uint8","value":"255"}]}`, TestUUID, TestTimestamp),
 		string(data))
 
 	// Unmarshal recover the reading fields
@@ -323,7 +323,7 @@ func TestEvent_MarshalOptimizedEventPayload(t *testing.T) {
 }
 
 func TestEvent_UnmarshalExtensions(t *testing.T) {
-	baseJSON := `{"apiVersion":"v3","deviceName":"TestDevice","profileName":"TestDeviceProfileName",` +
+	baseJSON := `{"apiVersion":"v3","nodeName":"TestNode","profileName":"TestProfileName",` +
 		`"sourceName":"TestSourceName","origin":1594963842,"readings":[], "description":"d"}`
 
 	t.Run("JSON", func(t *testing.T) {

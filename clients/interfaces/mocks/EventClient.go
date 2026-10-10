@@ -141,12 +141,12 @@ func (_m *EventClient) DeleteByAge(ctx context.Context, age int) (common.BaseRes
 	return r0, r1
 }
 
-// DeleteByDeviceName provides a mock function with given fields: ctx, name
-func (_m *EventClient) DeleteByDeviceName(ctx context.Context, name string) (common.BaseResponse, errors.EdgeX) {
+// DeleteByNodeName provides a mock function with given fields: ctx, name
+func (_m *EventClient) DeleteByNodeName(ctx context.Context, name string) (common.BaseResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name)
 
 	if len(ret) == 0 {
-		panic("no return value specified for DeleteByDeviceName")
+		panic("no return value specified for DeleteByNodeName")
 	}
 
 	var r0 common.BaseResponse
@@ -231,12 +231,12 @@ func (_m *EventClient) EventCount(ctx context.Context) (common.CountResponse, er
 	return r0, r1
 }
 
-// EventCountByDeviceName provides a mock function with given fields: ctx, name
-func (_m *EventClient) EventCountByDeviceName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX) {
+// EventCountByNodeName provides a mock function with given fields: ctx, name
+func (_m *EventClient) EventCountByNodeName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name)
 
 	if len(ret) == 0 {
-		panic("no return value specified for EventCountByDeviceName")
+		panic("no return value specified for EventCountByNodeName")
 	}
 
 	var r0 common.CountResponse
@@ -261,12 +261,12 @@ func (_m *EventClient) EventCountByDeviceName(ctx context.Context, name string) 
 	return r0, r1
 }
 
-// EventsByDeviceName provides a mock function with given fields: ctx, name, offset, limit
-func (_m *EventClient) EventsByDeviceName(ctx context.Context, name string, offset int, limit int) (responses.MultiEventsResponse, errors.EdgeX) {
+// EventsByNodeName provides a mock function with given fields: ctx, name, offset, limit
+func (_m *EventClient) EventsByNodeName(ctx context.Context, name string, offset int, limit int) (responses.MultiEventsResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for EventsByDeviceName")
+		panic("no return value specified for EventsByNodeName")
 	}
 
 	var r0 responses.MultiEventsResponse
@@ -291,12 +291,12 @@ func (_m *EventClient) EventsByDeviceName(ctx context.Context, name string, offs
 	return r0, r1
 }
 
-// EventsByDeviceNameWithQueryParams provides a mock function with given fields: ctx, name, offset, limit, queryParams
-func (_m *EventClient) EventsByDeviceNameWithQueryParams(ctx context.Context, name string, offset int, limit int, queryParams map[string]string) (responses.MultiEventsResponse, errors.EdgeX) {
+// EventsByNodeNameWithQueryParams provides a mock function with given fields: ctx, name, offset, limit, queryParams
+func (_m *EventClient) EventsByNodeNameWithQueryParams(ctx context.Context, name string, offset int, limit int, queryParams map[string]string) (responses.MultiEventsResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name, offset, limit, queryParams)
 
 	if len(ret) == 0 {
-		panic("no return value specified for EventsByDeviceNameWithQueryParams")
+		panic("no return value specified for EventsByNodeNameWithQueryParams")
 	}
 
 	var r0 responses.MultiEventsResponse

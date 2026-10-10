@@ -20,32 +20,32 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func TestQueryDeviceCoreCommands(t *testing.T) {
-	ts := newTestServer(http.MethodGet, common.ApiAllDeviceRoute, responses.MultiDeviceCoreCommandsResponse{})
+func TestQueryNodeCoreCommands(t *testing.T) {
+	ts := newTestServer(http.MethodGet, common.ApiAllNodeRoute, responses.MultiNodeCoreCommandsResponse{})
 	defer ts.Close()
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.AllDeviceCoreCommands(context.Background(), 0, 10)
+	res, err := client.AllNodeCoreCommands(context.Background(), 0, 10)
 	require.NoError(t, err)
-	require.IsType(t, responses.MultiDeviceCoreCommandsResponse{}, res)
+	require.IsType(t, responses.MultiNodeCoreCommandsResponse{}, res)
 }
 
-func TestQueryDeviceCoreCommandsByDeviceName(t *testing.T) {
-	deviceName := "Simple-Device01"
+func TestQueryNodeCoreCommandsByNodeName(t *testing.T) {
+	nodeName := "Simple-Node01"
 	path := common.NewPathBuilder().EnableNameFieldEscape(false).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).BuildPath()
-	ts := newTestServer(http.MethodGet, path, responses.DeviceCoreCommandResponse{})
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).BuildPath()
+	ts := newTestServer(http.MethodGet, path, responses.NodeCoreCommandResponse{})
 	defer ts.Close()
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.DeviceCoreCommandsByDeviceName(context.Background(), deviceName)
+	res, err := client.NodeCoreCommandsByNodeName(context.Background(), nodeName)
 	require.NoError(t, err)
-	require.IsType(t, responses.DeviceCoreCommandResponse{}, res)
+	require.IsType(t, responses.NodeCoreCommandResponse{}, res)
 }
 
 func TestIssueGetCommandByName(t *testing.T) {
-	deviceName := "Simple-Device01"
+	nodeName := "Simple-Node01"
 	cmdName := "SwitchButton"
 	path := common.NewPathBuilder().EnableNameFieldEscape(false).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(cmdName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(cmdName).BuildPath()
 	ts := newTestServer(http.MethodGet, path, &responses.EventResponse{})
 	defer ts.Close()
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
@@ -53,13 +53,13 @@ func TestIssueGetCommandByName(t *testing.T) {
 	require.NoError(t, err)
 	notReturnEvent, err := strconv.ParseBool(common.ValueFalse)
 	require.NoError(t, err)
-	res, err := client.IssueGetCommandByName(context.Background(), deviceName, cmdName, pushEvent, notReturnEvent)
+	res, err := client.IssueGetCommandByName(context.Background(), nodeName, cmdName, pushEvent, notReturnEvent)
 	require.NoError(t, err)
 	require.IsType(t, &responses.EventResponse{}, res)
 }
 
 func TestIssueGetCommandByNameWithQueryParams(t *testing.T) {
-	deviceName := "Simple-Device01"
+	nodeName := "Simple-Node01"
 	cmdName := "SwitchButton"
 	testQueryParams := map[string]string{"foo": "bar", "key": "value"}
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -77,29 +77,29 @@ func TestIssueGetCommandByNameWithQueryParams(t *testing.T) {
 	defer ts.Close()
 
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.IssueGetCommandByNameWithQueryParams(context.Background(), deviceName, cmdName, testQueryParams)
+	res, err := client.IssueGetCommandByNameWithQueryParams(context.Background(), nodeName, cmdName, testQueryParams)
 	require.NoError(t, err)
 	require.IsType(t, &responses.EventResponse{}, res)
 }
 
 func TestIssueIssueSetCommandByName(t *testing.T) {
-	deviceName := "Simple-Device01"
+	nodeName := "Simple-Node01"
 	cmdName := "SwitchButton"
 	settings := map[string]any{
 		"SwitchButton": "true",
 	}
 	path := common.NewPathBuilder().EnableNameFieldEscape(false).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(cmdName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(cmdName).BuildPath()
 	ts := newTestServer(http.MethodPut, path, dtoCommon.BaseResponse{})
 	defer ts.Close()
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.IssueSetCommandByName(context.Background(), deviceName, cmdName, settings)
+	res, err := client.IssueSetCommandByName(context.Background(), nodeName, cmdName, settings)
 	require.NoError(t, err)
 	require.IsType(t, dtoCommon.BaseResponse{}, res)
 }
 
 func TestIssueIssueSetCommandByNameWithObject(t *testing.T) {
-	deviceName := "Simple-Device01"
+	nodeName := "Simple-Node01"
 	cmdName := "SwitchButton"
 	settings := map[string]any{
 		"SwitchButton": map[string]any{
@@ -108,11 +108,11 @@ func TestIssueIssueSetCommandByNameWithObject(t *testing.T) {
 		},
 	}
 	path := common.NewPathBuilder().EnableNameFieldEscape(false).
-		SetPath(common.ApiDeviceRoute).SetPath(common.Name).SetNameFieldPath(deviceName).SetNameFieldPath(cmdName).BuildPath()
+		SetPath(common.ApiNodeRoute).SetPath(common.Name).SetNameFieldPath(nodeName).SetNameFieldPath(cmdName).BuildPath()
 	ts := newTestServer(http.MethodPut, path, dtoCommon.BaseResponse{})
 	defer ts.Close()
 	client := NewCommandClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.IssueSetCommandByName(context.Background(), deviceName, cmdName, settings)
+	res, err := client.IssueSetCommandByName(context.Background(), nodeName, cmdName, settings)
 	require.NoError(t, err)
 	require.IsType(t, dtoCommon.BaseResponse{}, res)
 }

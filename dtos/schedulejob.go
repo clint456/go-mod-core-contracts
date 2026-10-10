@@ -160,13 +160,13 @@ type CronScheduleDef struct {
 }
 
 type ScheduleAction struct {
-	Type        string `json:"type" validate:"oneof='EDGEXMESSAGEBUS' 'REST' 'DEVICECONTROL'"`
+	Type        string `json:"type" validate:"oneof='EDGEXMESSAGEBUS' 'REST' 'NODECONTROL'"`
 	ContentType string `json:"contentType,omitempty"`
 	Payload     []byte `json:"payload,omitempty"`
 
 	EdgeXMessageBusAction `json:",inline" validate:"-"`
 	RESTAction            `json:",inline" validate:"-"`
-	DeviceControlAction   `json:",inline" validate:"-"`
+	NodeControlAction     `json:",inline" validate:"-"`
 }
 
 func (s *ScheduleAction) UnmarshalJSON(b []byte) error {
@@ -226,10 +226,10 @@ func (s *ScheduleAction) Validate() error {
 		if err != nil {
 			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid RESTAction.", err)
 		}
-	case common.ActionDeviceControl:
-		err = common.Validate(s.DeviceControlAction)
+	case common.ActionNodeControl:
+		err = common.Validate(s.NodeControlAction)
 		if err != nil {
-			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid DeviceControlAction.", err)
+			return errors.NewCommonEdgeX(errors.KindContractInvalid, "invalid NodeControlAction.", err)
 		}
 	}
 
@@ -247,8 +247,8 @@ type RESTAction struct {
 	InjectEdgeXAuth bool   `json:"injectEdgeXAuth,omitempty"`
 }
 
-type DeviceControlAction struct {
-	DeviceName string `json:"deviceName,omitempty" validate:"required"`
+type NodeControlAction struct {
+	NodeName   string `json:"nodeName,omitempty" validate:"required"`
 	SourceName string `json:"sourceName,omitempty" validate:"required"`
 }
 
@@ -394,14 +394,14 @@ func ToScheduleActionModel(dto ScheduleAction) models.ScheduleAction {
 			Address:         dto.Address,
 			InjectEdgeXAuth: dto.InjectEdgeXAuth,
 		}
-	case common.ActionDeviceControl:
-		model = models.DeviceControlAction{
+	case common.ActionNodeControl:
+		model = models.NodeControlAction{
 			BaseScheduleAction: models.BaseScheduleAction{
-				Type:        common.ActionDeviceControl,
+				Type:        common.ActionNodeControl,
 				ContentType: dto.ContentType,
 				Payload:     dto.Payload,
 			},
-			DeviceName: dto.DeviceName,
+			NodeName:   dto.NodeName,
 			SourceName: dto.SourceName,
 		}
 	}
@@ -436,15 +436,15 @@ func FromScheduleActionModelToDTO(model models.ScheduleAction) ScheduleAction {
 				InjectEdgeXAuth: restModel.InjectEdgeXAuth,
 			},
 		}
-	case common.ActionDeviceControl:
-		deviceControlModel := model.(models.DeviceControlAction)
+	case common.ActionNodeControl:
+		nodeControlModel := model.(models.NodeControlAction)
 		dto = ScheduleAction{
-			Type:        common.ActionDeviceControl,
-			ContentType: deviceControlModel.ContentType,
-			Payload:     deviceControlModel.Payload,
-			DeviceControlAction: DeviceControlAction{
-				DeviceName: deviceControlModel.DeviceName,
-				SourceName: deviceControlModel.SourceName,
+			Type:        common.ActionNodeControl,
+			ContentType: nodeControlModel.ContentType,
+			Payload:     nodeControlModel.Payload,
+			NodeControlAction: NodeControlAction{
+				NodeName:   nodeControlModel.NodeName,
+				SourceName: nodeControlModel.SourceName,
 			},
 		}
 	}

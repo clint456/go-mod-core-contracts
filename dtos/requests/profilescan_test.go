@@ -18,10 +18,10 @@ func TestProfileScanRequest_Validate(t *testing.T) {
 			RequestId:   ExampleUUID,
 			Versionable: dtoCommon.NewVersionable(),
 		},
-		DeviceName: TestDeviceName,
+		NodeName: TestNodeName,
 	}
-	emptyDeviceName := valid
-	emptyDeviceName.DeviceName = ""
+	emptyNodeName := valid
+	emptyNodeName.NodeName = ""
 
 	tests := []struct {
 		name        string
@@ -29,7 +29,7 @@ func TestProfileScanRequest_Validate(t *testing.T) {
 		expectedErr bool
 	}{
 		{"valid ProfileScanRequest", valid, false},
-		{"invalid ProfileScanRequest, empty device name", emptyDeviceName, true},
+		{"invalid ProfileScanRequest, empty node name", emptyNodeName, true},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {

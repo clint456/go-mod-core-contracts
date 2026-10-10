@@ -19,23 +19,23 @@ type CommandClient struct {
 	mock.Mock
 }
 
-// AllDeviceCoreCommands provides a mock function with given fields: ctx, offset, limit
-func (_m *CommandClient) AllDeviceCoreCommands(ctx context.Context, offset int, limit int) (responses.MultiDeviceCoreCommandsResponse, errors.EdgeX) {
+// AllNodeCoreCommands provides a mock function with given fields: ctx, offset, limit
+func (_m *CommandClient) AllNodeCoreCommands(ctx context.Context, offset int, limit int) (responses.MultiNodeCoreCommandsResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for AllDeviceCoreCommands")
+		panic("no return value specified for AllNodeCoreCommands")
 	}
 
-	var r0 responses.MultiDeviceCoreCommandsResponse
+	var r0 responses.MultiNodeCoreCommandsResponse
 	var r1 errors.EdgeX
-	if rf, ok := ret.Get(0).(func(context.Context, int, int) (responses.MultiDeviceCoreCommandsResponse, errors.EdgeX)); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, int, int) (responses.MultiNodeCoreCommandsResponse, errors.EdgeX)); ok {
 		return rf(ctx, offset, limit)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, int, int) responses.MultiDeviceCoreCommandsResponse); ok {
+	if rf, ok := ret.Get(0).(func(context.Context, int, int) responses.MultiNodeCoreCommandsResponse); ok {
 		r0 = rf(ctx, offset, limit)
 	} else {
-		r0 = ret.Get(0).(responses.MultiDeviceCoreCommandsResponse)
+		r0 = ret.Get(0).(responses.MultiNodeCoreCommandsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, int, int) errors.EdgeX); ok {
@@ -49,27 +49,27 @@ func (_m *CommandClient) AllDeviceCoreCommands(ctx context.Context, offset int, 
 	return r0, r1
 }
 
-// DeviceCoreCommandsByDeviceName provides a mock function with given fields: ctx, deviceName
-func (_m *CommandClient) DeviceCoreCommandsByDeviceName(ctx context.Context, deviceName string) (responses.DeviceCoreCommandResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName)
+// NodeCoreCommandsByNodeName provides a mock function with given fields: ctx, nodeName
+func (_m *CommandClient) NodeCoreCommandsByNodeName(ctx context.Context, nodeName string) (responses.NodeCoreCommandResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName)
 
 	if len(ret) == 0 {
-		panic("no return value specified for DeviceCoreCommandsByDeviceName")
+		panic("no return value specified for NodeCoreCommandsByNodeName")
 	}
 
-	var r0 responses.DeviceCoreCommandResponse
+	var r0 responses.NodeCoreCommandResponse
 	var r1 errors.EdgeX
-	if rf, ok := ret.Get(0).(func(context.Context, string) (responses.DeviceCoreCommandResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName)
+	if rf, ok := ret.Get(0).(func(context.Context, string) (responses.NodeCoreCommandResponse, errors.EdgeX)); ok {
+		return rf(ctx, nodeName)
 	}
-	if rf, ok := ret.Get(0).(func(context.Context, string) responses.DeviceCoreCommandResponse); ok {
-		r0 = rf(ctx, deviceName)
+	if rf, ok := ret.Get(0).(func(context.Context, string) responses.NodeCoreCommandResponse); ok {
+		r0 = rf(ctx, nodeName)
 	} else {
-		r0 = ret.Get(0).(responses.DeviceCoreCommandResponse)
+		r0 = ret.Get(0).(responses.NodeCoreCommandResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName)
+		r1 = rf(ctx, nodeName)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -79,9 +79,9 @@ func (_m *CommandClient) DeviceCoreCommandsByDeviceName(ctx context.Context, dev
 	return r0, r1
 }
 
-// IssueGetCommandByName provides a mock function with given fields: ctx, deviceName, commandName, dsPushEvent, dsReturnEvent
-func (_m *CommandClient) IssueGetCommandByName(ctx context.Context, deviceName string, commandName string, dsPushEvent bool, dsReturnEvent bool) (*responses.EventResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, commandName, dsPushEvent, dsReturnEvent)
+// IssueGetCommandByName provides a mock function with given fields: ctx, nodeName, commandName, dsPushEvent, dsReturnEvent
+func (_m *CommandClient) IssueGetCommandByName(ctx context.Context, nodeName string, commandName string, dsPushEvent bool, dsReturnEvent bool) (*responses.EventResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, commandName, dsPushEvent, dsReturnEvent)
 
 	if len(ret) == 0 {
 		panic("no return value specified for IssueGetCommandByName")
@@ -90,10 +90,10 @@ func (_m *CommandClient) IssueGetCommandByName(ctx context.Context, deviceName s
 	var r0 *responses.EventResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, bool, bool) (*responses.EventResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, commandName, dsPushEvent, dsReturnEvent)
+		return rf(ctx, nodeName, commandName, dsPushEvent, dsReturnEvent)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, bool, bool) *responses.EventResponse); ok {
-		r0 = rf(ctx, deviceName, commandName, dsPushEvent, dsReturnEvent)
+		r0 = rf(ctx, nodeName, commandName, dsPushEvent, dsReturnEvent)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*responses.EventResponse)
@@ -101,7 +101,7 @@ func (_m *CommandClient) IssueGetCommandByName(ctx context.Context, deviceName s
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, bool, bool) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, commandName, dsPushEvent, dsReturnEvent)
+		r1 = rf(ctx, nodeName, commandName, dsPushEvent, dsReturnEvent)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -111,9 +111,9 @@ func (_m *CommandClient) IssueGetCommandByName(ctx context.Context, deviceName s
 	return r0, r1
 }
 
-// IssueGetCommandByNameWithQueryParams provides a mock function with given fields: ctx, deviceName, commandName, queryParams
-func (_m *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Context, deviceName string, commandName string, queryParams map[string]string) (*responses.EventResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, commandName, queryParams)
+// IssueGetCommandByNameWithQueryParams provides a mock function with given fields: ctx, nodeName, commandName, queryParams
+func (_m *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Context, nodeName string, commandName string, queryParams map[string]string) (*responses.EventResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, commandName, queryParams)
 
 	if len(ret) == 0 {
 		panic("no return value specified for IssueGetCommandByNameWithQueryParams")
@@ -122,10 +122,10 @@ func (_m *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Contex
 	var r0 *responses.EventResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, map[string]string) (*responses.EventResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, commandName, queryParams)
+		return rf(ctx, nodeName, commandName, queryParams)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, map[string]string) *responses.EventResponse); ok {
-		r0 = rf(ctx, deviceName, commandName, queryParams)
+		r0 = rf(ctx, nodeName, commandName, queryParams)
 	} else {
 		if ret.Get(0) != nil {
 			r0 = ret.Get(0).(*responses.EventResponse)
@@ -133,7 +133,7 @@ func (_m *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Contex
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, map[string]string) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, commandName, queryParams)
+		r1 = rf(ctx, nodeName, commandName, queryParams)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -143,9 +143,9 @@ func (_m *CommandClient) IssueGetCommandByNameWithQueryParams(ctx context.Contex
 	return r0, r1
 }
 
-// IssueSetCommandByName provides a mock function with given fields: ctx, deviceName, commandName, settings
-func (_m *CommandClient) IssueSetCommandByName(ctx context.Context, deviceName string, commandName string, settings map[string]interface{}) (common.BaseResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, commandName, settings)
+// IssueSetCommandByName provides a mock function with given fields: ctx, nodeName, commandName, settings
+func (_m *CommandClient) IssueSetCommandByName(ctx context.Context, nodeName string, commandName string, settings map[string]interface{}) (common.BaseResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, commandName, settings)
 
 	if len(ret) == 0 {
 		panic("no return value specified for IssueSetCommandByName")
@@ -154,16 +154,16 @@ func (_m *CommandClient) IssueSetCommandByName(ctx context.Context, deviceName s
 	var r0 common.BaseResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, map[string]interface{}) (common.BaseResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, commandName, settings)
+		return rf(ctx, nodeName, commandName, settings)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, map[string]interface{}) common.BaseResponse); ok {
-		r0 = rf(ctx, deviceName, commandName, settings)
+		r0 = rf(ctx, nodeName, commandName, settings)
 	} else {
 		r0 = ret.Get(0).(common.BaseResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, map[string]interface{}) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, commandName, settings)
+		r1 = rf(ctx, nodeName, commandName, settings)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)

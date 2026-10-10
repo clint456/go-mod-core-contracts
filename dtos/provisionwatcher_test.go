@@ -23,8 +23,8 @@ func TestFromProvisionWatcherModelToUpdateDTO(t *testing.T) {
 	assert.Nil(t, model.Identifiers, dto.Identifiers)
 	assert.Nil(t, model.BlockingIdentifiers, dto.BlockingIdentifiers)
 	assert.EqualValues(t, model.AdminState, *dto.AdminState)
-	assert.Equal(t, model.DiscoveredDevice.ProfileName, *dto.DiscoveredDevice.ProfileName)
-	assert.EqualValues(t, model.DiscoveredDevice.AdminState, *dto.DiscoveredDevice.AdminState)
-	assert.Zero(t, model.DiscoveredDevice.AutoEvents)
-	assert.Equal(t, model.DiscoveredDevice.Properties, dto.DiscoveredDevice.Properties)
+	assert.Equal(t, model.DiscoveredNode.ProfileName, *dto.DiscoveredNode.ProfileName)
+	assert.EqualValues(t, model.DiscoveredNode.AdminState, *dto.DiscoveredNode.AdminState)
+	assert.Zero(t, model.DiscoveredNode.AutoEvents)
+	assert.Equal(t, model.DiscoveredNode.Properties, dto.DiscoveredNode.Properties)
 }

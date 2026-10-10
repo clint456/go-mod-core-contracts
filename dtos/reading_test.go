@@ -21,9 +21,9 @@ import (
 
 var testSimpleReading = BaseReading{
 	Id:           TestUUID,
-	DeviceName:   TestDeviceName,
+	NodeName:     TestNodeName,
 	ResourceName: TestReadingName,
-	ProfileName:  TestDeviceProfileName,
+	ProfileName:  TestProfileName,
 	Origin:       TestTimestamp,
 	ValueType:    TestValueType,
 	Units:        TestUnit,
@@ -38,9 +38,9 @@ func Test_ToReadingModel(t *testing.T) {
 	expectedSimpleReading := models.SimpleReading{
 		BaseReading: models.BaseReading{
 			Id:           TestUUID,
-			DeviceName:   TestDeviceName,
+			NodeName:     TestNodeName,
 			ResourceName: TestReadingName,
-			ProfileName:  TestDeviceProfileName,
+			ProfileName:  TestProfileName,
 			Origin:       TestTimestamp,
 			ValueType:    TestValueType,
 			Units:        TestUnit,
@@ -67,9 +67,9 @@ func TestFromReadingModelToDTO(t *testing.T) {
 		BaseReading: models.BaseReading{
 			Id:           TestUUID,
 			Origin:       TestTimestamp,
-			DeviceName:   TestDeviceName,
+			NodeName:     TestNodeName,
 			ResourceName: TestReadingName,
-			ProfileName:  TestDeviceProfileName,
+			ProfileName:  TestProfileName,
 			ValueType:    TestValueType,
 			Units:        TestUnit,
 			Tags:         testTags,
@@ -79,9 +79,9 @@ func TestFromReadingModelToDTO(t *testing.T) {
 	expectedDTO := BaseReading{
 		Id:           TestUUID,
 		Origin:       TestTimestamp,
-		DeviceName:   TestDeviceName,
+		NodeName:     TestNodeName,
 		ResourceName: TestReadingName,
-		ProfileName:  TestDeviceProfileName,
+		ProfileName:  TestProfileName,
 		ValueType:    TestValueType,
 		Units:        TestUnit,
 		Tags:         testTags,
@@ -105,9 +105,9 @@ func TestFromReadingModelToDTO(t *testing.T) {
 }
 
 func TestNewSimpleReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 
 	tests := []struct {
 		name              string
@@ -147,11 +147,11 @@ func TestNewSimpleReading(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			actual, err := NewSimpleReading(expectedProfileName, expectedDeviceName, expectedResourceName, tt.expectedValueType, tt.value)
+			actual, err := NewSimpleReading(expectedProfileName, expectedNodeName, expectedResourceName, tt.expectedValueType, tt.value)
 			require.NoError(t, err)
 			assert.NotEmpty(t, actual.Id)
 			assert.Equal(t, expectedProfileName, actual.ProfileName)
-			assert.Equal(t, expectedDeviceName, actual.DeviceName)
+			assert.Equal(t, expectedNodeName, actual.NodeName)
 			assert.Equal(t, expectedResourceName, actual.ResourceName)
 			assert.Equal(t, tt.expectedValueType, actual.ValueType)
 			assert.Equal(t, tt.expectedValue, actual.Value)
@@ -194,16 +194,16 @@ func TestNewSimpleReadingError(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			_, err := NewSimpleReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.expectedValueType, tt.value)
+			_, err := NewSimpleReading(TestProfileName, TestNodeName, TestResourceName, tt.expectedValueType, tt.value)
 			require.Error(t, err)
 		})
 	}
 }
 
 func TestNullReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 
 	tests := []struct {
 		name              string
@@ -240,10 +240,10 @@ func TestNullReading(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			actual := NewNullReading(expectedProfileName, expectedDeviceName, expectedResourceName, tt.expectedValueType)
+			actual := NewNullReading(expectedProfileName, expectedNodeName, expectedResourceName, tt.expectedValueType)
 			assert.NotEmpty(t, actual.Id)
 			assert.Equal(t, expectedProfileName, actual.ProfileName)
-			assert.Equal(t, expectedDeviceName, actual.DeviceName)
+			assert.Equal(t, expectedNodeName, actual.NodeName)
 			assert.Equal(t, expectedResourceName, actual.ResourceName)
 			assert.Equal(t, tt.expectedValueType, actual.ValueType)
 			assert.True(t, actual.isNull)
@@ -256,19 +256,19 @@ func TestNullReading(t *testing.T) {
 }
 
 func TestNewBinaryReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 
 	expectedValueType := common.ValueTypeBinary
 	expectedBinaryValue := []byte("hello word, any one out there?")
 	expectedMediaType := "application/text"
 
-	actual := NewBinaryReading(expectedProfileName, expectedDeviceName, expectedResourceName, expectedBinaryValue, expectedMediaType)
+	actual := NewBinaryReading(expectedProfileName, expectedNodeName, expectedResourceName, expectedBinaryValue, expectedMediaType)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedBinaryValue, actual.BinaryValue)
@@ -276,19 +276,19 @@ func TestNewBinaryReading(t *testing.T) {
 }
 
 func TestNewBinaryReadingWithNilValue(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 
 	expectedValueType := common.ValueTypeBinary
 	var expectedBinaryValue []byte = nil
 	expectedMediaType := "application/text"
 
-	actual := NewBinaryReading(expectedProfileName, expectedDeviceName, expectedResourceName, expectedBinaryValue, expectedMediaType)
+	actual := NewBinaryReading(expectedProfileName, expectedNodeName, expectedResourceName, expectedBinaryValue, expectedMediaType)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedBinaryValue, actual.BinaryValue)
@@ -296,9 +296,9 @@ func TestNewBinaryReadingWithNilValue(t *testing.T) {
 }
 
 func TestNewObjectReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObject
 	expectedValue := map[string]any{
 		"Attr1": "yyz",
@@ -306,11 +306,11 @@ func TestNewObjectReading(t *testing.T) {
 		"Attr3": []any{255, 1, 0},
 	}
 
-	actual := NewObjectReading(expectedProfileName, expectedDeviceName, expectedResourceName, expectedValue)
+	actual := NewObjectReading(expectedProfileName, expectedNodeName, expectedResourceName, expectedValue)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.ObjectValue)
@@ -318,9 +318,9 @@ func TestNewObjectReading(t *testing.T) {
 }
 
 func TestNewObjectReadingWithArray(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObjectArray
 	expectedValue := []map[string]any{{
 		"Attr1": "yyz",
@@ -332,11 +332,11 @@ func TestNewObjectReadingWithArray(t *testing.T) {
 		"Attr3": []any{3255, -1, 0},
 	}}
 
-	actual := NewObjectReadingWithArray(expectedProfileName, expectedDeviceName, expectedResourceName, expectedValue)
+	actual := NewObjectReadingWithArray(expectedProfileName, expectedNodeName, expectedResourceName, expectedValue)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.ObjectValue)
@@ -344,17 +344,17 @@ func TestNewObjectReadingWithArray(t *testing.T) {
 }
 
 func TestNewObjectReadingWithNilValue(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObject
 	var expectedValue any = nil
 
-	actual := NewObjectReading(expectedProfileName, expectedDeviceName, expectedResourceName, expectedValue)
+	actual := NewObjectReading(expectedProfileName, expectedNodeName, expectedResourceName, expectedValue)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.ObjectValue)
@@ -463,9 +463,9 @@ func TestValidateValueError(t *testing.T) {
 }
 
 func TestUnmarshalObjectValue(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObject
 	type testObjectType struct {
 		StringField       string
@@ -494,11 +494,11 @@ func TestUnmarshalObjectValue(t *testing.T) {
 		Float64ArrayField: []float64{111.222, 333.444, 555.666},
 	}
 
-	actual := NewObjectReading(expectedProfileName, expectedDeviceName, expectedResourceName, testObject)
+	actual := NewObjectReading(expectedProfileName, expectedNodeName, expectedResourceName, testObject)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 
@@ -509,9 +509,9 @@ func TestUnmarshalObjectValue(t *testing.T) {
 }
 
 func TestUnmarshalObjectValueWithArray(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObjectArray
 	type testObjectType struct {
 		StringField       string
@@ -555,11 +555,11 @@ func TestUnmarshalObjectValueWithArray(t *testing.T) {
 		},
 	}
 
-	actual := NewObjectReadingWithArray(expectedProfileName, expectedDeviceName, expectedResourceName, testObjectArray)
+	actual := NewObjectReadingWithArray(expectedProfileName, expectedNodeName, expectedResourceName, testObjectArray)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 
@@ -570,9 +570,9 @@ func TestUnmarshalObjectValueWithArray(t *testing.T) {
 }
 
 func TestUnmarshalObjectValueError(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 
 	tests := []struct {
 		name      string
@@ -604,7 +604,7 @@ func TestUnmarshalObjectValueError(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			reading, err := NewSimpleReading(expectedProfileName, expectedDeviceName, expectedResourceName, tt.valueType, tt.value)
+			reading, err := NewSimpleReading(expectedProfileName, expectedNodeName, expectedResourceName, tt.valueType, tt.value)
 			require.NoError(t, err)
 			target := ""
 			err = reading.UnmarshalObjectValue(&target)
@@ -614,9 +614,9 @@ func TestUnmarshalObjectValueError(t *testing.T) {
 }
 
 func TestNewObjectArrayReading(t *testing.T) {
-	expectedDeviceName := TestDeviceName
-	expectedProfileName := TestDeviceProfileName
-	expectedResourceName := TestDeviceResourceName
+	expectedNodeName := TestNodeName
+	expectedProfileName := TestProfileName
+	expectedResourceName := TestResourceName
 	expectedValueType := common.ValueTypeObjectArray
 	expectedValue := []map[string]interface{}{
 		{
@@ -631,11 +631,11 @@ func TestNewObjectArrayReading(t *testing.T) {
 		},
 	}
 
-	actual := NewObjectReadingWithArray(expectedProfileName, expectedDeviceName, expectedResourceName, expectedValue)
+	actual := NewObjectReadingWithArray(expectedProfileName, expectedNodeName, expectedResourceName, expectedValue)
 
 	assert.NotEmpty(t, actual.Id)
 	assert.Equal(t, expectedProfileName, actual.ProfileName)
-	assert.Equal(t, expectedDeviceName, actual.DeviceName)
+	assert.Equal(t, expectedNodeName, actual.NodeName)
 	assert.Equal(t, expectedResourceName, actual.ResourceName)
 	assert.Equal(t, expectedValueType, actual.ValueType)
 	assert.Equal(t, expectedValue, actual.ObjectValue)
@@ -669,7 +669,7 @@ func TestMarshalObjectReading(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			reading := newBaseReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.valueType)
+			reading := newBaseReading(TestProfileName, TestNodeName, TestResourceName, tt.valueType)
 			if tt.value == nil {
 				reading.NullReading = NullReading{
 					isNull: true,
@@ -704,9 +704,9 @@ func TestMarshalBinaryReading(t *testing.T) {
 		t.Run(tt.name, func(t *testing.T) {
 			var reading BaseReading
 			if tt.value == nil {
-				reading = NewNullReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, common.ValueTypeBinary)
+				reading = NewNullReading(TestProfileName, TestNodeName, TestResourceName, common.ValueTypeBinary)
 			} else {
-				reading = NewBinaryReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.value, "application/json")
+				reading = NewBinaryReading(TestProfileName, TestNodeName, TestResourceName, tt.value, "application/json")
 			}
 			data, err := json.Marshal(reading)
 			require.NoError(t, err)
@@ -756,9 +756,9 @@ func TestMarshalSimpleReading(t *testing.T) {
 			var reading BaseReading
 			var err error
 			if tt.value == nil {
-				reading = NewNullReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.valueType)
+				reading = NewNullReading(TestProfileName, TestNodeName, TestResourceName, tt.valueType)
 			} else {
-				reading, err = NewSimpleReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.valueType, tt.value)
+				reading, err = NewSimpleReading(TestProfileName, TestNodeName, TestResourceName, tt.valueType, tt.value)
 				require.NoError(t, err)
 			}
 			data, err := json.Marshal(reading)
@@ -801,7 +801,7 @@ func TestMarshalNumericReading(t *testing.T) {
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			reading := NewNumericReading(TestDeviceProfileName, TestDeviceName, TestDeviceResourceName, tt.valueType, tt.value)
+			reading := NewNumericReading(TestProfileName, TestNodeName, TestResourceName, tt.valueType, tt.value)
 			data, err := json.Marshal(reading)
 			require.NoError(t, err)
 
@@ -815,8 +815,8 @@ func TestMarshalNumericReading(t *testing.T) {
 }
 
 func TestBaseReading_UnmarshalExtensions(t *testing.T) {
-	baseJSON := `{"deviceName":"TestDevice","profileName":"TestDeviceProfileName",` +
-		`"resourceName":"TestDeviceResource","valueType":"String","value":"val",` +
+	baseJSON := `{"nodeName":"TestNode","profileName":"TestProfileName",` +
+		`"resourceName":"TestResource","valueType":"String","value":"val",` +
 		`"origin":1594963842,"description":"d"}`
 
 	t.Run("JSON", func(t *testing.T) {

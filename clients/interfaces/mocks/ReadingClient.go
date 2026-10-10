@@ -109,12 +109,12 @@ func (_m *ReadingClient) ReadingCount(ctx context.Context) (common.CountResponse
 	return r0, r1
 }
 
-// ReadingCountByDeviceName provides a mock function with given fields: ctx, name
-func (_m *ReadingClient) ReadingCountByDeviceName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX) {
+// ReadingCountByNodeName provides a mock function with given fields: ctx, name
+func (_m *ReadingClient) ReadingCountByNodeName(ctx context.Context, name string) (common.CountResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingCountByDeviceName")
+		panic("no return value specified for ReadingCountByNodeName")
 	}
 
 	var r0 common.CountResponse
@@ -139,12 +139,12 @@ func (_m *ReadingClient) ReadingCountByDeviceName(ctx context.Context, name stri
 	return r0, r1
 }
 
-// ReadingsByDeviceName provides a mock function with given fields: ctx, name, offset, limit
-func (_m *ReadingClient) ReadingsByDeviceName(ctx context.Context, name string, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+// ReadingsByNodeName provides a mock function with given fields: ctx, name, offset, limit
+func (_m *ReadingClient) ReadingsByNodeName(ctx context.Context, name string, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceName")
+		panic("no return value specified for ReadingsByNodeName")
 	}
 
 	var r0 responses.MultiReadingsResponse
@@ -169,27 +169,27 @@ func (_m *ReadingClient) ReadingsByDeviceName(ctx context.Context, name string, 
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceName provides a mock function with given fields: ctx, deviceName, resourceName, offset, limit
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceName(ctx context.Context, deviceName string, resourceName string, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceName, offset, limit)
+// ReadingsByNodeNameAndResourceName provides a mock function with given fields: ctx, nodeName, resourceName, offset, limit
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceName(ctx context.Context, nodeName string, resourceName string, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceName, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceName")
+		panic("no return value specified for ReadingsByNodeNameAndResourceName")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int, int) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceName, offset, limit)
+		return rf(ctx, nodeName, resourceName, offset, limit)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int, int) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceName, offset, limit)
+		r0 = rf(ctx, nodeName, resourceName, offset, limit)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, int, int) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceName, offset, limit)
+		r1 = rf(ctx, nodeName, resourceName, offset, limit)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -199,27 +199,27 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceName(ctx context.Context
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceNameAndTimeRange provides a mock function with given fields: ctx, deviceName, resourceName, start, end, offset, limit
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameAndTimeRange(ctx context.Context, deviceName string, resourceName string, start int64, end int64, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceName, start, end, offset, limit)
+// ReadingsByNodeNameAndResourceNameAndTimeRange provides a mock function with given fields: ctx, nodeName, resourceName, start, end, offset, limit
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceNameAndTimeRange(ctx context.Context, nodeName string, resourceName string, start int64, end int64, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceName, start, end, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceNameAndTimeRange")
+		panic("no return value specified for ReadingsByNodeNameAndResourceNameAndTimeRange")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int64, int64, int, int) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceName, start, end, offset, limit)
+		return rf(ctx, nodeName, resourceName, start, end, offset, limit)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int64, int64, int, int) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceName, start, end, offset, limit)
+		r0 = rf(ctx, nodeName, resourceName, start, end, offset, limit)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, int64, int64, int, int) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceName, start, end, offset, limit)
+		r1 = rf(ctx, nodeName, resourceName, start, end, offset, limit)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -229,27 +229,27 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameAndTimeRange(ctx con
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams provides a mock function with given fields: ctx, deviceName, resourceName, start, end, offset, limit, queryParams
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, deviceName string, resourceName string, start int64, end int64, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceName, start, end, offset, limit, queryParams)
+// ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams provides a mock function with given fields: ctx, nodeName, resourceName, start, end, offset, limit, queryParams
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, nodeName string, resourceName string, start int64, end int64, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceName, start, end, offset, limit, queryParams)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams")
+		panic("no return value specified for ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int64, int64, int, int, map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceName, start, end, offset, limit, queryParams)
+		return rf(ctx, nodeName, resourceName, start, end, offset, limit, queryParams)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int64, int64, int, int, map[string]string) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceName, start, end, offset, limit, queryParams)
+		r0 = rf(ctx, nodeName, resourceName, start, end, offset, limit, queryParams)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, int64, int64, int, int, map[string]string) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceName, start, end, offset, limit, queryParams)
+		r1 = rf(ctx, nodeName, resourceName, start, end, offset, limit, queryParams)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -259,27 +259,27 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQuer
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceNameWithQueryParams provides a mock function with given fields: ctx, deviceName, resourceName, offset, limit, queryParams
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx context.Context, deviceName string, resourceName string, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceName, offset, limit, queryParams)
+// ReadingsByNodeNameAndResourceNameWithQueryParams provides a mock function with given fields: ctx, nodeName, resourceName, offset, limit, queryParams
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceNameWithQueryParams(ctx context.Context, nodeName string, resourceName string, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceName, offset, limit, queryParams)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceNameWithQueryParams")
+		panic("no return value specified for ReadingsByNodeNameAndResourceNameWithQueryParams")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int, int, map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceName, offset, limit, queryParams)
+		return rf(ctx, nodeName, resourceName, offset, limit, queryParams)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, string, int, int, map[string]string) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceName, offset, limit, queryParams)
+		r0 = rf(ctx, nodeName, resourceName, offset, limit, queryParams)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, string, int, int, map[string]string) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceName, offset, limit, queryParams)
+		r1 = rf(ctx, nodeName, resourceName, offset, limit, queryParams)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -289,27 +289,27 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx 
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceNamesAndTimeRange provides a mock function with given fields: ctx, deviceName, resourceNames, start, end, offset, limit
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRange(ctx context.Context, deviceName string, resourceNames []string, start int64, end int64, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceNames, start, end, offset, limit)
+// ReadingsByNodeNameAndResourceNamesAndTimeRange provides a mock function with given fields: ctx, nodeName, resourceNames, start, end, offset, limit
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceNamesAndTimeRange(ctx context.Context, nodeName string, resourceNames []string, start int64, end int64, offset int, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceNames, start, end, offset, limit)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceNamesAndTimeRange")
+		panic("no return value specified for ReadingsByNodeNameAndResourceNamesAndTimeRange")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, []string, int64, int64, int, int) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceNames, start, end, offset, limit)
+		return rf(ctx, nodeName, resourceNames, start, end, offset, limit)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, []string, int64, int64, int, int) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceNames, start, end, offset, limit)
+		r0 = rf(ctx, nodeName, resourceNames, start, end, offset, limit)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, []string, int64, int64, int, int) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceNames, start, end, offset, limit)
+		r1 = rf(ctx, nodeName, resourceNames, start, end, offset, limit)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -319,27 +319,27 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRange(ctx co
 	return r0, r1
 }
 
-// ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams provides a mock function with given fields: ctx, deviceName, resourceNames, start, end, offset, limit, queryParams
-func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, deviceName string, resourceNames []string, start int64, end int64, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
-	ret := _m.Called(ctx, deviceName, resourceNames, start, end, offset, limit, queryParams)
+// ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams provides a mock function with given fields: ctx, nodeName, resourceNames, start, end, offset, limit, queryParams
+func (_m *ReadingClient) ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, nodeName string, resourceNames []string, start int64, end int64, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+	ret := _m.Called(ctx, nodeName, resourceNames, start, end, offset, limit, queryParams)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams")
+		panic("no return value specified for ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams")
 	}
 
 	var r0 responses.MultiReadingsResponse
 	var r1 errors.EdgeX
 	if rf, ok := ret.Get(0).(func(context.Context, string, []string, int64, int64, int, int, map[string]string) (responses.MultiReadingsResponse, errors.EdgeX)); ok {
-		return rf(ctx, deviceName, resourceNames, start, end, offset, limit, queryParams)
+		return rf(ctx, nodeName, resourceNames, start, end, offset, limit, queryParams)
 	}
 	if rf, ok := ret.Get(0).(func(context.Context, string, []string, int64, int64, int, int, map[string]string) responses.MultiReadingsResponse); ok {
-		r0 = rf(ctx, deviceName, resourceNames, start, end, offset, limit, queryParams)
+		r0 = rf(ctx, nodeName, resourceNames, start, end, offset, limit, queryParams)
 	} else {
 		r0 = ret.Get(0).(responses.MultiReadingsResponse)
 	}
 
 	if rf, ok := ret.Get(1).(func(context.Context, string, []string, int64, int64, int, int, map[string]string) errors.EdgeX); ok {
-		r1 = rf(ctx, deviceName, resourceNames, start, end, offset, limit, queryParams)
+		r1 = rf(ctx, nodeName, resourceNames, start, end, offset, limit, queryParams)
 	} else {
 		if ret.Get(1) != nil {
 			r1 = ret.Get(1).(errors.EdgeX)
@@ -349,12 +349,12 @@ func (_m *ReadingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQue
 	return r0, r1
 }
 
-// ReadingsByDeviceNameWithQueryParams provides a mock function with given fields: ctx, name, offset, limit, queryParams
-func (_m *ReadingClient) ReadingsByDeviceNameWithQueryParams(ctx context.Context, name string, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+// ReadingsByNodeNameWithQueryParams provides a mock function with given fields: ctx, name, offset, limit, queryParams
+func (_m *ReadingClient) ReadingsByNodeNameWithQueryParams(ctx context.Context, name string, offset int, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
 	ret := _m.Called(ctx, name, offset, limit, queryParams)
 
 	if len(ret) == 0 {
-		panic("no return value specified for ReadingsByDeviceNameWithQueryParams")
+		panic("no return value specified for ReadingsByNodeNameWithQueryParams")
 	}
 
 	var r0 responses.MultiReadingsResponse

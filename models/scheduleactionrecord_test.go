@@ -29,11 +29,11 @@ func scheduleActionRecordWithRESTScheduleAction() ScheduleActionRecord {
 	}
 }
 
-func scheduleActionRecordWithDEVICECONTROLScheduleAction() ScheduleActionRecord {
+func scheduleActionRecordWithNODECONTROLScheduleAction() ScheduleActionRecord {
 	return ScheduleActionRecord{
 		Id:      ExampleUUID,
 		JobName: TestScheduleJobName,
-		Action:  deviceControlAction,
+		Action:  nodeControlAction,
 	}
 }
 
@@ -46,11 +46,11 @@ func TestScheduleActionRecord_UnmarshalJSON(t *testing.T) {
 	scheduleActionRecordWithRestScheduleActionJsonData, err := json.Marshal(scheduleActionRecordWithRestScheduleAction)
 	require.NoError(t, err)
 
-	scheduleActionRecordWithDeviceControlScheduleAction := scheduleActionRecordWithDEVICECONTROLScheduleAction()
-	scheduleActionRecordWithDeviceControlScheduleActionJsonData, err := json.Marshal(scheduleActionRecordWithDeviceControlScheduleAction)
+	scheduleActionRecordWithNodeControlScheduleAction := scheduleActionRecordWithNODECONTROLScheduleAction()
+	scheduleActionRecordWithNodeControlScheduleActionJsonData, err := json.Marshal(scheduleActionRecordWithNodeControlScheduleAction)
 	require.NoError(t, err)
 
-	scheduleActionRecordWithInvalidScheduleAction := scheduleActionRecordWithDEVICECONTROLScheduleAction()
+	scheduleActionRecordWithInvalidScheduleAction := scheduleActionRecordWithNODECONTROLScheduleAction()
 	scheduleActionRecordWithInvalidScheduleAction.Action = nil
 	scheduleActionRecordWithInvalidScheduleActionJsonData, err := json.Marshal(scheduleActionRecordWithInvalidScheduleAction)
 	require.NoError(t, err)
@@ -63,7 +63,7 @@ func TestScheduleActionRecord_UnmarshalJSON(t *testing.T) {
 	}{
 		{"valid, unmarshal ScheduleActionRecord with EDGEXMESSAGEBUS ScheduleAction", scheduleActionRecordWithEdgeXMessageBusScheduleAction, scheduleActionRecordWithEdgeXMessageBusScheduleActionJsonData, false},
 		{"valid, unmarshal ScheduleActionRecord with REST ScheduleAction", scheduleActionRecordWithRestScheduleAction, scheduleActionRecordWithRestScheduleActionJsonData, false},
-		{"valid, unmarshal ScheduleActionRecord with DEVICECONTROL ScheduleAction", scheduleActionRecordWithDeviceControlScheduleAction, scheduleActionRecordWithDeviceControlScheduleActionJsonData, false},
+		{"valid, unmarshal ScheduleActionRecord with NODECONTROL ScheduleAction", scheduleActionRecordWithNodeControlScheduleAction, scheduleActionRecordWithNodeControlScheduleActionJsonData, false},
 		{"unmarshal ScheduleActionRecord with invalid ScheduleAction", scheduleActionRecordWithInvalidScheduleAction, scheduleActionRecordWithInvalidScheduleActionJsonData, true},
 		{"unmarshal invalid ScheduleActionRecord, invalid data", ScheduleActionRecord{}, []byte(`{"Created": [1]}`), true},
 		{"unmarshal invalid ScheduleActionRecord, empty data", ScheduleActionRecord{}, []byte{}, true},

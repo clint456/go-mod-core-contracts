@@ -11,58 +11,58 @@ const (
 	ApiVersion = "v3"
 	ApiBase    = "/api/v3"
 
-	ApiEventRoute                                           = ApiBase + "/event"
-	ApiAllEventRoute                                        = ApiEventRoute + "/" + All
-	ApiEventCountRoute                                      = ApiEventRoute + "/" + Count
-	ApiEventServiceNameProfileNameDeviceNameSourceNameRoute = ApiEventRoute + "/:" + ServiceName + "/:" + ProfileName + "/:" + DeviceName + "/:" + SourceName
-	ApiEventIdRoute                                         = ApiEventRoute + "/" + Id + "/:" + Id
-	ApiEventCountByDeviceNameRoute                          = ApiEventCountRoute + "/" + Device + "/" + Name + "/:" + Name
-	ApiEventByDeviceNameRoute                               = ApiEventRoute + "/" + Device + "/" + Name + "/:" + Name
-	ApiEventByTimeRangeRoute                                = ApiEventRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
-	ApiEventByAgeRoute                                      = ApiEventRoute + "/" + Age + "/:" + Age
+	ApiEventRoute                                         = ApiBase + "/event"
+	ApiAllEventRoute                                      = ApiEventRoute + "/" + All
+	ApiEventCountRoute                                    = ApiEventRoute + "/" + Count
+	ApiEventServiceNameProfileNameNodeNameSourceNameRoute = ApiEventRoute + "/:" + ServiceName + "/:" + ProfileName + "/:" + NodeName + "/:" + SourceName
+	ApiEventIdRoute                                       = ApiEventRoute + "/" + Id + "/:" + Id
+	ApiEventCountByNodeNameRoute                          = ApiEventCountRoute + "/" + Node + "/" + Name + "/:" + Name
+	ApiEventByNodeNameRoute                               = ApiEventRoute + "/" + Node + "/" + Name + "/:" + Name
+	ApiEventByTimeRangeRoute                              = ApiEventRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
+	ApiEventByAgeRoute                                    = ApiEventRoute + "/" + Age + "/:" + Age
 
-	ApiReadingRoute                                        = ApiBase + "/reading"
-	ApiAllReadingRoute                                     = ApiReadingRoute + "/" + All
-	ApiReadingCountRoute                                   = ApiReadingRoute + "/" + Count
-	ApiReadingCountByDeviceNameRoute                       = ApiReadingCountRoute + "/" + Device + "/" + Name + "/:" + Name
-	ApiReadingByDeviceNameRoute                            = ApiReadingRoute + "/" + Device + "/" + Name + "/:" + Name
-	ApiReadingByResourceNameRoute                          = ApiReadingRoute + "/" + ResourceName + "/:" + ResourceName
-	ApiReadingByTimeRangeRoute                             = ApiReadingRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
-	ApiReadingByResourceNameAndTimeRangeRoute              = ApiReadingByResourceNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
-	ApiReadingByDeviceNameAndResourceNameRoute             = ApiReadingRoute + "/" + Device + "/" + Name + "/:" + Name + "/" + ResourceName + "/:" + ResourceName
-	ApiReadingByDeviceNameAndResourceNameAndTimeRangeRoute = ApiReadingByDeviceNameAndResourceNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
-	ApiReadingByDeviceNameAndTimeRangeRoute                = ApiReadingByDeviceNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
+	ApiReadingRoute                                      = ApiBase + "/reading"
+	ApiAllReadingRoute                                   = ApiReadingRoute + "/" + All
+	ApiReadingCountRoute                                 = ApiReadingRoute + "/" + Count
+	ApiReadingCountByNodeNameRoute                       = ApiReadingCountRoute + "/" + Node + "/" + Name + "/:" + Name
+	ApiReadingByNodeNameRoute                            = ApiReadingRoute + "/" + Node + "/" + Name + "/:" + Name
+	ApiReadingByResourceNameRoute                        = ApiReadingRoute + "/" + ResourceName + "/:" + ResourceName
+	ApiReadingByTimeRangeRoute                           = ApiReadingRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
+	ApiReadingByResourceNameAndTimeRangeRoute            = ApiReadingByResourceNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
+	ApiReadingByNodeNameAndResourceNameRoute             = ApiReadingRoute + "/" + Node + "/" + Name + "/:" + Name + "/" + ResourceName + "/:" + ResourceName
+	ApiReadingByNodeNameAndResourceNameAndTimeRangeRoute = ApiReadingByNodeNameAndResourceNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
+	ApiReadingByNodeNameAndTimeRangeRoute                = ApiReadingByNodeNameRoute + "/" + Start + "/:" + Start + "/" + End + "/:" + End
 
-	ApiDeviceProfileRoute                       = ApiBase + "/deviceprofile"
-	ApiDeviceProfileBasicInfoRoute              = ApiDeviceProfileRoute + "/basicinfo"
-	ApiAllDeviceProfileBasicInfoRoute           = ApiDeviceProfileBasicInfoRoute + "/" + All
-	ApiDeviceProfileDeviceCommandRoute          = ApiDeviceProfileRoute + "/" + DeviceCommand
-	ApiDeviceProfileResourceRoute               = ApiDeviceProfileRoute + "/" + Resource
-	ApiDeviceProfileUploadFileRoute             = ApiDeviceProfileRoute + "/uploadfile"
-	ApiAllDeviceProfileRoute                    = ApiDeviceProfileRoute + "/" + All
-	ApiDeviceProfileByNameRoute                 = ApiDeviceProfileRoute + "/" + Name + "/:" + Name
-	ApiDeviceProfileTagsByNameRoute             = ApiDeviceProfileByNameRoute + "/" + Tags
-	ApiDeviceProfileDeviceCommandByNameRoute    = ApiDeviceProfileByNameRoute + "/" + DeviceCommand + "/:" + CommandName
-	ApiDeviceProfileResourceByNameRoute         = ApiDeviceProfileByNameRoute + "/" + Resource + "/:" + ResourceName
-	ApiDeviceProfileByManufacturerRoute         = ApiDeviceProfileRoute + "/" + Manufacturer + "/:" + Manufacturer
-	ApiDeviceProfileByModelRoute                = ApiDeviceProfileRoute + "/" + Model + "/:" + Model
-	ApiDeviceProfileByManufacturerAndModelRoute = ApiDeviceProfileRoute + "/" + Manufacturer + "/:" + Manufacturer + "/" + Model + "/:" + Model
+	ApiProfileRoute                       = ApiBase + "/profile"
+	ApiProfileBasicInfoRoute              = ApiProfileRoute + "/basicinfo"
+	ApiAllProfileBasicInfoRoute           = ApiProfileBasicInfoRoute + "/" + All
+	ApiProfileCommandRoute                = ApiProfileRoute + "/" + Command
+	ApiProfileResourceRoute               = ApiProfileRoute + "/" + Resource
+	ApiProfileUploadFileRoute             = ApiProfileRoute + "/uploadfile"
+	ApiAllProfileRoute                    = ApiProfileRoute + "/" + All
+	ApiProfileByNameRoute                 = ApiProfileRoute + "/" + Name + "/:" + Name
+	ApiProfileTagsByNameRoute             = ApiProfileByNameRoute + "/" + Tags
+	ApiProfileCommandByNameRoute          = ApiProfileByNameRoute + "/" + Command + "/:" + CommandName
+	ApiProfileResourceByNameRoute         = ApiProfileByNameRoute + "/" + Resource + "/:" + ResourceName
+	ApiProfileByManufacturerRoute         = ApiProfileRoute + "/" + Manufacturer + "/:" + Manufacturer
+	ApiProfileByModelRoute                = ApiProfileRoute + "/" + Model + "/:" + Model
+	ApiProfileByManufacturerAndModelRoute = ApiProfileRoute + "/" + Manufacturer + "/:" + Manufacturer + "/" + Model + "/:" + Model
 
-	ApiDeviceResourceRoute                     = ApiBase + "/deviceresource"
-	ApiDeviceResourceByProfileAndResourceRoute = ApiDeviceResourceRoute + "/" + Profile + "/:" + ProfileName + "/" + Resource + "/:" + ResourceName
+	ApiResourceRoute                     = ApiBase + "/resource"
+	ApiResourceByProfileAndResourceRoute = ApiResourceRoute + "/" + Profile + "/:" + ProfileName + "/" + Resource + "/:" + ResourceName
 
-	ApiDeviceServiceRoute       = ApiBase + "/deviceservice"
-	ApiAllDeviceServiceRoute    = ApiDeviceServiceRoute + "/" + All
-	ApiDeviceServiceByNameRoute = ApiDeviceServiceRoute + "/" + Name + "/:" + Name
+	ApiNodeServiceRoute       = ApiBase + "/nodeservice"
+	ApiAllNodeServiceRoute    = ApiNodeServiceRoute + "/" + All
+	ApiNodeServiceByNameRoute = ApiNodeServiceRoute + "/" + Name + "/:" + Name
 
-	ApiDeviceRoute                 = ApiBase + "/device"
-	ApiAllDeviceRoute              = ApiDeviceRoute + "/" + All
-	ApiDeviceNameExistsRoute       = ApiDeviceRoute + "/" + Check + "/" + Name + "/:" + Name
-	ApiDeviceByNameRoute           = ApiDeviceRoute + "/" + Name + "/:" + Name
-	ApiDevicePropertiesByNameRoute = ApiDeviceByNameRoute + "/" + Properties
-	ApiDeviceByProfileNameRoute    = ApiDeviceRoute + "/" + Profile + "/" + Name + "/:" + Name
-	ApiDeviceByServiceNameRoute    = ApiDeviceRoute + "/" + Service + "/" + Name + "/:" + Name
-	ApiDeviceNameCommandNameRoute  = ApiDeviceByNameRoute + "/:" + Command
+	ApiNodeRoute                 = ApiBase + "/node"
+	ApiAllNodeRoute              = ApiNodeRoute + "/" + All
+	ApiNodeNameExistsRoute       = ApiNodeRoute + "/" + Check + "/" + Name + "/:" + Name
+	ApiNodeByNameRoute           = ApiNodeRoute + "/" + Name + "/:" + Name
+	ApiNodePropertiesByNameRoute = ApiNodeByNameRoute + "/" + Properties
+	ApiNodeByProfileNameRoute    = ApiNodeRoute + "/" + Profile + "/" + Name + "/:" + Name
+	ApiNodeByServiceNameRoute    = ApiNodeRoute + "/" + Service + "/" + Name + "/:" + Name
+	ApiNodeNameCommandNameRoute  = ApiNodeByNameRoute + "/:" + Command
 
 	ApiProvisionWatcherRoute              = ApiBase + "/provisionwatcher"
 	ApiAllProvisionWatcherRoute           = ApiProvisionWatcherRoute + "/" + All
@@ -73,8 +73,8 @@ const (
 	ApiDiscoveryRoute     = ApiBase + "/discovery"
 	ApiDiscoveryByIdRoute = ApiDiscoveryRoute + "/" + RequestId + "/:" + RequestId
 
-	ApiProfileScanRoute             = ApiBase + "/profilescan"
-	ApiProfileScanByDeviceNameRoute = ApiProfileScanRoute + "/" + Device + "/" + Name + "/:" + Name
+	ApiProfileScanRoute           = ApiBase + "/profilescan"
+	ApiProfileScanByNodeNameRoute = ApiProfileScanRoute + "/" + Node + "/" + Name + "/:" + Name
 
 	ApiSubscriptionRoute           = ApiBase + "/subscription"
 	ApiAllSubscriptionRoute        = ApiSubscriptionRoute + "/" + All
@@ -153,10 +153,9 @@ const (
 	Pushed        = "pushed"
 	Origin        = "origin"
 	Count         = "count"
-	Device        = "device"
-	DeviceId      = "deviceId"
-	DeviceName    = "deviceName"
-	DeviceCommand = "deviceCommand"
+	Node          = "node"
+	NodeId        = "nodeId"
+	NodeName      = "nodeName"
 	Check         = "check"
 	Profile       = "profile"
 	Resource      = "resource"
@@ -206,10 +205,10 @@ const (
 	Labels        = "labels"         //query string to specify associated user-defined labels for querying a given object. More than one label may be specified via a comma-delimited list
 	Numeric       = "numeric"        //query string to specify the reading numeric value should return in numeric instead of string format.
 	PushEvent     = "ds-pushevent"   //query string to specify if an event should be pushed to the EdgeX system
-	ReturnEvent   = "ds-returnevent" //query string to specify if an event should be returned from device service
+	ReturnEvent   = "ds-returnevent" //query string to specify if an event should be returned from node service
 	RegexCommand  = "ds-regexcmd"    //query string to specify if the command name is in regular expression format
-	DescendantsOf = "descendantsOf"  //Limit returned devices to those who have parent, grandparent, etc. of the given device name
-	MaxLevels     = "maxLevels"      //Limit returned devices to this many levels below 'descendantsOf' (0=unlimited)
+	DescendantsOf = "descendantsOf"  //Limit returned nodes to those who have parent, grandparent, etc. of the given node name
+	MaxLevels     = "maxLevels"      //Limit returned nodes to this many levels below 'descendantsOf' (0=unlimited)
 	Flatten       = "flatten"        //query string to specify if the request json payload should be flattened to update multiple keys with the same prefix
 	KeyOnly       = "keyOnly"        //query string to specify if the response will only return the keys of the specified query key prefix, without values and metadata
 	Plaintext     = "plaintext"      //query string to specify if the response will return the stored plain text value of the key(s) without any encoding
@@ -284,7 +283,7 @@ const (
 	ActionStop    = "stop"
 )
 
-// Constants for DeviceProfile
+// Constants for Profile
 const (
 	ReadWrite_R  = "R"
 	ReadWrite_W  = "W"
@@ -298,7 +297,7 @@ const (
 	DefCron               = "CRON"
 	ActionEdgeXMessageBus = "EDGEXMESSAGEBUS"
 	ActionREST            = "REST"
-	ActionDeviceControl   = "DEVICECONTROL"
+	ActionNodeControl     = "NODECONTROL"
 )
 
 // Constants for Edgex Environment variable
@@ -349,9 +348,9 @@ const (
 
 // Constants related to System Events
 const (
-	DeviceSystemEventType           = "device"
-	DeviceProfileSystemEventType    = "deviceprofile"
-	DeviceServiceSystemEventType    = "deviceservice"
+	NodeSystemEventType             = "node"
+	ProfileSystemEventType          = "profile"
+	NodeServiceSystemEventType      = "nodeservice"
 	ProvisionWatcherSystemEventType = "provisionwatcher"
 	SystemEventActionAdd            = "add"
 	SystemEventActionUpdate         = "update"
@@ -364,7 +363,7 @@ const (
 	ConfigStemAll      = "edgex/v4" // Version never changes during minor releases so v3 is more appropriate than 3.0
 	ConfigStemApp      = ConfigStemAll
 	ConfigStemCore     = ConfigStemAll
-	ConfigStemDevice   = ConfigStemAll
+	ConfigStemNode     = ConfigStemAll
 	ConfigStemSecurity = ConfigStemAll
 )
 
@@ -380,22 +379,22 @@ const (
 
 	// Common Topics
 	DefaultBaseTopic        = "edgex"         // Used if the base topic is not specified in MessageBus configuration
-	EventsPublishTopic      = "events"        // <ServiceType>/<DeviceServiceName>/<ProfileName>/<DeviceName>/<SourceName> are appended
+	EventsPublishTopic      = "events"        // <ServiceType>/<NodeServiceName>/<ProfileName>/<NodeName>/<SourceName> are appended
 	ResponseTopic           = "response"      // <ServiceName>/<RequestId> are prepended
 	MetricsPublishTopic     = "telemetry"     // <ServiceName>/<MetricName> are prepended
 	SystemEventPublishTopic = "system-events" // <SourceServiceName>/<SystemEventType>/<SystemEventAction><OwnerServiceName>/<ProfileName>
 
 	// Core Data Topics
-	CoreDataEventSubscribeTopic = "events/device/#"
+	CoreDataEventSubscribeTopic = "events/node/#"
 
 	// Core Command Topics
-	CoreCommandDeviceRequestPublishTopic  = "device/command/request" // <DeviceServiceName>/<DeviceName>/<CommandName>/<CommandMethod> are appended
+	CoreCommandNodeRequestPublishTopic    = "node/command/request" // <NodeServiceName>/<NodeName>/<CommandName>/<CommandMethod> are appended
 	CoreCommandRequestSubscribeTopic      = "core/command/request/#"
 	CoreCommandQueryRequestSubscribeTopic = "core/commandquery/request/#"
 
 	// Command Client Topics
-	CoreCommandQueryRequestPublishTopic = "core/commandquery/request" // <deviceName>|all is prepended
-	CoreCommandRequestPublishTopic      = "core/command/request"      // <DeviceName>/<CommandName>/<CommandMethod> are appended
+	CoreCommandQueryRequestPublishTopic = "core/commandquery/request" // <nodeName>|all is prepended
+	CoreCommandRequestPublishTopic      = "core/command/request"      // <NodeName>/<CommandName>/<CommandMethod> are appended
 
 	// Support Notifications
 	// No Topics Yet
@@ -403,10 +402,10 @@ const (
 	// Support Scheduler
 	// No Topics Yet
 
-	// Device Services Topics
-	CommandRequestSubscribeTopic      = "device/command/request"          // <DeviceServiceName>/# is appended <
-	MetadataSystemEventSubscribeTopic = "system-events/core-metadata/+/+" // <DeviceServiceName>/# is appended
-	ValidateDeviceSubscribeTopic      = "validate/device"                 // <DeviceServiceName> is pre-pended
+	// Node Services Topics
+	CommandRequestSubscribeTopic      = "node/command/request"            // <NodeServiceName>/# is appended <
+	MetadataSystemEventSubscribeTopic = "system-events/core-metadata/+/+" // <NodeServiceName>/# is appended
+	ValidateNodeSubscribeTopic        = "validate/node"                   // <NodeServiceName> is pre-pended
 
 	// App Service Topics
 	// App Service topics remain configurable inorder to filter by subscription.

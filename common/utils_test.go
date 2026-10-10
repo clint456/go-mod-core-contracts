@@ -39,24 +39,24 @@ func TestPathBuild(t *testing.T) {
 		name                  string
 		enableNameFieldEscape bool
 		prefixPath            string
-		deviceServiceName     string
-		deviceName            string
+		nodeServiceName       string
+		nodeName              string
 		expectedPath          string
 	}{
 		{
 			"valid with name filed escape", true,
-			"edgex/system-events/core-metadata/device/add", "^[this]+{is}?test:string*#", "this-is_test.string~哈囉世界< >/!#%^*()+,`@$&",
-			"edgex/system-events/core-metadata/device/add/%5E%5Bthis%5D%2B%7Bis%7D%3Ftest:string%2A%23/this%2Dis%5Ftest%2Estring%7E%E5%93%88%E5%9B%89%E4%B8%96%E7%95%8C%3C%20%3E%2F%21%23%25%5E%2A%28%29%2B%2C%60@$&",
+			"edgex/system-events/core-metadata/node/add", "^[this]+{is}?test:string*#", "this-is_test.string~哈囉世界< >/!#%^*()+,`@$&",
+			"edgex/system-events/core-metadata/node/add/%5E%5Bthis%5D%2B%7Bis%7D%3Ftest:string%2A%23/this%2Dis%5Ftest%2Estring%7E%E5%93%88%E5%9B%89%E4%B8%96%E7%95%8C%3C%20%3E%2F%21%23%25%5E%2A%28%29%2B%2C%60@$&",
 		},
 		{
 			"valid without name filed escape", false,
-			"edgex/system-events/core-metadata/device/add", "device-onvif-camera", "camera-device",
-			"edgex/system-events/core-metadata/device/add/device-onvif-camera/camera-device"},
+			"edgex/system-events/core-metadata/node/add", "node-onvif-camera", "camera-node",
+			"edgex/system-events/core-metadata/node/add/node-onvif-camera/camera-node"},
 	}
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			res := NewPathBuilder().EnableNameFieldEscape(tt.enableNameFieldEscape).
-				SetPath(tt.prefixPath).SetNameFieldPath(tt.deviceServiceName).SetNameFieldPath(tt.deviceName).BuildPath()
+				SetPath(tt.prefixPath).SetNameFieldPath(tt.nodeServiceName).SetNameFieldPath(tt.nodeName).BuildPath()
 			assert.Equal(t, tt.expectedPath, res)
 		})
 	}

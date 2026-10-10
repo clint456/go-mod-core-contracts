@@ -74,8 +74,8 @@ func (rc readingClient) ReadingCount(ctx context.Context) (dtoCommon.CountRespon
 	return res, nil
 }
 
-func (rc readingClient) ReadingCountByDeviceName(ctx context.Context, name string) (dtoCommon.CountResponse, errors.EdgeX) {
-	requestPath := path.Join(common.ApiReadingCountRoute, common.Device, common.Name, name)
+func (rc readingClient) ReadingCountByNodeName(ctx context.Context, name string) (dtoCommon.CountResponse, errors.EdgeX) {
+	requestPath := path.Join(common.ApiReadingCountRoute, common.Node, common.Name, name)
 	res := dtoCommon.CountResponse{}
 	baseUrl, err := clients.GetBaseUrl(rc.baseUrlFunc)
 	if err != nil {
@@ -88,12 +88,12 @@ func (rc readingClient) ReadingCountByDeviceName(ctx context.Context, name strin
 	return res, nil
 }
 
-func (rc readingClient) ReadingsByDeviceName(ctx context.Context, name string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	return rc.ReadingsByDeviceNameWithQueryParams(ctx, name, offset, limit, nil)
+func (rc readingClient) ReadingsByNodeName(ctx context.Context, name string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	return rc.ReadingsByNodeNameWithQueryParams(ctx, name, offset, limit, nil)
 }
 
-func (rc readingClient) ReadingsByDeviceNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
-	requestPath := path.Join(common.ApiReadingRoute, common.Device, common.Name, name)
+func (rc readingClient) ReadingsByNodeNameWithQueryParams(ctx context.Context, name string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+	requestPath := path.Join(common.ApiReadingRoute, common.Node, common.Name, name)
 	res := responses.MultiReadingsResponse{}
 	baseUrl, err := clients.GetBaseUrl(rc.baseUrlFunc)
 	if err != nil {
@@ -163,13 +163,13 @@ func (rc readingClient) ReadingsByResourceNameAndTimeRangeWithQueryParams(ctx co
 	return res, nil
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceName(ctx context.Context, deviceName, resourceName string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	return rc.ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx, deviceName, resourceName, offset, limit, nil)
+func (rc readingClient) ReadingsByNodeNameAndResourceName(ctx context.Context, nodeName, resourceName string, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	return rc.ReadingsByNodeNameAndResourceNameWithQueryParams(ctx, nodeName, resourceName, offset, limit, nil)
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx context.Context, deviceName, resourceName string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+func (rc readingClient) ReadingsByNodeNameAndResourceNameWithQueryParams(ctx context.Context, nodeName, resourceName string, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(rc.enableNameFieldEscape).
-		SetPath(common.ApiReadingRoute).SetPath(common.Device).SetPath(common.Name).SetNameFieldPath(deviceName).SetPath(common.ResourceName).SetNameFieldPath(resourceName).BuildPath()
+		SetPath(common.ApiReadingRoute).SetPath(common.Node).SetPath(common.Name).SetNameFieldPath(nodeName).SetPath(common.ResourceName).SetNameFieldPath(resourceName).BuildPath()
 	res := responses.MultiReadingsResponse{}
 	baseUrl, err := clients.GetBaseUrl(rc.baseUrlFunc)
 	if err != nil {
@@ -182,13 +182,13 @@ func (rc readingClient) ReadingsByDeviceNameAndResourceNameWithQueryParams(ctx c
 	return res, nil
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceNameAndTimeRange(ctx context.Context, deviceName, resourceName string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	return rc.ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams(ctx, deviceName, resourceName, start, end, offset, limit, nil)
+func (rc readingClient) ReadingsByNodeNameAndResourceNameAndTimeRange(ctx context.Context, nodeName, resourceName string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	return rc.ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams(ctx, nodeName, resourceName, start, end, offset, limit, nil)
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, deviceName, resourceName string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+func (rc readingClient) ReadingsByNodeNameAndResourceNameAndTimeRangeWithQueryParams(ctx context.Context, nodeName, resourceName string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(rc.enableNameFieldEscape).
-		SetPath(common.ApiReadingRoute).SetPath(common.Device).SetPath(common.Name).SetNameFieldPath(deviceName).SetPath(common.ResourceName).SetNameFieldPath(resourceName).
+		SetPath(common.ApiReadingRoute).SetPath(common.Node).SetPath(common.Name).SetNameFieldPath(nodeName).SetPath(common.ResourceName).SetNameFieldPath(resourceName).
 		SetPath(common.Start).SetPath(strconv.FormatInt(start, 10)).SetPath(common.End).SetPath(strconv.FormatInt(end, 10)).BuildPath()
 	res := responses.MultiReadingsResponse{}
 	baseUrl, err := clients.GetBaseUrl(rc.baseUrlFunc)
@@ -202,13 +202,13 @@ func (rc readingClient) ReadingsByDeviceNameAndResourceNameAndTimeRangeWithQuery
 	return res, nil
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRange(ctx context.Context, deviceName string, resourceNames []string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
-	return rc.ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams(ctx, deviceName, resourceNames, start, end, offset, limit, nil)
+func (rc readingClient) ReadingsByNodeNameAndResourceNamesAndTimeRange(ctx context.Context, nodeName string, resourceNames []string, start, end int64, offset, limit int) (responses.MultiReadingsResponse, errors.EdgeX) {
+	return rc.ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams(ctx, nodeName, resourceNames, start, end, offset, limit, nil)
 }
 
-func (rc readingClient) ReadingsByDeviceNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, deviceName string, resourceNames []string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
+func (rc readingClient) ReadingsByNodeNameAndResourceNamesAndTimeRangeWithQueryParams(ctx context.Context, nodeName string, resourceNames []string, start, end int64, offset, limit int, queryParams map[string]string) (responses.MultiReadingsResponse, errors.EdgeX) {
 	requestPath := common.NewPathBuilder().EnableNameFieldEscape(rc.enableNameFieldEscape).
-		SetPath(common.ApiReadingRoute).SetPath(common.Device).SetPath(common.Name).SetNameFieldPath(deviceName).
+		SetPath(common.ApiReadingRoute).SetPath(common.Node).SetPath(common.Name).SetNameFieldPath(nodeName).
 		SetPath(common.Start).SetPath(strconv.FormatInt(start, 10)).SetPath(common.End).SetPath(strconv.FormatInt(end, 10)).BuildPath()
 	var queryPayload map[string]interface{}
 	if len(resourceNames) > 0 { // gosimple S1009: len(nil slice) == 0

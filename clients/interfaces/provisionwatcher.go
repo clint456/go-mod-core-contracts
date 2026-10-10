@@ -29,12 +29,12 @@ type ProvisionWatcherClient interface {
 	ProvisionWatcherByName(ctx context.Context, name string) (responses.ProvisionWatcherResponse, errors.EdgeX)
 	// DeleteProvisionWatcherByName deletes a provision watcher by name.
 	DeleteProvisionWatcherByName(ctx context.Context, name string) (common.BaseResponse, errors.EdgeX)
-	// ProvisionWatchersByProfileName returns provision watchers associated with the specified device profile name.
+	// ProvisionWatchersByProfileName returns provision watchers associated with the specified node profile name.
 	// The result can be limited in a certain range by specifying the offset and limit parameters.
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.
 	ProvisionWatchersByProfileName(ctx context.Context, name string, offset int, limit int) (responses.MultiProvisionWatchersResponse, errors.EdgeX)
-	// ProvisionWatchersByServiceName returns provision watchers associated with the specified device service name.
+	// ProvisionWatchersByServiceName returns provision watchers associated with the specified node service name.
 	// The result can be limited in a certain range by specifying the offset and limit parameters.
 	// offset: The number of items to skip before starting to collect the result set. Default is 0.
 	// limit: The number of items to return. Specify -1 will return all remaining items after offset. The maximum will be the MaxResultCount as defined in the configuration of service. Default is 20.

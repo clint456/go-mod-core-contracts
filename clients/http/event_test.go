@@ -27,8 +27,8 @@ var queryParameters = map[string]string{common.Numeric: common.ValueTrue}
 
 func TestAddEvent(t *testing.T) {
 	serviceName := "serviceName"
-	event := dtos.Event{ProfileName: "profileName", DeviceName: "deviceName", SourceName: "sourceName"}
-	apiRoute := path.Join(common.ApiEventRoute, serviceName, event.ProfileName, event.DeviceName, event.SourceName)
+	event := dtos.Event{ProfileName: "profileName", NodeName: "nodeName", SourceName: "sourceName"}
+	apiRoute := path.Join(common.ApiEventRoute, serviceName, event.ProfileName, event.NodeName, event.SourceName)
 	ts := newTestServer(http.MethodPost, apiRoute, dtoCommon.BaseWithIdResponse{})
 	defer ts.Close()
 
@@ -63,43 +63,43 @@ func TestQueryEventCount(t *testing.T) {
 	assert.IsType(t, dtoCommon.CountResponse{}, res)
 }
 
-func TestQueryEventCountByDeviceName(t *testing.T) {
-	deviceName := "device"
-	path := path.Join(common.ApiEventCountRoute, common.Device, common.Name, deviceName)
+func TestQueryEventCountByNodeName(t *testing.T) {
+	nodeName := "node"
+	path := path.Join(common.ApiEventCountRoute, common.Node, common.Name, nodeName)
 	ts := newTestServer(http.MethodGet, path, dtoCommon.CountResponse{})
 	defer ts.Close()
 
 	client := NewEventClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.EventCountByDeviceName(context.Background(), deviceName)
+	res, err := client.EventCountByNodeName(context.Background(), nodeName)
 	require.NoError(t, err)
 	require.IsType(t, dtoCommon.CountResponse{}, res)
 }
 
-func TestQueryEventsByDeviceName(t *testing.T) {
-	deviceName := "device"
-	urlPath := path.Join(common.ApiEventRoute, common.Device, common.Name, deviceName)
+func TestQueryEventsByNodeName(t *testing.T) {
+	nodeName := "node"
+	urlPath := path.Join(common.ApiEventRoute, common.Node, common.Name, nodeName)
 	ts := newTestServer(http.MethodGet, urlPath, responses.MultiEventsResponse{})
 	defer ts.Close()
 
 	client := NewEventClient(ts.URL, NewNullAuthenticationInjector(), false)
 
-	res, err := client.EventsByDeviceName(context.Background(), deviceName, 1, 10)
+	res, err := client.EventsByNodeName(context.Background(), nodeName, 1, 10)
 	require.NoError(t, err)
 	assert.IsType(t, responses.MultiEventsResponse{}, res)
 
-	res, err = client.EventsByDeviceNameWithQueryParams(context.Background(), deviceName, 1, 10, queryParameters)
+	res, err = client.EventsByNodeNameWithQueryParams(context.Background(), nodeName, 1, 10, queryParameters)
 	require.NoError(t, err)
 	assert.IsType(t, responses.MultiEventsResponse{}, res)
 }
 
-func TestDeleteEventsByDeviceName(t *testing.T) {
-	deviceName := "device"
-	path := path.Join(common.ApiEventRoute, common.Device, common.Name, deviceName)
+func TestDeleteEventsByNodeName(t *testing.T) {
+	nodeName := "node"
+	path := path.Join(common.ApiEventRoute, common.Node, common.Name, nodeName)
 	ts := newTestServer(http.MethodDelete, path, dtoCommon.BaseResponse{})
 	defer ts.Close()
 
 	client := NewEventClient(ts.URL, NewNullAuthenticationInjector(), false)
-	res, err := client.DeleteByDeviceName(context.Background(), deviceName)
+	res, err := client.DeleteByNodeName(context.Background(), nodeName)
 	require.NoError(t, err)
 	assert.IsType(t, dtoCommon.BaseResponse{}, res)
 }

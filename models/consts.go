@@ -2,8 +2,8 @@ package models
 
 // Constants for AdminState
 const (
-	// Locked : device is locked
-	// Unlocked : device is unlocked
+	// Locked : node is locked
+	// Unlocked : node is unlocked
 	Locked   = "LOCKED"
 	Unlocked = "UNLOCKED"
 )

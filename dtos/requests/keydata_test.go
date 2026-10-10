@@ -76,10 +76,10 @@ func TestAddKeyDataRequest_UnmarshalJSON(t *testing.T) {
 		data []byte
 	}
 	tests := []struct {
-		name      string
-		addDevice AddKeyDataRequest
-		args      args
-		wantErr   bool
+		name    string
+		addNode AddKeyDataRequest
+		args    args
+		wantErr bool
 	}{
 		{"unmarshal AddKeyDataRequest with success", valid, args{resultTestBytes}, false},
 		{"unmarshal invalid AddKeyDataRequest, empty data", AddKeyDataRequest{}, args{[]byte{}}, true},
@@ -88,13 +88,13 @@ func TestAddKeyDataRequest_UnmarshalJSON(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			var expected = tt.addDevice
-			err := tt.addDevice.UnmarshalJSON(tt.args.data)
+			var expected = tt.addNode
+			err := tt.addNode.UnmarshalJSON(tt.args.data)
 			if tt.wantErr {
 				require.Error(t, err)
 			} else {
 				require.NoError(t, err)
-				require.Equal(t, expected, tt.addDevice, "Unmarshal did not result in expected AddKeyDataRequest.")
+				require.Equal(t, expected, tt.addNode, "Unmarshal did not result in expected AddKeyDataRequest.")
 			}
 		})
 	}

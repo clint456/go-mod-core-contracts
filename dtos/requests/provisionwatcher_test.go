@@ -34,13 +34,13 @@ var testAddProvisionWatcher = AddProvisionWatcherRequest{
 	},
 	ProvisionWatcher: dtos.ProvisionWatcher{
 		Name:                testProvisionWatcherName,
-		ServiceName:         TestDeviceServiceName,
+		ServiceName:         TestNodeServiceName,
 		Labels:              testProvisionWatcherLabels,
 		Identifiers:         testIdentifiers,
 		BlockingIdentifiers: testBlockingIdentifiers,
 		AdminState:          models.Locked,
-		DiscoveredDevice: dtos.DiscoveredDevice{
-			ProfileName: TestDeviceProfileName,
+		DiscoveredNode: dtos.DiscoveredNode{
+			ProfileName: TestProfileName,
 			AdminState:  models.Locked,
 			AutoEvents:  testAutoEvents,
 			Properties:  make(map[string]any),
@@ -60,19 +60,19 @@ func mockUpdateProvisionWatcher() dtos.UpdateProvisionWatcher {
 	testId := ExampleUUID
 	testName := testProvisionWatcherName
 	testAdminState := models.Locked
-	testDeviceServiceName := TestDeviceServiceName
-	testProfileName := TestDeviceProfileName
+	testNodeServiceName := TestNodeServiceName
+	testProfileName := TestProfileName
 	d := dtos.UpdateProvisionWatcher{}
 	d.Id = &testId
 	d.Name = &testName
-	d.ServiceName = &testDeviceServiceName
+	d.ServiceName = &testNodeServiceName
 	d.Labels = testProvisionWatcherLabels
 	d.Identifiers = testIdentifiers
 	d.BlockingIdentifiers = testBlockingIdentifiers
 	d.AdminState = &testAdminState
-	d.DiscoveredDevice.ProfileName = &testProfileName
-	d.DiscoveredDevice.AdminState = &testAdminState
-	d.DiscoveredDevice.AutoEvents = testAutoEvents
+	d.DiscoveredNode.ProfileName = &testProfileName
+	d.DiscoveredNode.AdminState = &testAdminState
+	d.DiscoveredNode.AutoEvents = testAutoEvents
 	return d
 }
 
@@ -101,19 +101,19 @@ func TestAddProvisionWatcherRequest_Validate(t *testing.T) {
 	noServiceName := testAddProvisionWatcher
 	noServiceName.ProvisionWatcher.ServiceName = whiteSpace
 	noProfileName := testAddProvisionWatcher
-	noProfileName.ProvisionWatcher.DiscoveredDevice.ProfileName = whiteSpace
+	noProfileName.ProvisionWatcher.DiscoveredNode.ProfileName = whiteSpace
 	emptyStringProfileName := testAddProvisionWatcher
-	emptyStringProfileName.ProvisionWatcher.DiscoveredDevice.ProfileName = ""
+	emptyStringProfileName.ProvisionWatcher.DiscoveredNode.ProfileName = ""
 	invalidFrequency := testAddProvisionWatcher
-	invalidFrequency.ProvisionWatcher.DiscoveredDevice.AutoEvents = []dtos.AutoEvent{
-		{SourceName: "TestDevice", Interval: "-1", OnChange: true},
+	invalidFrequency.ProvisionWatcher.DiscoveredNode.AutoEvents = []dtos.AutoEvent{
+		{SourceName: "TestNode", Interval: "-1", OnChange: true},
 	}
 	noAutoEventFrequency := testAddProvisionWatcher
-	noAutoEventFrequency.ProvisionWatcher.DiscoveredDevice.AutoEvents = []dtos.AutoEvent{
-		{SourceName: "TestDevice", OnChange: true},
+	noAutoEventFrequency.ProvisionWatcher.DiscoveredNode.AutoEvents = []dtos.AutoEvent{
+		{SourceName: "TestNode", OnChange: true},
 	}
 	noAutoEventResource := testAddProvisionWatcher
-	noAutoEventResource.ProvisionWatcher.DiscoveredDevice.AutoEvents = []dtos.AutoEvent{
+	noAutoEventResource.ProvisionWatcher.DiscoveredNode.AutoEvents = []dtos.AutoEvent{
 		{Interval: "300ms", OnChange: true},
 	}
 
@@ -140,7 +140,7 @@ func TestAddProvisionWatcherRequest_Validate(t *testing.T) {
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
 			err := tt.ProvisionWatcher.Validate()
-			assert.Equal(t, tt.expectError, err != nil, "Unexpected addDeviceRequest validation result.", err)
+			assert.Equal(t, tt.expectError, err != nil, "Unexpected addNodeRequest validation result.", err)
 		})
 	}
 }
@@ -148,9 +148,9 @@ func TestAddProvisionWatcherRequest_Validate(t *testing.T) {
 func TestAddProvisionWatcherRequest_UnmarshalJSON(t *testing.T) {
 	valid := testAddProvisionWatcher
 	resultTestBytes, _ := json.Marshal(testAddProvisionWatcher)
-	nilDiscoveredDeviceProperties := testAddProvisionWatcher
-	nilDiscoveredDeviceProperties.ProvisionWatcher.DiscoveredDevice.Properties = nil
-	bytesNilDiscoveredDeviceProperties, _ := json.Marshal(nilDiscoveredDeviceProperties)
+	nilDiscoveredNodeProperties := testAddProvisionWatcher
+	nilDiscoveredNodeProperties.ProvisionWatcher.DiscoveredNode.Properties = nil
+	bytesNilDiscoveredNodeProperties, _ := json.Marshal(nilDiscoveredNodeProperties)
 	type args struct {
 		data []byte
 	}
@@ -161,9 +161,9 @@ func TestAddProvisionWatcherRequest_UnmarshalJSON(t *testing.T) {
 		wantErr             bool
 	}{
 		{"unmarshal AddProvisionWatcherRequest with success", valid, args{resultTestBytes}, false},
-		{"unmarshal AddProvisionWatcherRequest with success, nil DiscoveredDevice Properties", valid, args{bytesNilDiscoveredDeviceProperties}, false},
+		{"unmarshal AddProvisionWatcherRequest with success, nil DiscoveredNode Properties", valid, args{bytesNilDiscoveredNodeProperties}, false},
 		{"unmarshal invalid AddProvisionWatcherRequest, empty data", AddProvisionWatcherRequest{}, args{[]byte{}}, true},
-		{"unmarshal invalid AddProvisionWatcherRequest, string data", AddProvisionWatcherRequest{}, args{[]byte("Invalid AddDeviceRequest")}, true},
+		{"unmarshal invalid AddProvisionWatcherRequest, string data", AddProvisionWatcherRequest{}, args{[]byte("Invalid AddNodeRequest")}, true},
 	}
 	fmt.Println(string(resultTestBytes))
 	for _, tt := range tests {
@@ -185,7 +185,7 @@ func TestAddProvisionWatcherReqToProvisionWatcherModels(t *testing.T) {
 	expectedProvisionWatcherModel := []models.ProvisionWatcher{
 		{
 			Name:        testProvisionWatcherName,
-			ServiceName: TestDeviceServiceName,
+			ServiceName: TestNodeServiceName,
 			Labels:      testProvisionWatcherLabels,
 			Identifiers: map[string]string{
 				"address": "localhost",
@@ -195,11 +195,11 @@ func TestAddProvisionWatcherReqToProvisionWatcherModels(t *testing.T) {
 				"port": {"397", "398", "399"},
 			},
 			AdminState: models.Locked,
-			DiscoveredDevice: models.DiscoveredDevice{
-				ProfileName: TestDeviceProfileName,
+			DiscoveredNode: models.DiscoveredNode{
+				ProfileName: TestProfileName,
 				AdminState:  models.Locked,
 				AutoEvents: []models.AutoEvent{
-					{SourceName: "TestDevice", Interval: "300ms", OnChange: true, OnChangeThreshold: 0.01},
+					{SourceName: "TestNode", Interval: "300ms", OnChange: true, OnChangeThreshold: 0.01},
 				},
 				Properties: make(map[string]any),
 			},
@@ -208,11 +208,11 @@ func TestAddProvisionWatcherReqToProvisionWatcherModels(t *testing.T) {
 	resultModels := AddProvisionWatcherReqToProvisionWatcherModels(requests)
 	assert.Equal(t, expectedProvisionWatcherModel, resultModels, "AddProvisionWatcherReqToProvisionWatcherModels did not result in expected ProvisionWatcher model.")
 	for i := range requests {
-		requests[i].ProvisionWatcher.DiscoveredDevice.Properties = nil
+		requests[i].ProvisionWatcher.DiscoveredNode.Properties = nil
 	}
 	resultModels = AddProvisionWatcherReqToProvisionWatcherModels(requests)
 	for _, pw := range resultModels {
-		assert.NotNil(t, pw.DiscoveredDevice.Properties)
+		assert.NotNil(t, pw.DiscoveredNode.Properties)
 	}
 }
 
@@ -257,18 +257,18 @@ func TestUpdateProvisionWatcherRequest_Validate(t *testing.T) {
 	invalidEmptyServiceName.ProvisionWatcher.ServiceName = &whiteSpace
 	// ProfileName
 	validNilProfileName := valid
-	validNilProfileName.ProvisionWatcher.DiscoveredDevice.ProfileName = nil
+	validNilProfileName.ProvisionWatcher.DiscoveredNode.ProfileName = nil
 	invalidEmptyProfileName := valid
-	invalidEmptyProfileName.ProvisionWatcher.DiscoveredDevice.ProfileName = &whiteSpace
+	invalidEmptyProfileName.ProvisionWatcher.DiscoveredNode.ProfileName = &whiteSpace
 	emptyStringProfileName := valid
 	emptyString := ""
-	emptyStringProfileName.ProvisionWatcher.DiscoveredDevice.ProfileName = &emptyString
+	emptyStringProfileName.ProvisionWatcher.DiscoveredNode.ProfileName = &emptyString
 
 	invalidState := "invalid state"
 	invalidAdminState := valid
 	invalidAdminState.ProvisionWatcher.AdminState = &invalidState
 	invalidFrequency := valid
-	invalidFrequency.ProvisionWatcher.DiscoveredDevice.AutoEvents = testAutoEventsWithInvalidFrequency
+	invalidFrequency.ProvisionWatcher.DiscoveredNode.AutoEvents = testAutoEventsWithInvalidFrequency
 
 	tests := []struct {
 		name        string
@@ -325,10 +325,10 @@ func TestUpdateProvisionWatcherRequest_UnmarshalJSON_NilField(t *testing.T) {
 	assert.Nil(t, req.ProvisionWatcher.Labels)
 	assert.Nil(t, req.ProvisionWatcher.Identifiers)
 	assert.Nil(t, req.ProvisionWatcher.BlockingIdentifiers)
-	assert.Nil(t, req.ProvisionWatcher.DiscoveredDevice.ProfileName)
+	assert.Nil(t, req.ProvisionWatcher.DiscoveredNode.ProfileName)
 	assert.Nil(t, req.ProvisionWatcher.AdminState)
-	assert.Nil(t, req.ProvisionWatcher.DiscoveredDevice.AutoEvents)
-	assert.Nil(t, req.ProvisionWatcher.DiscoveredDevice.Properties)
+	assert.Nil(t, req.ProvisionWatcher.DiscoveredNode.AutoEvents)
+	assert.Nil(t, req.ProvisionWatcher.DiscoveredNode.Properties)
 }
 
 func TestUpdateProvisionWatcherRequest_UnmarshalJSON_EmptySlice(t *testing.T) {
@@ -339,7 +339,7 @@ func TestUpdateProvisionWatcherRequest_UnmarshalJSON_EmptySlice(t *testing.T) {
 			"apiVersion" : "v3",
 			"name":"test-watcher",
 			"labels":[],
-			"discoveredDevice":{
+			"discoveredNode":{
 				"autoEvents":[]
 			}
 		}
@@ -351,7 +351,7 @@ func TestUpdateProvisionWatcherRequest_UnmarshalJSON_EmptySlice(t *testing.T) {
 	require.NoError(t, err)
 	// Empty slice is used to remove the data
 	assert.NotNil(t, req.ProvisionWatcher.Labels)
-	assert.NotNil(t, req.ProvisionWatcher.DiscoveredDevice.AutoEvents)
+	assert.NotNil(t, req.ProvisionWatcher.DiscoveredNode.AutoEvents)
 }
 
 func TestReplaceProvisionWatcherModelFieldsWithDTO(t *testing.T) {
@@ -363,11 +363,11 @@ func TestReplaceProvisionWatcherModelFieldsWithDTO(t *testing.T) {
 
 	ReplaceProvisionWatcherModelFieldsWithDTO(&provisionWatcher, patch)
 
-	assert.Equal(t, TestDeviceServiceName, provisionWatcher.ServiceName)
+	assert.Equal(t, TestNodeServiceName, provisionWatcher.ServiceName)
 	assert.Equal(t, testProvisionWatcherLabels, provisionWatcher.Labels)
 	assert.Equal(t, testIdentifiers, provisionWatcher.Identifiers)
 	assert.Equal(t, testBlockingIdentifiers, provisionWatcher.BlockingIdentifiers)
-	assert.Equal(t, TestDeviceProfileName, provisionWatcher.DiscoveredDevice.ProfileName)
+	assert.Equal(t, TestProfileName, provisionWatcher.DiscoveredNode.ProfileName)
 	assert.Equal(t, models.AdminState(models.Locked), provisionWatcher.AdminState)
-	assert.Equal(t, dtos.ToAutoEventModels(testAutoEvents), provisionWatcher.DiscoveredDevice.AutoEvents)
+	assert.Equal(t, dtos.ToAutoEventModels(testAutoEvents), provisionWatcher.DiscoveredNode.AutoEvents)
 }

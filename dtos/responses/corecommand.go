@@ -10,28 +10,28 @@ import (
 	"github.com/edgexfoundry/go-mod-core-contracts/v4/dtos/common"
 )
 
-// DeviceCoreCommandResponse defines the Response Content for GET DeviceCoreCommand DTO.
-type DeviceCoreCommandResponse struct {
+// NodeCoreCommandResponse defines the Response Content for GET NodeCoreCommand DTO.
+type NodeCoreCommandResponse struct {
 	common.BaseResponse `json:",inline"`
-	DeviceCoreCommand   dtos.DeviceCoreCommand `json:"deviceCoreCommand"`
+	NodeCoreCommand     dtos.NodeCoreCommand `json:"nodeCoreCommand"`
 }
 
-func NewDeviceCoreCommandResponse(requestId string, message string, statusCode int, deviceCoreCommand dtos.DeviceCoreCommand) DeviceCoreCommandResponse {
-	return DeviceCoreCommandResponse{
-		BaseResponse:      common.NewBaseResponse(requestId, message, statusCode),
-		DeviceCoreCommand: deviceCoreCommand,
+func NewNodeCoreCommandResponse(requestId string, message string, statusCode int, nodeCoreCommand dtos.NodeCoreCommand) NodeCoreCommandResponse {
+	return NodeCoreCommandResponse{
+		BaseResponse:    common.NewBaseResponse(requestId, message, statusCode),
+		NodeCoreCommand: nodeCoreCommand,
 	}
 }
 
-// MultiDeviceCoreCommandsResponse defines the Response Content for GET multiple DeviceCoreCommand DTOs.
-type MultiDeviceCoreCommandsResponse struct {
+// MultiNodeCoreCommandsResponse defines the Response Content for GET multiple NodeCoreCommand DTOs.
+type MultiNodeCoreCommandsResponse struct {
 	common.BaseWithTotalCountResponse `json:",inline"`
-	DeviceCoreCommands                []dtos.DeviceCoreCommand `json:"deviceCoreCommands"`
+	NodeCoreCommands                  []dtos.NodeCoreCommand `json:"nodeCoreCommands"`
 }
 
-func NewMultiDeviceCoreCommandsResponse(requestId string, message string, statusCode int, totalCount int64, commands []dtos.DeviceCoreCommand) MultiDeviceCoreCommandsResponse {
-	return MultiDeviceCoreCommandsResponse{
+func NewMultiNodeCoreCommandsResponse(requestId string, message string, statusCode int, totalCount int64, commands []dtos.NodeCoreCommand) MultiNodeCoreCommandsResponse {
+	return MultiNodeCoreCommandsResponse{
 		BaseWithTotalCountResponse: common.NewBaseWithTotalCountResponse(requestId, message, statusCode, totalCount),
-		DeviceCoreCommands:         commands,
+		NodeCoreCommands:           commands,
 	}
 }
