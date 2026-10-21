@@ -32,40 +32,40 @@ go-mod-core-contracts/
 
 ## 改动说明
 
-本分支对契约命名做了一次**全量重命名**，将原先以 `device` 为核心的命名统一调整为更中性的 `node` / `profile` / `resource` / `command` 体系。
+本分支对契约命名做了一次**全量重命名**，将原先以 `node` 为核心的命名统一调整为更中性的 `node` / `profile` / `resource` / `command` 体系。
 
 ### 命名映射
 
 | 原命名 | 新命名 | 说明 |
 |---|---|---|
-| `Device` | `Node` | 设备实体改为节点 |
-| `DeviceProfile` | `Profile` | 设备配置文件改为配置 |
-| `DeviceResource` | `Resource` | 设备资源改为资源 |
-| `DeviceCommand` | `Command` | 设备命令改为命令 |
-| `DeviceService` | `NodeService` | 设备服务改为节点服务 |
-| `DiscoveredDevice` | `DiscoveredNode` | 发现的设备改为发现的节点 |
-| `DEVICECONTROL` | `NODECONTROL` | ScheduleAction 类型枚举值 |
+| `Node` | `Node` | 设备实体改为节点 |
+| `Profile` | `Profile` | 设备配置文件改为配置 |
+| `Resource` | `Resource` | 设备资源改为资源 |
+| `Command` | `Command` | 设备命令改为命令 |
+| `NodeService` | `NodeService` | 设备服务改为节点服务 |
+| `DiscoveredNode` | `DiscoveredNode` | 发现的设备改为发现的节点 |
+| `NODECONTROL` | `NODECONTROL` | ScheduleAction 类型枚举值 |
 
 ### 改动范围
 
-- **Go 标识符**：类型、字段、函数、常量、方法名均按上表替换，且按"最长匹配优先"处理，例如 `DeviceProfileBasicInfo` → `ProfileBasicInfo`、`MultiDeviceProfilesResponse` → `MultiProfilesResponse`、`DeviceCoreCommand` → `NodeCoreCommand`。
-- **文件名**：相关源文件同步重命名，例如 `models/device.go` → `models/node.go`、`dtos/deviceprofile.go` → `dtos/profile.go`、`dtos/devicecommand.go` → `dtos/command.go`。
-- **常量与路由**：`common/constants.go` 中的路由常量（如 `ApiDeviceRoute` → `ApiNodeRoute`）与字段名常量同步更新。
-- **常量合并**：原先的 `common.DeviceCommand = "deHTTP 路由：/api/v3/device → /api/v3/node、/api/v3/deviceprofile → /api/v3/profile、/api/v3/deviceresource → /api/v3/resource、/api/v3/deviceservice → /api/v3/nodeservice。
-消息总线 topic：events/device/# → events/node/#、device/command/request → node/command/request、validate/device → validate/node 等。
-系统事件：系统事件类型 "device" → "node"、"deviceprofile" → "profile"、"deviceservice" → "nodeservice"。
-JSON/YAML 负载字段：deviceName、deviceResource、deviceCommand、discoveredDevice 等字段名均已改变。
+- **Go 标识符**：类型、字段、函数、常量、方法名均按上表替换，且按"最长匹配优先"处理，例如 `ProfileBasicInfo` → `ProfileBasicInfo`、`MultiProfilesResponse` → `MultiProfilesResponse`、`NodeCoreCommand` → `NodeCoreCommand`。
+- **文件名**：相关源文件同步重命名，例如 `models/node.go` → `models/node.go`、`dtos/profile.go` → `dtos/profile.go`、`dtos/command.go` → `dtos/command.go`。
+- **常量与路由**：`common/constants.go` 中的路由常量（如 `ApiNodeRoute` → `ApiNodeRoute`）与字段名常量同步更新。
+- **常量合并**：原先的 `common.Command = "deHTTP 路由：/api/v3/node → /api/v3/node、/api/v3/profile → /api/v3/profile、/api/v3/resource → /api/v3/resource、/api/v3/nodeservice → /api/v3/nodeservice。
+消息总线 topic：events/node/# → events/node/#、node/command/request → node/command/request、validate/node → validate/node 等。
+系统事件：系统事件类型 "node" → "node"、"profile" → "profile"、"nodeservice" → "nodeservice"。
+JSON/YAML 负载字段：nodeName、resource、command、discoveredNode 等字段名均已改变。
 viceCommand"` 与既有的 `common.Command = "command"` 重命名后取值相同，已删除冗余定义并将引用统一到 `common.Command`。
-- **协议字段**：JSON/YAML tag 与字符串字面量一并调整，例如 `deviceName` → `nodeName`、`deviceResource` → `resource`、`deviceResources` → `resources`、`deviceCommands` → `commands`、`deviceCommand` → `command`、`discoveredDevice` → `discoveredNode`。
+- **协议字段**：JSON/YAML tag 与字符串字面量一并调整，例如 `nodeName` → `nodeName`、`resource` → `resource`、`resources` → `resources`、`commands` → `commands`、`command` → `command`、`discoveredNode` → `discoveredNode`。
 
 ### 破坏性变更（重要）
 
 本次改动会**破坏与既有 EdgeX 服务之间的线上协议兼容性**，使用方需同步升级：
 
-- **HTTP 路由**：`/api/v3/device` → `/api/v3/node`、`/api/v3/deviceprofile` → `/api/v3/profile`、`/api/v3/deviceresource` → `/api/v3/resource`、`/api/v3/deviceservice` → `/api/v3/nodeservice`。
-- **消息总线 topic**：`events/device/#` → `events/node/#`、`device/command/request` → `node/command/request`、`validate/device` → `validate/node` 等。
-- **系统事件**：系统事件类型 `"device"` → `"node"`、`"deviceprofile"` → `"profile"`、`"deviceservice"` → `"nodeservice"`。
-- **JSON/YAML 负载字段**：`deviceName`、`deviceResource`、`deviceCommand`、`discoveredDevice` 等字段名均已改变。
+- **HTTP 路由**：`/api/v3/node` → `/api/v3/node`、`/api/v3/profile` → `/api/v3/profile`、`/api/v3/resource` → `/api/v3/resource`、`/api/v3/nodeservice` → `/api/v3/nodeservice`。
+- **消息总线 topic**：`events/node/#` → `events/node/#`、`node/command/request` → `node/command/request`、`validate/node` → `validate/node` 等。
+- **系统事件**：系统事件类型 `"node"` → `"node"`、`"profile"` → `"profile"`、`"nodeservice"` → `"nodeservice"`。
+- **JSON/YAML 负载字段**：`nodeName`、`resource`、`command`、`discoveredNode` 等字段名均已改变。
 
 ### 验证
 

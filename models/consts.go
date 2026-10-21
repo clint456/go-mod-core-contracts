@@ -55,5 +55,13 @@ const (
 	Unknown = "UNKNOWN"
 )
 
+// Constants for Node Direction
+const (
+	// South : southbound (south-facing) node
+	// North : northbound (north-facing) node
+	South = "SOUTH"
+	North = "NORTH"
+)
+
 // Constant for Keeper health status
 const Halt = "HALT"

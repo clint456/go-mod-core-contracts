@@ -21,6 +21,7 @@ import (
 
 var testNodeLabels = []string{"MODBUS", "TEMP"}
 var testNodeLocation = "{40lat;45long}"
+var testNodeDirection = "SOUTH"
 var testAutoEvents = []dtos.AutoEvent{
 	{SourceName: "TestNode", Interval: "300ms", OnChange: true, OnChangeThreshold: 0.01},
 }
@@ -53,6 +54,7 @@ var testAddNode = AddNodeRequest{
 		AdminState:     models.Locked,
 		OperatingState: models.Up,
 		Labels:         testNodeLabels,
+		Direction:      testNodeDirection,
 		Location:       testNodeLocation,
 		Tags:           testTags,
 		AutoEvents:     testAutoEvents,
@@ -87,6 +89,7 @@ func mockUpdateNode() dtos.UpdateNode {
 	d.ServiceName = &testNodeServiceName
 	d.ProfileName = &testProfileName
 	d.Labels = testNodeLabels
+	d.Direction = &testNodeDirection
 	d.Location = testNodeLocation
 	d.AutoEvents = testAutoEvents
 	d.Protocols = testProtocols
@@ -248,6 +251,7 @@ func Test_AddNodeReqToNodeModels(t *testing.T) {
 			AdminState:     models.Locked,
 			OperatingState: models.Up,
 			Labels:         testNodeLabels,
+			Direction:      testNodeDirection,
 			Location:       testNodeLocation,
 			Tags:           testTags,
 			AutoEvents: []models.AutoEvent{
@@ -415,6 +419,7 @@ func TestUpdateNodeRequest_UnmarshalJSON_NilField(t *testing.T) {
 	assert.Nil(t, req.Node.ServiceName)
 	assert.Nil(t, req.Node.ProfileName)
 	assert.Nil(t, req.Node.Labels)
+	assert.Nil(t, req.Node.Direction)
 	assert.Nil(t, req.Node.Location)
 	assert.Nil(t, req.Node.AutoEvents)
 	assert.Nil(t, req.Node.Protocols)
@@ -458,6 +463,7 @@ func TestReplaceNodeModelFieldsWithDTO(t *testing.T) {
 	assert.Equal(t, TestNodeServiceName, node.ServiceName)
 	assert.Equal(t, TestProfileName, node.ProfileName)
 	assert.Equal(t, testLabels, node.Labels)
+	assert.Equal(t, testNodeDirection, node.Direction)
 	assert.Equal(t, testNodeLocation, node.Location)
 	assert.Equal(t, testTags, node.Tags)
 	assert.Equal(t, dtos.ToAutoEventModels(testAutoEvents), node.AutoEvents)

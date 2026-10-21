@@ -104,6 +104,9 @@ func ReplaceNodeModelFieldsWithDTO(node *models.Node, patch dtos.UpdateNode) {
 	if patch.OperatingState != nil {
 		node.OperatingState = models.OperatingState(*patch.OperatingState)
 	}
+	if patch.Direction != nil {
+		node.Direction = *patch.Direction
+	}
 	if patch.ServiceName != nil {
 		node.ServiceName = *patch.ServiceName
 	}

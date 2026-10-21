@@ -9,20 +9,21 @@ import "maps"
 
 type Node struct {
 	DBTimestamp
-	Id             string
-	Name           string
-	Parent         string
-	Description    string
-	AdminState     AdminState
-	OperatingState OperatingState
-	Protocols      map[string]ProtocolProperties
-	Labels         []string
-	Location       interface{}
-	ServiceName    string
-	ProfileName    string
-	AutoEvents     []AutoEvent
-	Tags           map[string]any
-	Properties     map[string]any
+	Id             string                        // 唯一ID
+	Name           string                        // Node名称
+	Parent         string                        // 父节点ID
+	Description    string                        // Node描述
+	AdminState     AdminState                    // 管理状态
+	OperatingState OperatingState                // 运行状态
+	Protocols      map[string]ProtocolProperties // 节点连接信息
+	Labels         []string                      // 标签
+	Direction      string                        // 南北向 "SOUTH" or "NORTH",这里注视规定，业务层进行南北向的区分，SOUTH表示南向，NORTH表示北向
+	Location       interface{}                   // 位置信息
+	ServiceName    string                        // 服务名称
+	ProfileName    string                        // Profile名称
+	AutoEvents     []AutoEvent                   // 自动事件
+	Tags           map[string]any                // 标签
+	Properties     map[string]any                // 属性
 }
 
 // ProtocolProperties contains the node connection information in key/value pair
@@ -57,6 +58,7 @@ func (node Node) Clone() Node {
 		Description:    node.Description,
 		AdminState:     node.AdminState,
 		OperatingState: node.OperatingState,
+		Direction:      node.Direction,
 		Location:       node.Location,
 		ServiceName:    node.ServiceName,
 		ProfileName:    node.ProfileName,

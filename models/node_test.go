@@ -18,6 +18,7 @@ func TestNode_Clone(t *testing.T) {
 		OperatingState: Up,
 		Protocols:      map[string]ProtocolProperties{"other": map[string]any{"Address": "127.0.0.1"}},
 		Labels:         []string{"label1", "label2"},
+		Direction:      "SOUTH",
 		Location:       map[string]any{"loc": "x.y.z"},
 		ServiceName:    "testServiceName",
 		ProfileName:    "testProfileName",

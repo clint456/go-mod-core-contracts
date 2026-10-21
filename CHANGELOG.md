@@ -9,16 +9,16 @@
 
 - Add `UseRawPayload` support for `ScheduleAction` with `EdgeXMessageBus` type ([#9769618](https://github.com/edgexfoundry/go-mod-core-contracts/commits/9769618))
 - Add `Extensions` field to Event and BaseReading DTOs ([#667cc38](https://github.com/edgexfoundry/go-mod-core-contracts/commits/667cc38))
-- Add `linkedDeviceCount` field to `DeviceProfileBasicInfo` DTO ([#5b1ec54](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5b1ec54))
-- Add the HTTP clients and DTOs for PATCH device profile tags ([#c5a527d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c5a527d))
+- Add `linkedNodeCount` field to `ProfileBasicInfo` DTO ([#5b1ec54](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5b1ec54))
+- Add the HTTP clients and DTOs for PATCH node profile tags ([#c5a527d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c5a527d))
 - Add `BuildCoreCommands` utility function ([#6666b06](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6666b06))
 - Add new `MultiReadingsAggregationResponse` DTO ([#1020](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1020)) ([#b1f2561](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b1f2561))
 - Add `NumericReading` for numeric data ([#1016](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1016)) ([#9e23642](https://github.com/edgexfoundry/go-mod-core-contracts/commits/9e23642))
 - Support day unit with edgex-dto-duration validation tag ([#1014](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1014)) ([#11bffbc](https://github.com/edgexfoundry/go-mod-core-contracts/commits/11bffbc))
-- Reduce payload size for device events ([#1012](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1012)) ([#22c22c6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/22c22c6))
+- Reduce payload size for node events ([#1012](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1012)) ([#22c22c6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/22c22c6))
 - Add `SecretPoster` for invoking post secret to different service ([#1010](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1010)) ([#beaeb51](https://github.com/edgexfoundry/go-mod-core-contracts/commits/beaeb51))
 - Support `SystemEvent` CBOR encoding ([#1007](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1007)) ([#4cf1468](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4cf1468))
-- Add Clone function for Device, DeviceProfile and ProvisionWatcher ([#1004](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1004)) ([#b8b4cb2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b8b4cb2))
+- Add Clone function for Node, Profile and ProvisionWatcher ([#1004](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1004)) ([#b8b4cb2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b8b4cb2))
 - Export `ParseDurationWithDay` function ([#07844d0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/07844d0))
 
 ### 🐛 Bug Fixes
@@ -26,7 +26,7 @@
 - Initialize Readings as empty slice in `NewEvent` ([#cd4b35c](https://github.com/edgexfoundry/go-mod-core-contracts/commits/cd4b35c))
 - Fix schedule job creation error when using JSON array payload ([#5b46b03](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5b46b03))
 - Fix `StringArray` reading serialization handling by using `json.Marshal` ([#fa67f43](https://github.com/edgexfoundry/go-mod-core-contracts/commits/fa67f43))
-- Initialize `resourcesCache` for new device profile client ([#1002](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1002)) ([#c09f050](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c09f050))
+- Initialize `resourcesCache` for new node profile client ([#1002](https://github.com/edgexfoundry/go-mod-core-contracts/issues/1002)) ([#c09f050](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c09f050))
 - Fix float-to-string conversion precision handling ([#37c58d2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/37c58d2))
 - Change the default scheme of `NewRESTAddress` to HTTP ([#f54e88f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f54e88f))
 - Allow empty duration values for Auto Events ([#a5c1c90](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a5c1c90))
@@ -53,10 +53,10 @@
 - Add ZeroMQ channel and update MQTT channel for Address dto/model ([bbd1843…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/bbd1843f5aa1d127b59d23d8e517cff9d4345007))
 - Add username/password validations ([4336af0…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/4336af07560a4d02ffb6783f33e18b2f96b5afe4))
 - Add Unauthorized `ErrKind` ([a628e4c…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/a628e4c8c657a215a65813f31ce8e62adb89b22e))
-- Add `onChangeThreshold` in Device AutoEvent ([f399940…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/f39994077e6603461b5c3fee41b176f810ff9913))
+- Add `onChangeThreshold` in Node AutoEvent ([f399940…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/f39994077e6603461b5c3fee41b176f810ff9913))
 - Add CBOR encode and decode for BaseReading ([8f27c7a…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/8f27c7abae0e16c031c8c7e2ba3c71ec97d07d39))
 - Allow reading value to be null ([4a7a10a…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/4a7a10a3a61d76941da71588a5da288692112b8f))
-- Add new discovery/profilescan APIs to DeviceServiceCommandClient ([9ff41d2…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/9ff41d212d11429aa0370e900638e98d91d449fa))
+- Add new discovery/profilescan APIs to NodeServiceCommandClient ([9ff41d2…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/9ff41d212d11429aa0370e900638e98d91d449fa))
 - Enhance `WithEmptyPayloadAndId` method ([5095a2a…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/5095a2a290111a3eb981f3cade4dbcfd5959b829))
 - Enhance support-scheduler service for advanced job scheduling ([8789206…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/878920651f8f33bcd7d3f24de4f2affa7ae60761))
 - Add UnmarshalJSON and WithEmptyPayload methods with more tests ([7ffbf86…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/7ffbf863d5ebd0ce6e0bc811e49f93664f804a9f))
@@ -69,10 +69,10 @@ BREAKING CHANGE: Switched default database to PostgreSQL across all services
 - Add DS profilescan API DTO and client ([45caab6…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/45caab6e793aec63da2839df359b618f97008afe))
 - Add profile basic info http client ([3d51ed7…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/3d51ed7616cc08427e4d538aba11c75e352d1bae))
 - Add multiple profile basic info DTO ([2133f19…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/2133f19c414c3a8d1ef62f5484038543baf8ca3d))
-- Allow empty profileName in Device ([0782ff0…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/0782ff0d388a9319a830f94ebed6529908651f5b))
+- Allow empty profileName in Node ([0782ff0…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/0782ff0d388a9319a830f94ebed6529908651f5b))
 - Add ObjectArray valueType support ([#899](https://github.com/edgexfoundry/go-mod-core-contracts/issues/899)) ([467e0a5…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/467e0a5de96c7e27d57f985266f9f068ad2a1d2a))
-- Add new Add/update with param device client ([6edc03f…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/6edc03f696a9a074c7115e347077c22ca502b44a))
-- Add optional "parent" field to Device objects ([#887](https://github.com/edgexfoundry/go-mod-core-contracts/issues/887)) ([132cf7a…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/132cf7a0d98f69aaa4a72c8537e6ff006b27445a))
+- Add new Add/update with param node client ([6edc03f…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/6edc03f696a9a074c7115e347077c22ca502b44a))
+- Add optional "parent" field to Node objects ([#887](https://github.com/edgexfoundry/go-mod-core-contracts/issues/887)) ([132cf7a…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/132cf7a0d98f69aaa4a72c8537e6ff006b27445a))
 - Core Keeper implementation ([e3dd702…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/e3dd7029928a0a6ca0433a8ff353d6de7cdd76df))
 ```text
 
@@ -108,7 +108,7 @@ BREAKING CHANGE: Update go module to v4
 - Fix inconsistent reading DTO JSON marshal and unmarshal ([c399d60…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/c399d60e2593767685d3b618a083c5a5f2cf0014))
 - Fix binary reading validation ([1bf9e0c…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/1bf9e0c7b19d5143de3a4bacf98c81ce5b5d77ee))
 - Add missing field "Method" to model and DTO transform functions ([2e1836e…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/2e1836ed65a7b8fa2dc8799e1eaf670623591bec))
-- Update DeviceClient and KVSClient mocks ([50a29bf…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/50a29bf8c465817118fd07dc014cdf999ceccbd2))
+- Update NodeClient and KVSClient mocks ([50a29bf…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/50a29bf8c465817118fd07dc014cdf999ceccbd2))
 - Check the response content length before invoking json.Unmarshal ([266762f…](https://github.com/edgexfoundry/go-mod-core-contracts/commit/266762f9c8393c8da7aea63bb418216b78b8829a))
 
 
@@ -149,9 +149,9 @@ BREAKING CHANGE: Update go module to v4
   ```text
   BREAKING CHANGE: all EdgeX base API version is changed to v3 for REST endpoints
   ```
-- Add 'discoveredDevice' for discovered device fields ([#f889069](https://github.com/edgexfoundry/go-mod-core-contracts/commit/f8890694ba2443089107554beff12780e39f030e))
+- Add 'discoveredNode' for discovered node fields ([#f889069](https://github.com/edgexfoundry/go-mod-core-contracts/commit/f8890694ba2443089107554beff12780e39f030e))
   ```text
-  BREAKING CHANGE: add 'DiscoveredDevice' field which includes profileName,adminState,autoEvents and properties for discovered device
+  BREAKING CHANGE: add 'DiscoveredNode' field which includes profileName,adminState,autoEvents and properties for discovered node
   ```
 - Update maximum and minimum to float64 data type ([#1af2d52](https://github.com/edgexfoundry/go-mod-core-contracts/commit/1af2d52b2805dd8b31ab8a74952bd92a1b93e9d7))
   ```text
@@ -166,9 +166,9 @@ BREAKING CHANGE: Update go module to v4
   BREAKING CHANGE: update mask,shift,base,scale,offset to numeric data type also rename 'Others' to 'Optional' for the consistency with
   message broker settings.
   ```
-- Remove Notify out of Device DTO/Model ([#cb18066](https://github.com/edgexfoundry/go-mod-core-contracts/commit/cb18066d493742bdfaf8f31a0eded08ce169db02))
+- Remove Notify out of Node DTO/Model ([#cb18066](https://github.com/edgexfoundry/go-mod-core-contracts/commit/cb18066d493742bdfaf8f31a0eded08ce169db02))
   ```text
-  Since core-metadata will publish system event message when device is created or updated, notify is no longer needed and should be removed.
+  Since core-metadata will publish system event message when node is created or updated, notify is no longer needed and should be removed.
   ```
 - Add interface for injecting authentication data to outgoing requests ([#dc21b6](https://github.com/edgexfoundry/go-mod-core-contracts/commit/dc21b6ba2c81931ffc3ae0ec228443a46b7c8900))
   ```text
@@ -176,25 +176,25 @@ BREAKING CHANGE: Update go module to v4
   
   While the change does affect the public interface of the HTTP clients, actual requests are only mutated by the authentication injector, which is provided by the consumer.
   ```
-- Remove LastConnected and LastReported from Device/DeviceService ([#fbdba8c3e](https://github.com/edgexfoundry/go-mod-core-contracts/commit/fbdba8c3ee7a5841e5299dff2aa29aa4bea36a71))
+- Remove LastConnected and LastReported from Node/NodeService ([#fbdba8c3e](https://github.com/edgexfoundry/go-mod-core-contracts/commit/fbdba8c3ee7a5841e5299dff2aa29aa4bea36a71))
   ```text
-  BREAKING CHANGE: LastConnected and LastReported removed from device and device service DTOs and models
+  BREAKING CHANGE: LastConnected and LastReported removed from node and node service DTOs and models
   ```
-- Add device service name in Add Event API endpoint ([#61bd91](https://github.com/edgexfoundry/go-mod-core-contracts/commit/61bd91ab058f1c855ec180b3d64afd937c6ababb))
+- Add node service name in Add Event API endpoint ([#61bd91](https://github.com/edgexfoundry/go-mod-core-contracts/commit/61bd91ab058f1c855ec180b3d64afd937c6ababb))
   ```text
   BREAKING CHANGE: Update EventClient 'Add' method signature
   ```
 - Remove SimpleReading value required validation for empty string ([#0e331f](https://github.com/edgexfoundry/go-mod-core-contracts/commit/0e331f41e0d4903de81972c1cae15627e716c4a2))
-- Allow Device Profile to be empty string in ProvisionWatcher ([#d0b069d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0b069d))
+- Allow Node Profile to be empty string in ProvisionWatcher ([#d0b069d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0b069d))
 - Add URLEncode helper function ([#cb6c3dd](https://github.com/edgexfoundry/go-mod-core-contracts/commits/cb6c3dd))
-- Add YAML tag for Device and ProvisionWatcher ([#19c4f32](https://github.com/edgexfoundry/go-mod-core-contracts/commits/19c4f32))
+- Add YAML tag for Node and ProvisionWatcher ([#19c4f32](https://github.com/edgexfoundry/go-mod-core-contracts/commits/19c4f32))
 - Add 'ds-regexcmd' query parameter ([#6582a37](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6582a37))
 - Add ability to authenticate outbound IntervalActions ([#b2c2176](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b2c2176))
-- Use URL escape for device command name and resource name ([#1450102](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1450102))
+- Use URL escape for node command name and resource name ([#1450102](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1450102))
 - Add 'Others' field in ResourceProperties ([#6eb51bb](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6eb51bb))
 - Add new Properties field to ProvisionWatcher DTO and Model ([#4695302](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4695302))
-- Add new Properties field to Device DTO and Model ([#66fa623](https://github.com/edgexfoundry/go-mod-core-contracts/commits/66fa623))
-- Added ValidateDeviceSubscribeTopic ([#7d63dd3](https://github.com/edgexfoundry/go-mod-core-contracts/commits/7d63dd3))
+- Add new Properties field to Node DTO and Model ([#66fa623](https://github.com/edgexfoundry/go-mod-core-contracts/commits/66fa623))
+- Added ValidateNodeSubscribeTopic ([#7d63dd3](https://github.com/edgexfoundry/go-mod-core-contracts/commits/7d63dd3))
 - Add UnmarshalObjectValue helper function to Reading DTO ([#baf7df4](https://github.com/edgexfoundry/go-mod-core-contracts/commits/baf7df4))
 - Add topic constants that will replace configured topics ([#f8aa83a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f8aa83a))
 - Add service key for new core-common-config-bootstrapper service ([#28efaad](https://github.com/edgexfoundry/go-mod-core-contracts/commits/28efaad))
@@ -253,7 +253,7 @@ BREAKING CHANGE: Update go module to v4
 ### Bug Fixes 🐛
 
 - Keep the existing baseUrl path in helper function ([#abc04af](https://github.com/edgexfoundry/go-mod-core-contracts/commits/abc04af))
-- Remove DeviceProfileBasicInfo fieldName from validation error messages ([#8656825](https://github.com/edgexfoundry/go-mod-core-contracts/commits/8656825))
+- Remove ProfileBasicInfo fieldName from validation error messages ([#8656825](https://github.com/edgexfoundry/go-mod-core-contracts/commits/8656825))
 
 ### Code Refactoring ♻
 
@@ -274,16 +274,16 @@ BREAKING CHANGE: Update go module to v4
 ### Features ✨
 
 - add new method for CommandClient ([#a13ffb3](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a13ffb3))
-- Add new device profile API clients ([#3d2ca3b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/3d2ca3b))
+- Add new node profile API clients ([#3d2ca3b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/3d2ca3b))
 - Add Units property to reading DTO and model ([#637851d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/637851d))
 - Add Metric DTO to hold data for a single metric ([#6f432a9](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6f432a9))
-- Add DTOs for device profile changes ([#ee12520](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ee12520))
-- Remove DeviceProfile deviceResources validate gt=0 ([#fd99e17](https://github.com/edgexfoundry/go-mod-core-contracts/commits/fd99e17))
-- Add new routes for device profile changes ([#e5aff1a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/e5aff1a))
-- extend DeviceServiceCallbackClient to support validation API ([#20c4465](https://github.com/edgexfoundry/go-mod-core-contracts/commits/20c4465))
+- Add DTOs for node profile changes ([#ee12520](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ee12520))
+- Remove Profile resources validate gt=0 ([#fd99e17](https://github.com/edgexfoundry/go-mod-core-contracts/commits/fd99e17))
+- Add new routes for node profile changes ([#e5aff1a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/e5aff1a))
+- extend NodeServiceCallbackClient to support validation API ([#20c4465](https://github.com/edgexfoundry/go-mod-core-contracts/commits/20c4465))
 - Add ServiceName to Common DTOs ([#043134c](https://github.com/edgexfoundry/go-mod-core-contracts/commits/043134c))
-- update device validation route ([#a30116e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a30116e))
-- add validate API route for device service ([#e6de2b0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/e6de2b0))
+- update node validation route ([#a30116e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a30116e))
+- add validate API route for node service ([#e6de2b0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/e6de2b0))
 - **security:** Add a new constant for security-spiffe-token-provider ([#306938c](https://github.com/edgexfoundry/go-mod-core-contracts/commits/306938c))
 
 ### Test
@@ -294,8 +294,8 @@ BREAKING CHANGE: Update go module to v4
 
 - Remove redundant URL escaping from Client lib ([#c67fdec](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c67fdec))
 - Remove JSON omitempty from SimpleReading value ([#d83bf3a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d83bf3a))
-- Update device resource/command DTO ([#59aa69d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/59aa69d))
-- Add yaml:inline to DeviceProfile DTO DeviceProfileBasicInfo ([#4d80223](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4d80223))
+- Update node resource/command DTO ([#59aa69d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/59aa69d))
+- Add yaml:inline to Profile DTO ProfileBasicInfo ([#4d80223](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4d80223))
 - Update the ReadWrite validation to include WR ([#708](https://github.com/edgexfoundry/go-mod-core-contracts/issues/708)) ([#b3917be](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b3917be))
 - update network connectivity problem error kind ([#a52b776](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a52b776))
 - Adding the missed PATCH method in REST Address DTO ([#a113ab0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a113ab0))
@@ -315,7 +315,7 @@ BREAKING CHANGE: Update go module to v4
 - Remove unclear HTTP status code ([#646](https://github.com/edgexfoundry/go-mod-core-contracts/issues/646)) ([#5e91c92](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5e91c92))
 - Add omitempty tag to Reading DTO ([#630bcf1](https://github.com/edgexfoundry/go-mod-core-contracts/commits/630bcf1))
 - Update the api version inside all godoc from 2.x to 2.1.0 ([#99ac5f5](https://github.com/edgexfoundry/go-mod-core-contracts/commits/99ac5f5))
-- **command:** Add totalCount field into MultiDeviceCoreCommandsResponse DTO ([#eaa77a0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eaa77a0))
+- **command:** Add totalCount field into MultiNodeCoreCommandsResponse DTO ([#eaa77a0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eaa77a0))
 - **data:** Add totalCount field into MultiReadingsResponse DTO ([#94063c0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/94063c0))
 - **data:** Use generic interface in the Event Tagging value ([#ad694db](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ad694db))
 - **data:** Add totalCount field into MultiEventsResponse DTO ([#e706228](https://github.com/edgexfoundry/go-mod-core-contracts/commits/e706228))
@@ -347,12 +347,12 @@ BREAKING CHANGE: Update go module to v4
 - **data:** Add factory methods for AddEventRequest, Event and Reading DTOs ([#00861d0](https://github.com/edgexfoundry/go-mod-core-contracts/commits/00861d0))
 - **SMA:** Add HealthResponse for SMA GET health API ([#5a23571](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5a23571))
 - **v2:** Added ApiVersion to BaseRequest ([#12e7666](https://github.com/edgexfoundry/go-mod-core-contracts/commits/12e7666))
-- **meta:** Add DeviceResourceResponse DTO and API route ([#fc0ca70](https://github.com/edgexfoundry/go-mod-core-contracts/commits/fc0ca70))
-- **meta:** Implement the re-designed device profile model ([#540](https://github.com/edgexfoundry/go-mod-core-contracts/issues/540)) ([#1c03d9d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1c03d9d))
-- **meta:** Enhance v2 DeviceServiceCallbackClient ([#df388aa](https://github.com/edgexfoundry/go-mod-core-contracts/commits/df388aa))
+- **meta:** Add ResourceResponse DTO and API route ([#fc0ca70](https://github.com/edgexfoundry/go-mod-core-contracts/commits/fc0ca70))
+- **meta:** Implement the re-designed node profile model ([#540](https://github.com/edgexfoundry/go-mod-core-contracts/issues/540)) ([#1c03d9d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1c03d9d))
+- **meta:** Enhance v2 NodeServiceCallbackClient ([#df388aa](https://github.com/edgexfoundry/go-mod-core-contracts/commits/df388aa))
 - **data:** Add encoding method for AddEventRequest ([#d71b5a3](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d71b5a3))
 - **meta:** Rename Resource to SourceName in AutoEvent model ([#0ece284](https://github.com/edgexfoundry/go-mod-core-contracts/commits/0ece284))
-- **meta:** Add error type used by device service data transformation ([#076855e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/076855e))
+- **meta:** Add error type used by node service data transformation ([#076855e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/076855e))
 - **notifications:** Return 400 when UpdateSubscription with empty categories, labels ([#1521f71](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1521f71))
 - **v2:** Create a common Address struct for v2 API ([#525](https://github.com/edgexfoundry/go-mod-core-contracts/issues/525)) ([#eae89da](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eae89da))
 - **data:** Add Origin constant for event and reading v2 API ([#6bf0fec](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6bf0fec))
@@ -364,16 +364,16 @@ BREAKING CHANGE: Update go module to v4
 - **v2:** Add contentType field to Address ([#3adadce](https://github.com/edgexfoundry/go-mod-core-contracts/commits/3adadce))
 - **scheduler:** Update IntervalAction to use the common Address ([#81d8f1f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/81d8f1f))
 - **data:** Update Add Event route to include SourceName ([#778f72f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/778f72f))
-- **v2:** Add factory methods for DeviceRequest DTO ([#6c6dc03](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6c6dc03))
+- **v2:** Add factory methods for NodeRequest DTO ([#6c6dc03](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6c6dc03))
 - **v2:** Add factory methods for Request DTO ([#5755a25](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5755a25))
 - **v2:** Enhance the DTO's Json and Validate annotation ([#19dc603](https://github.com/edgexfoundry/go-mod-core-contracts/commits/19dc603))
 - **command:**  Remove commandName constant ([#673266b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/673266b))
 - **data:** Implement UnmarshalCBOR for AddEventRequest DTO ([#a85587f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a85587f))
 - **meta:** Add resource map for cache ([#c58f4e6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c58f4e6))
 - **meta:** Assign ApiVersion for each ConvertModelToDTO func ([#99a3cf8](https://github.com/edgexfoundry/go-mod-core-contracts/commits/99a3cf8))
-- **meta:** Implement Device Resource Client ([#4ed049f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4ed049f))
+- **meta:** Implement Node Resource Client ([#4ed049f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/4ed049f))
 - **meta:** Implement ProvisionWatcherClient ([#098d65f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/098d65f))
-- **meta:** Rename ProfileResource to DeviceCommand for v2 Model and DTO ([#d0d059f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0d059f))
+- **meta:** Rename ProfileResource to Command for v2 Model and DTO ([#d0d059f](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0d059f))
 - **notifications:** Create Subscription DTO and Model ([#6e7f6a6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6e7f6a6))
 - **notifications:** Create Transmission DTO and Model ([#41d5e11](https://github.com/edgexfoundry/go-mod-core-contracts/commits/41d5e11))
 - **notifications:** Update Subscription DTO to adopt common Address ([#50867e2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/50867e2))
@@ -387,14 +387,14 @@ BREAKING CHANGE: Update go module to v4
 - **scheduler:** Implement Interval and IntervalAction Client ([#cf5ddad](https://github.com/edgexfoundry/go-mod-core-contracts/commits/cf5ddad))
 - **v2:** BaseResponse omit empty RequestId and Message ([#f45e548](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f45e548))
 - **v2:** Create new ErrKind for Delete API to return 409 ([#5f77921](https://github.com/edgexfoundry/go-mod-core-contracts/commits/5f77921))
-- **v2:** Adjust DeviceServiceCommandClient interface by moving baseURL as func param ([#3393ae7](https://github.com/edgexfoundry/go-mod-core-contracts/commits/3393ae7))
+- **v2:** Adjust NodeServiceCommandClient interface by moving baseURL as func param ([#3393ae7](https://github.com/edgexfoundry/go-mod-core-contracts/commits/3393ae7))
 - **v2:** Create Mocking Clients for v2 Client Libraries ([#b47bd74](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b47bd74))
-- **v2:** Update DeviceServicCommandClient interface to have queryParams ([#76d71ab](https://github.com/edgexfoundry/go-mod-core-contracts/commits/76d71ab))
+- **v2:** Update NodeServicCommandClient interface to have queryParams ([#76d71ab](https://github.com/edgexfoundry/go-mod-core-contracts/commits/76d71ab))
 - **v2:** Add queryParams as part of SetCommand ([#c9200dd](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c9200dd))
-- **v2:** Refactor CoreCommand DTO to DeviceCoreCommand ([#d4786e8](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d4786e8))
+- **v2:** Refactor CoreCommand DTO to NodeCoreCommand ([#d4786e8](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d4786e8))
 - **v2:** Put together the constants of the models package ([#7967573](https://github.com/edgexfoundry/go-mod-core-contracts/commits/7967573))
-- **v2:** Implement Device Service Command Client ([#b433f68](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b433f68))
-- **v2:** Update the API path to /device/name/{name}/{command} ([#ec69e1e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ec69e1e))
+- **v2:** Implement Node Service Command Client ([#b433f68](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b433f68))
+- **v2:** Update the API path to /node/name/{name}/{command} ([#ec69e1e](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ec69e1e))
 ### Code Refactoring ♻
 - **scheduler:** Remove runOnce from the Interval ([#782597b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/782597b))
 - **scheduler:** Rename Interval.Frequency field to Interval ([#94fa9ab](https://github.com/edgexfoundry/go-mod-core-contracts/commits/94fa9ab))
@@ -411,7 +411,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.149"></a>
 ## [v0.1.149] - 2021-01-19
 ### Features ✨
-- Update device service v2 api route ([#eda60ea](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eda60ea))
+- Update node service v2 api route ([#eda60ea](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eda60ea))
 
 <a name="v0.1.147"></a>
 ## [v0.1.147] - 2021-01-19
@@ -421,7 +421,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.146"></a>
 ## [v0.1.146] - 2021-01-14
 ### Features ✨
-- **meta:** Get profileName & deviceName from req ([#92e4a24](https://github.com/edgexfoundry/go-mod-core-contracts/commits/92e4a24))
+- **meta:** Get profileName & nodeName from req ([#92e4a24](https://github.com/edgexfoundry/go-mod-core-contracts/commits/92e4a24))
 - **meta:** Revert to a single AddEventRequest DTO ([#a0c1ddc](https://github.com/edgexfoundry/go-mod-core-contracts/commits/a0c1ddc))
 - **meta:** Update v2 API AddEvent path ([#f3d88ad](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f3d88ad))
 - **meta:** Complete the EventClient ([#b476394](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b476394))
@@ -460,7 +460,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.137"></a>
 ## [v0.1.137] - 2021-01-04
 ### Features ✨
-- **meta:** Add DeviceServiceClient ([#d0b5ae4](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0b5ae4))
+- **meta:** Add NodeServiceClient ([#d0b5ae4](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d0b5ae4))
 
 <a name="v0.1.136"></a>
 ## [v0.1.136] - 2020-12-30
@@ -476,12 +476,12 @@ BREAKING CHANGE: Update go module to v4
 ## [v0.1.134] - 2020-12-29
 ### Features ✨
 - Refactor createRequest method ([#ae795ac](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ae795ac))
-- Add device service callback client ([#ed4f318](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ed4f318))
+- Add node service callback client ([#ed4f318](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ed4f318))
 
 <a name="v0.1.133"></a>
 ## [v0.1.133] - 2020-12-28
 ### Features ✨
-- **meta:** Add v2 DeviceClient ([#d692bb7](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d692bb7))
+- **meta:** Add v2 NodeClient ([#d692bb7](https://github.com/edgexfoundry/go-mod-core-contracts/commits/d692bb7))
 
 <a name="v0.1.132"></a>
 ## [v0.1.132] - 2020-12-28
@@ -504,9 +504,9 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.129"></a>
 ## [v0.1.129] - 2020-12-15
 ### Features ✨
-- **meta:** Implement validation logic for device profile DTO ([#1f27142](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1f27142))
+- **meta:** Implement validation logic for node profile DTO ([#1f27142](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1f27142))
 ### Code Refactoring ♻
-- **meta:** Use range to iterates element for verifying device profile ([#505e46a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/505e46a))
+- **meta:** Use range to iterates element for verifying node profile ([#505e46a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/505e46a))
 
 <a name="v0.1.128"></a>
 ## [v0.1.128] - 2020-12-15
@@ -517,12 +517,12 @@ BREAKING CHANGE: Update go module to v4
 ## [v0.1.127] - 2020-12-14
 ### Features ✨
 - Refactor GetRequest func to accept request path and params ([#6d5c326](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6d5c326))
-- **meta:** Add v2 client for querying device profile ([#db07628](https://github.com/edgexfoundry/go-mod-core-contracts/commits/db07628))
+- **meta:** Add v2 client for querying node profile ([#db07628](https://github.com/edgexfoundry/go-mod-core-contracts/commits/db07628))
 
 <a name="v0.1.126"></a>
 ## [v0.1.126] - 2020-12-14
 ### Features ✨
-- **meta:** Add v2 client for deleting device profile ([#47fe6c2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/47fe6c2))
+- **meta:** Add v2 client for deleting node profile ([#47fe6c2](https://github.com/edgexfoundry/go-mod-core-contracts/commits/47fe6c2))
 
 <a name="v0.1.125"></a>
 ## [v0.1.125] - 2020-12-13
@@ -534,24 +534,24 @@ BREAKING CHANGE: Update go module to v4
 ## [v0.1.124] - 2020-12-11
 ### Features ✨
 - Use require pkg to verify test result ([#c47e45b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/c47e45b))
-- **meta:** Add v2 client for uploading device profile in YAML file ([#1b4ca27](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1b4ca27))
+- **meta:** Add v2 client for uploading node profile in YAML file ([#1b4ca27](https://github.com/edgexfoundry/go-mod-core-contracts/commits/1b4ca27))
 ### Code Refactoring ♻
 - **meta:** Rename request func and add negative test case ([#98564d9](https://github.com/edgexfoundry/go-mod-core-contracts/commits/98564d9))
 
 <a name="v0.1.123"></a>
 ## [v0.1.123] - 2020-12-09
 ### Features ✨
-- **meta:** Add v2 client for adding, updating device profiles ([#26f7976](https://github.com/edgexfoundry/go-mod-core-contracts/commits/26f7976))
-- **meta:** Add v2 client for adding, updating device profiles ([#73165ec](https://github.com/edgexfoundry/go-mod-core-contracts/commits/73165ec))
+- **meta:** Add v2 client for adding, updating node profiles ([#26f7976](https://github.com/edgexfoundry/go-mod-core-contracts/commits/26f7976))
+- **meta:** Add v2 client for adding, updating node profiles ([#73165ec](https://github.com/edgexfoundry/go-mod-core-contracts/commits/73165ec))
 ### Code Refactoring ♻
 - **meta:** Refactor http client helper method ([#0d0ddc5](https://github.com/edgexfoundry/go-mod-core-contracts/commits/0d0ddc5))
-- **meta:** v2 Device OperatingState value change ([#f86ad7d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f86ad7d))
+- **meta:** v2 Node OperatingState value change ([#f86ad7d](https://github.com/edgexfoundry/go-mod-core-contracts/commits/f86ad7d))
 
 <a name="v0.1.122"></a>
 ## [v0.1.122] - 2020-12-08
 ### Code Refactoring ♻
 - **meta:** Remove unnecessary comments ([#85d4d6a](https://github.com/edgexfoundry/go-mod-core-contracts/commits/85d4d6a))
-- **meta:** Remove OperatingState field in DeviceService v2 model ([#617ea87](https://github.com/edgexfoundry/go-mod-core-contracts/commits/617ea87))
+- **meta:** Remove OperatingState field in NodeService v2 model ([#617ea87](https://github.com/edgexfoundry/go-mod-core-contracts/commits/617ea87))
 
 <a name="v0.1.121"></a>
 ## [v0.1.121] - 2020-12-04
@@ -641,7 +641,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.102"></a>
 ## [v0.1.102] - 2020-10-19
 ### Features ✨
-- **metadata:** Add API route path for device ([#ac01b7b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ac01b7b))
+- **metadata:** Add API route path for node ([#ac01b7b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/ac01b7b))
 
 <a name="v0.1.101"></a>
 ## [v0.1.101] - 2020-10-19
@@ -671,7 +671,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.96"></a>
 ## [v0.1.96] - 2020-10-12
 ### Bug Fixes 🐛
-- Rename deviceId to deviceName from Event DTO ([#da55c3b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/da55c3b))
+- Rename nodeId to nodeName from Event DTO ([#da55c3b](https://github.com/edgexfoundry/go-mod-core-contracts/commits/da55c3b))
 
 <a name="v0.1.95"></a>
 ## [v0.1.95] - 2020-10-12
@@ -681,17 +681,17 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.94"></a>
 ## [v0.1.94] - 2020-10-09
 ### Features ✨
-- **metadata:** Modified deviceProfile DTO to support PUT API ([#cadcd80](https://github.com/edgexfoundry/go-mod-core-contracts/commits/cadcd80))
+- **metadata:** Modified profile DTO to support PUT API ([#cadcd80](https://github.com/edgexfoundry/go-mod-core-contracts/commits/cadcd80))
 
 <a name="v0.1.93"></a>
 ## [v0.1.93] - 2020-10-08
 ### Features ✨
-- **metadata:** Add API route path for device service ([#b736a93](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b736a93))
+- **metadata:** Add API route path for node service ([#b736a93](https://github.com/edgexfoundry/go-mod-core-contracts/commits/b736a93))
 
 <a name="v0.1.91"></a>
 ## [v0.1.91] - 2020-10-07
 ### Features ✨
-- **metadata:** Add API route path for device profile ([#bc90a46](https://github.com/edgexfoundry/go-mod-core-contracts/commits/bc90a46))
+- **metadata:** Add API route path for node profile ([#bc90a46](https://github.com/edgexfoundry/go-mod-core-contracts/commits/bc90a46))
 
 <a name="v0.1.89"></a>
 ## [v0.1.89] - 2020-10-01
@@ -706,12 +706,12 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.86"></a>
 ## [v0.1.86] - 2020-09-30
 ### Features ✨
-- **metadata:** Add func to transform the deviceProfile model to DTO ([#da904d6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/da904d6))
+- **metadata:** Add func to transform the profile model to DTO ([#da904d6](https://github.com/edgexfoundry/go-mod-core-contracts/commits/da904d6))
 
 <a name="v0.1.84"></a>
 ## [v0.1.84] - 2020-09-25
 ### Features ✨
-- Add new error types for device SDK v2 API ([#eea4301](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eea4301))
+- Add new error types for node SDK v2 API ([#eea4301](https://github.com/edgexfoundry/go-mod-core-contracts/commits/eea4301))
 
 <a name="v0.1.82"></a>
 ## [v0.1.82] - 2020-09-22
@@ -792,7 +792,7 @@ BREAKING CHANGE: Update go module to v4
 <a name="v0.1.64"></a>
 ## [v0.1.64] - 2020-07-10
 ### Code Refactoring ♻
-- Rename device field to deviceName in v2 CoreData DTO and Model In Event and Reading, there is a device field. According to Core WG meeting on July 9th 2020, we need to rename to deviceName to make it explicit. Fix: [#251](https://github.com/edgexfoundry/go-mod-core-contracts/issues/251) ([#6fb5b16](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6fb5b16))
+- Rename node field to nodeName in v2 CoreData DTO and Model In Event and Reading, there is a node field. According to Core WG meeting on July 9th 2020, we need to rename to nodeName to make it explicit. Fix: [#251](https://github.com/edgexfoundry/go-mod-core-contracts/issues/251) ([#6fb5b16](https://github.com/edgexfoundry/go-mod-core-contracts/commits/6fb5b16))
 
 <a name="v0.1.63"></a>
 ## [v0.1.63] - 2020-07-08

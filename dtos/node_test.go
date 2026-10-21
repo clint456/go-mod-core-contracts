@@ -19,6 +19,7 @@ var testParent = "ParentName"
 var testDescription = "Describe Me"
 var testAdminState = "LOCKED"
 var testOperatingState = "UP"
+var testDirection = "SOUTH"
 var testLocation = "Location"
 var testServiceName = "ServiceName"
 var testProfileName = "ProfileName"
@@ -32,6 +33,7 @@ var testNodeDto = Node{
 	AdminState:     testAdminState,
 	OperatingState: testOperatingState,
 	Labels:         []string{"label1", "label2"},
+	Direction:      testDirection,
 	Location:       testLocation,
 	ServiceName:    testServiceName,
 	ProfileName:    testProfileName,
@@ -50,6 +52,7 @@ var testNodeModel = models.Node{
 	AdminState:     models.AdminState(testAdminState),
 	OperatingState: models.OperatingState(testOperatingState),
 	Labels:         []string{"label1", "label2"},
+	Direction:      testDirection,
 	Location:       testLocation,
 	ServiceName:    testServiceName,
 	ProfileName:    testProfileName,
@@ -67,6 +70,7 @@ var testUpdateDto = UpdateNode{
 	AdminState:     &testAdminState,
 	OperatingState: &testOperatingState,
 	Labels:         []string{"label1", "label2"},
+	Direction:      &testDirection,
 	Location:       testLocation,
 	ServiceName:    &testServiceName,
 	ProfileName:    &testProfileName,

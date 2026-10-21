@@ -18,6 +18,7 @@ type Node struct {
 	AdminState     string                        `json:"adminState" yaml:"adminState" validate:"oneof='LOCKED' 'UNLOCKED'"`
 	OperatingState string                        `json:"operatingState" yaml:"operatingState" validate:"oneof='UP' 'DOWN' 'UNKNOWN'"`
 	Labels         []string                      `json:"labels,omitempty" yaml:"labels,omitempty"`
+	Direction      string                        `json:"direction,omitempty" yaml:"direction,omitempty" validate:"omitempty,oneof='SOUTH' 'NORTH'"`
 	Location       interface{}                   `json:"location,omitempty" yaml:"location,omitempty"`
 	ServiceName    string                        `json:"serviceName" yaml:"serviceName" validate:"required,edgex-dto-none-empty-string"`
 	ProfileName    string                        `json:"profileName,omitempty" yaml:"profileName,omitempty"`
@@ -37,6 +38,7 @@ type UpdateNode struct {
 	ServiceName    *string                       `json:"serviceName" validate:"omitempty,edgex-dto-none-empty-string"`
 	ProfileName    *string                       `json:"profileName" validate:"omitempty"`
 	Labels         []string                      `json:"labels"`
+	Direction      *string                       `json:"direction" validate:"omitempty,oneof='SOUTH' 'NORTH'"`
 	Location       interface{}                   `json:"location"`
 	AutoEvents     []AutoEvent                   `json:"autoEvents" validate:"dive"`
 	Protocols      map[string]ProtocolProperties `json:"protocols" validate:"omitempty"`
@@ -55,6 +57,7 @@ func ToNodeModel(dto Node) models.Node {
 	d.ProfileName = dto.ProfileName
 	d.AdminState = models.AdminState(dto.AdminState)
 	d.OperatingState = models.OperatingState(dto.OperatingState)
+	d.Direction = dto.Direction
 	d.Labels = dto.Labels
 	d.Location = dto.Location
 	d.AutoEvents = ToAutoEventModels(dto.AutoEvents)
@@ -79,6 +82,7 @@ func FromNodeModelToDTO(d models.Node) Node {
 	dto.ProfileName = d.ProfileName
 	dto.AdminState = string(d.AdminState)
 	dto.OperatingState = string(d.OperatingState)
+	dto.Direction = d.Direction
 	dto.Labels = d.Labels
 	dto.Location = d.Location
 	dto.AutoEvents = FromAutoEventModelsToDTOs(d.AutoEvents)
@@ -102,6 +106,7 @@ func FromNodeModelToUpdateDTO(d models.Node) UpdateNode {
 		Description:    &d.Description,
 		AdminState:     &adminState,
 		OperatingState: &operatingState,
+		Direction:      &d.Direction,
 		ServiceName:    &d.ServiceName,
 		ProfileName:    &d.ProfileName,
 		Location:       d.Location,
