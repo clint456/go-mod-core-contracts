@@ -4,7 +4,7 @@
 ## 简介
 
 本模块提供 EDGE-HY 各服务之间以 Request/Response 形式传递数据时所使用的**契约模型（contract models）**，
-同时包含 [edgex-go](https://github.com/clint456/edgex-go) 仓库中各个服务对应的**服务客户端**。
+同时包含 [edgex-go](http://192.168.0.89:3000/edgex-go) 仓库中各个服务对应的**服务客户端**。
 各类模型与客户端的定义可分别在对应的顶层目录中查看，详见 [docs/arch.md](./docs/arch.md)。
 
 
